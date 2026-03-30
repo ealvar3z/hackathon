@@ -1,0 +1,18 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+config.yaml
+tak-server/takserver-docker-distro/*.zip
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out/
+cdk.context.json
+
+# IDE files
+.vscode/
+.idea/
+
+# System files
+.DS_Store

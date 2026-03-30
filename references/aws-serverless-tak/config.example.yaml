@@ -1,0 +1,65 @@
+# AWS Account and Region Configuration
+env:
+  # The AWS account ID where resources will be deployed
+  account: "123456789012"
+  # The AWS region where resources will be deployed
+  region: "us-east-1"
+  # Flag to indicate if this is a development environment
+  isDevelopmentEnvironment: false
+
+# Infrastructure Configuration (optional)
+infra:
+  # The ID of an existing VPC where resources should be deployed
+  # This VPC must be in the account and region specified above
+  vpcId: "XXXXXXXXXXXXXX"
+  # The name of an existing ECS cluster where services should be deployed
+  # This cluster must be inside of the VPC specified above
+  clusterName: "XXXXXXXXXXXXXX"
+
+# Network Firewall Configuration (optional)
+firewall:
+  # Whether to enable AWS Network Firewall for additional security
+  enabled: true
+  # Custom name for the firewall (optional)
+  name: "TAK-Server-Firewall"
+  # List of country codes to allow (ISO 3166-1 alpha-2 format)
+  geoAllow: ["US", "CA", "UK"]
+  # Connection timeout in seconds
+  connectionTimeout: 300
+
+# TAK Server Configuration
+tak:
+  # The email address to use for SSL certificate generation via Let's Encrypt
+  adminEmail: admin@example.com
+  # The authentication type TAK Server should use.
+  # Valid types are 'FILE' or 'LDAP'
+  authType: FILE
+  # The top level domain/subdomain you want to use to access TAK Server
+  # TAK Server will be accessible as a subdomain of this domain name (e.g. `tak.example.com`)
+  domainName: "example.com"
+  # The subdomain of the domainName provided above that should be used for TAK Server
+  subdomainName: "tak"
+  # The ID of the Route53 Hosted Zone associated with the provided domain name
+  hostedZoneId: "XXXXXXXXXXXXXX"
+  # Certificate values for client certificates issued by TAK Server
+  certCountry: US
+  certState: VA
+  certCity: Arlington
+  certOrg: Amazon
+  certOrgUnit: AWS
+  # LDAP Configuration (only required if authType is 'LDAP')
+  ldap:
+    # Set to true to deploy a new LDAP server, false to use existing LDAP server
+    deployLdapServer: true
+    # LLDAP server configuration (only required if deployLdapServer is true)
+    baseDn: "dc=tak,dc=local"
+    # External LDAP server configuration (only required if deployLdapServer is false)
+    # host: "ldap.example.com"
+    # port: 389
+    # baseDn: "dc=example,dc=com"
+    # bindDn: "cn=admin,dc=example,dc=com"
+    # bindPassword: "your-ldap-password"
+    # userSearchBase: "ou=people,dc=example,dc=com"
+    # groupSearchBase: "ou=groups,dc=example,dc=com"
+  # Force regeneration of TAK CoreConfig.xml file on startup
+  forceConfigRegen: false

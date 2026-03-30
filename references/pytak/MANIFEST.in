@@ -1,0 +1,7 @@
+graft src
+
+global-exclude .DS_Store
+global-exclude __pycache__
+global-exclude *.pyc
+
+include README.md CHANGELOG.md LICENSE src/pytak/VERSION

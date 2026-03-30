@@ -1,0 +1,92 @@
+R 261330Z MAR 26
+MARADMIN 131/26
+MSGID/GENADMIN/CMC L WASHINGTON DC//
+SUBJ/MODERN DAY MARINE 2026 ARTIFICIAL INTELLIGENCE FORUM HACKATHON//
+GENTEXT/REMARKS/1.  SITUATION.  This MARADMIN solicits applications
+from Marine Corps Active Duty, Reserve, Civilian, and Contractor
+personnel to participate in the Marine Corps Logistics Command
+(MARCORLOGCOM) AI Forum Hackathon, sponsored by the Deputy Commandant
+for Installations and Logistics (DC I&L). The event will be held in
+conjunction with Modern Day Marine 2026 at the Walter E. Washington
+Convention Center in Washington, D.C. The focus of this Hackathon
+will be on Marine Corps logistics and sustainment use cases,
+leveraging artificial intelligence and data-driven solutions to
+address real-world challenges in contested logistics, maintenance,
+supply chain management, and expeditionary operations.
+1.a.  Focus areas include logistics and supply chain optimization,
+predictive maintenance, inventory management, and the integration of
+AI with autonomous systems to enhance warfighter lethality,
+readiness, and decision advantage across the force.
+1.b.  The Hackathon serves as a rapid capability accelerator, pairing
+subject matter experts, technologists, and industry partners to
+prototype and validate solutions to high-priority, logistics-focused
+operational challenges.
+2.   MISSION.  From 27 to 30 April 2026, MARCORLOGCOM CDAO will
+conduct a Hackathon in conjunction with Modern Day Marine 2026 at the
+Walter E. Washington Convention Center, Washington, D.C., in order to
+develop scalable, operationally relevant solutions to high-impact use
+cases across the Marine Corps.
+3. EXECUTION.
+3.a.  Commander's Intent.  Generate practical, scalable digital
+solutions to logistics-focused operational challenges while
+accelerating the Marine Corps’ ability to integrate AI-enabled
+capabilities into operations.
+3.b.  Objectives.
+3.b.1.  Hackers will develop and prototype solutions addressing
+operationally relevant use cases, including but not limited to the
+following:
+3.b.2.  Predictive Maintenance: AI-enabled models to anticipate
+equipment failure and improve readiness.
+3.b.3.  Data Sanitization: Automated methods to identify and sanitize
+controlled data to enable authorized use in unclassified or external
+collaboration environments.
+3.b.4.  Installation Incident Response: Digital tools to enhance
+situational awareness and response coordination during
+installation-level incidents.
+3.b.5.  Use cases are not limited to those mentioned above but will
+include select submissions from the registered population that
+demonstrate the highest operational value.
+3.c.  Concept of Operations. The Hackathon will be conducted over
+four days in conjunction with Modern Day Marine 2026.
+3.c.1.  27 Apr 26: Opening remarks, event overview, use case
+familiarization, and team formation.
+3.c.2.  28–29 Apr 26: Team-based development and prototyping of
+selected use cases.
+3.c.3.  30 Apr 26: Final presentations, judging, and recognition
+of top-performing teams.
+3.c.4.  A detailed schedule, location information, and additional
+requirements will be provided to confirmed participants.
+3.d.  Tasks.
+3.d.1. Participants will apply under one of the following categories:
+3.d.1.a.  Hacker: Responsible for developing and prototyping
+solutions. Preferred backgrounds include artificial intelligence,
+machine learning, data science, data engineering, software
+development, or related technical fields.
+3.d.1.b.  Subject Matter Expert: Responsible for defining use cases,
+providing operational context, and guiding solution development.
+3.d.1.c.  Support: Provides administrative and logistical support to
+facilitate event execution.
+3.d.2.  Selected participants submitting use cases and/or associated
+datasets will coordinate directly with the Hackathon planning team to
+transition the approved data and problem statements onto the
+authorized platform prior to execution.
+3.e.  Coordinating Instructions.
+3.e.1.  The Hackathon will be held from 27 to 30 April 2026 at the
+Walter E. Washington Convention Center in Washington, D.C.
+3.e.2.  Marines, government civilians, industry, and academic
+partners interested in participating may submit applications at:
+https://forms.office.com/r/Yt0DaNKPYd
+3.e.3.  The application deadline is 2359, 10 April 2026.
+3.e.4.  All prospective participants must be registered attendees
+of Modern Day Marine 2026 through the official event registration
+system in order to be considered for participation in the Hackathon.
+Registration to attend Modern Day Marine is free for active duty and
+reserve United States military members.
+3.e.5.  Applicants approved for participation will be notified no
+later than 13 April 2026 via email.
+4.  ADMINISTRATION AND LOGISTICS.
+4.a.  Funding.  Temporary Additional Duty funding and travel
+coordination are the responsibility of the participant’s parent
+command or organization.
+4.b.  Security.  The Hackathon will be conducted at the
+UNCLASSIFIED level.
