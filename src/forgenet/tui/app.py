@@ -114,7 +114,7 @@ class ForgeNetTUIApplication:
         self.page_title = urwid.Text("", align="left")
         self.detail_title = urwid.Text("", align="left")
         self.header = urwid.AttrMap(
-            urwid.Text(" ForgeNet ALOC TUI ", align="center"),
+            urwid.Text(" ForgeNet ", align="center"),
             "header",
         )
         self.nav_listbox = FocusListBox(
