@@ -2,15 +2,18 @@
 
 ## Scope
 
-ForgeNet is an ALOC-focused logistics workflow application that runs as a local Python service and
-integrates with TAK clients through `PyTAK`.
+ForgeNet is an ALOC-focused logistics workflow application that runs as
+a local Python service and integrates with TAK clients through
+`PyTAK`.
 
-The source code under [`references/`](./references) is the implementation guidebook for this
-project. In practice, that means:
+The source code under [`docs/`](./docs) is the implementation
+guidebook for this project. In practice, that means:
 
 - use `PyTAK` as the Python transport adapter for CoT traffic
-- treat `sample-serverless-tak` as a later infrastructure reference, not as the MVP foundation
-- borrow useful runtime and persistence patterns from `reticulum-meshchat`
+- treat `sample-serverless-tak` as a later infrastructure reference,
+  not as the MVP foundation
+- borrow useful runtime and persistence patterns from prior reference
+  projects without inheriting their transport assumptions
 - keep ForgeNet's workflow state in its own database
 
 ## Deployment Topology
@@ -18,18 +21,18 @@ project. In practice, that means:
 ### MVP Demo Topology
 
 - `ALOC node`
-    - laptop runs ForgeNet
-    - stores incidents, jobs, capabilities, artifacts, and events locally
-    - hosts the operator-facing web UI
-    - publishes and consumes CoT via `PyTAK`
+  - laptop runs ForgeNet
+  - stores incidents, jobs, capabilities, artifacts, and events locally
+  - hosts the operator-facing TUI
+  - publishes and consumes CoT via `PyTAK`
 
 - `EUD 1`
-    - Android phone with ATAK
-    - acts as forward requester
+  - Android phone with ATAK
+  - acts as forward requester
 
 - `EUD 2`
-    - Android phone with ATAK
-    - acts as maintenance or fabrication-capable responder
+  - Android phone with ATAK
+  - acts as maintenance or fabrication-capable responder
 
 ### TAK Server Position
 
@@ -41,8 +44,8 @@ For the MVP:
 
 For later phases:
 
-- ForgeNet can connect to TAK Server if we need standard TAK infrastructure, multi-client routing,
-  or cloud deployment
+- ForgeNet can connect to TAK Server if we need standard TAK
+  infrastructure, multi-client routing, or cloud deployment
 
 ## Architectural Layers
 
@@ -59,9 +62,10 @@ Responsibilities:
 
 Reference guides:
 
-- [`references/pytak/src/pytak/classes.py`](./references/pytak/src/pytak/classes.py)
-- [`references/pytak/src/pytak/client_functions.py`](./references/pytak/src/pytak/client_functions.py)
-- [`references/pytak/examples/send_receive.py`](./references/pytak/examples/send_receive.py)
+- [classes.py](/Users/eax/repos/hackathon/docs/pytak/src/pytak/classes.py)
+- [client_functions.py](/Users/eax/repos/hackathon/docs/pytak/src/pytak/client_functions.py)
+- [send_receive.py](/Users/eax/repos/hackathon/docs/pytak/examples/send_receive.py)
+- [cot-schema.md](/Users/eax/repos/hackathon/docs/cot-schema.md)
 
 ### 2. Domain Layer
 
@@ -87,7 +91,8 @@ Responsibilities:
 - job board
 - artifact visibility
 
-This layer is a standalone web UI for the ALOC node. ATAK is not the ALOC workflow console.
+The first operator surface is a local TUI built with `urwid`. The web
+UI comes later. ATAK is not the ALOC workflow console.
 
 ## Persistence Strategy
 
@@ -109,9 +114,10 @@ Use:
 
 Why:
 
-- TAK and CoT are event and interoperability layers, not ForgeNet's domain database
-- TAK Server persistence is for TAK infrastructure, not for replacing application-level workflow
-  state
+- TAK and CoT are event and interoperability layers, not ForgeNet's
+  domain database
+- TAK Server persistence is for TAK infrastructure, not for replacing
+  application-level workflow state
 
 ## TAK Integration Strategy
 
@@ -119,7 +125,8 @@ Use `PyTAK` for:
 
 - publishing incident markers and job updates
 - ingesting field-originated events from ATAK
-- translating ForgeNet workflow state into TAK-visible operational events
+- translating ForgeNet workflow state into TAK-visible operational
+  events
 
 Do not depend on TAK Server for:
 
@@ -132,20 +139,22 @@ Do not depend on TAK Server for:
 
 ### Why ForgeNet Is Not Built On TAK Server
 
-The cloud solution in [`references/aws-serverless-tak`](./references/aws-serverless-tak) is an
-infrastructure solution:
+The cloud solution in
+[aws-serverless-tak](/Users/eax/repos/hackathon/docs/aws-serverless-tak)
+is an infrastructure solution:
 
 - ECS/Fargate deployment
 - Aurora Serverless database for TAK Server
 - EFS, S3, Route53, certificates, firewalling, and secrets
 
-That is useful later, but it is not the fastest or safest path for a hackathon MVP. ForgeNet needs
-an application runtime and workflow database first, not cloud TAK infrastructure first.
+That is useful later, but it is not the fastest or safest path for a
+hackathon MVP. ForgeNet needs an application runtime and workflow
+database first, not cloud TAK infrastructure first.
 
-## Why ForgeNet Still Needs Its Own Web UI
+### Why ForgeNet Still Needs Its Own UI
 
-ATAK is useful for field awareness and operational event visibility, but it is not sufficient as
-the primary ALOC workflow console for:
+ATAK is useful for field awareness and operational event visibility,
+but it is not sufficient as the primary ALOC workflow console for:
 
 - reviewing incidents as records
 - comparing candidate COAs
@@ -153,15 +162,16 @@ the primary ALOC workflow console for:
 - tracking readiness impact
 - inspecting artifact history
 
-The ALOC node therefore needs a purpose-built web UI or TUI.
+The ALOC node therefore needs a purpose-built TUI and later a web UI.
 
 ## Proposed Python Stack
 
-- `fastapi`
-- `jinja2`
+- `pytak`
 - `sqlalchemy`
 - `pydantic`
-- `pytak`
+- `urwid`
+- `fastapi`
+- `jinja2`
 - `uvicorn`
 
 Tooling:
@@ -176,6 +186,7 @@ forgenet/
   pyproject.toml
   README.md
   ARCHITECTURE.md
+  docs/
   src/forgenet/
     __init__.py
     app.py
@@ -183,6 +194,7 @@ forgenet/
     transport/
     domain/
     storage/
+    tui/
     web/
     services/
   tests/
@@ -204,7 +216,9 @@ forgenet/
 ## Implementation Rules
 
 - default to patterns already proven in the reference code
-- keep the runtime in one Python process unless there is a clear reason not to
+- keep the runtime in one Python process unless there is a clear reason
+  not to
 - keep the domain model separate from transport and UI concerns
-- treat `PyTAK` as a library inside ForgeNet, not as the application itself
+- treat `PyTAK` as a library inside ForgeNet, not as the application
+  itself
 - do not introduce TAK Server into the MVP without a concrete demo need

@@ -27,7 +27,8 @@ def seed_demo_data(session: Session) -> None:
         external_uid="incident-alpha-001",
         title="MRZR suspension bracket failure",
         description=(
-            "Forward team reports a failed suspension bracket and depleted local spares. "
+            "Forward team reports a failed suspension bracket and "
+            "depleted local spares. "
             "Vehicle is mission critical for casualty movement."
         ),
         failed_component="Suspension bracket",
@@ -40,13 +41,17 @@ def seed_demo_data(session: Session) -> None:
         longitude=-117.1611,
         priority=1,
         urgency=1,
-        mission_impact="Vehicle unavailable for casualty movement until repaired or rerouted.",
+        mission_impact=(
+            "Vehicle unavailable for casualty movement until repaired "
+            "or rerouted."
+        ),
         local_stock_on_hand=0,
         requested_quantity=1,
         recommended_coa="fabricate",
         recommended_coa_confidence=0.82,
         recommended_coa_rationale=(
-            "Nearest fabrication node has matching material stock and lower ETA than reroute."
+            "Nearest fabrication node has matching material stock and "
+            "lower ETA than reroute."
         ),
         readiness_delta=-0.15,
         eta_minutes=95,
@@ -60,7 +65,10 @@ def seed_demo_data(session: Session) -> None:
         callsign="NODE2",
         capability_type=CapabilityType.FABRICATION,
         title="Expeditionary additive fabrication cell",
-        description="Polymer and aluminum bracket fabrication with basic post-processing.",
+        description=(
+            "Polymer and aluminum bracket fabrication with basic "
+            "post-processing."
+        ),
         materials={"pla_cf": True, "aluminum_plate_mm": [3, 5, 8]},
         equipment={"printers": 2, "cnc_router": 1},
         skills={"cad_repair": True, "print_prep": True},
@@ -73,7 +81,10 @@ def seed_demo_data(session: Session) -> None:
         callsign="NODE3",
         capability_type=CapabilityType.REPAIR,
         title="Forward repair detachment",
-        description="Field expedient repair and install team with mobile welder.",
+        description=(
+            "Field expedient repair and install team with mobile "
+            "welder."
+        ),
         materials={"steel_stock": True, "fasteners": True},
         equipment={"welder": 1, "vehicle_lift": 1},
         skills={"field_repair": True, "installation": True},
@@ -91,7 +102,10 @@ def seed_demo_data(session: Session) -> None:
         assigned_callsign=fab_capability.callsign,
         job_type="fabrication",
         title="Fabricate replacement suspension bracket",
-        description="Produce one replacement bracket and push install instructions to requester.",
+        description=(
+            "Produce one replacement bracket and push install "
+            "instructions to requester."
+        ),
         course_of_action="fabricate",
         status=JobStatus.ASSIGNED,
         priority=1,
@@ -106,7 +120,10 @@ def seed_demo_data(session: Session) -> None:
         external_uid="artifact-stl-001",
         kind=ArtifactKind.PART_MODEL,
         title="Suspension bracket STL",
-        description="Printable replacement bracket model approved for demo workflow.",
+        description=(
+            "Printable replacement bracket model approved for demo "
+            "workflow."
+        ),
         file_name="mrzr-suspension-bracket-v1.stl",
         file_path="data/artifacts/mrzr-suspension-bracket-v1.stl",
         media_type="model/stl",
@@ -146,7 +163,10 @@ def seed_demo_data(session: Session) -> None:
                 actor_id="forgenet-aloc",
                 actor_callsign="ALOC",
                 summary="Fabrication job assigned.",
-                detail="ALOC selected fabrication as the recommended course of action.",
+                detail=(
+                    "ALOC selected fabrication as the recommended "
+                    "course of action."
+                ),
             ),
             Event(
                 incident_id=requester_incident.id,

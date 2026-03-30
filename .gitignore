@@ -11,4 +11,4 @@ data/artifacts/*
 data/sqlite/*.db
 !data/sqlite/.gitkeep
 
-references/NomadNet/
+docs/NomadNet/
