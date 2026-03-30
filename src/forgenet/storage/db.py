@@ -7,7 +7,6 @@ from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
-
 DEFAULT_DB_PATH = Path("data/sqlite/forgenet.db")
 
 
@@ -29,7 +28,9 @@ def create_engine_for_path(path: Path | str = DEFAULT_DB_PATH):
     return create_engine(get_database_url(path), future=True)
 
 
-def create_session_factory(path: Path | str = DEFAULT_DB_PATH) -> sessionmaker[Session]:
+def create_session_factory(
+    path: Path | str = DEFAULT_DB_PATH,
+) -> sessionmaker[Session]:
     """Create a session factory bound to the SQLite engine."""
 
     engine = create_engine_for_path(path)
