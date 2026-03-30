@@ -21,6 +21,7 @@ from forgenet.transport import (
     record_received_cot,
     upsert_capability_from_cot,
 )
+from forgenet.tui import run_tui
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -80,6 +81,10 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=10.0,
         help="Seconds to wait for one inbound CoT event",
+    )
+    subparsers.add_parser(
+        "tui",
+        help="Launch the local ForgeNet urwid operator console",
     )
 
     return parser
@@ -270,13 +275,16 @@ def main() -> None:
         return
 
     if args.command == "publish-capability":
-        asyncio.run(
-            _publish_capability(args.capability_id, args.cot_url)
-        )
+        asyncio.run(_publish_capability(args.capability_id, args.cot_url))
         return
 
     if args.command == "receive-once":
         asyncio.run(_receive_once(args.cot_url, args.timeout))
+        return
+
+    if args.command == "tui":
+        settings = get_settings()
+        run_tui(settings.db_path, settings.cot_url)
         return
 
     raise SystemExit(f"Unknown command: {args.command}")

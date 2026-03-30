@@ -82,8 +82,7 @@ def seed_demo_data(session: Session) -> None:
         capability_type=CapabilityType.REPAIR,
         title="Forward repair detachment",
         description=(
-            "Field expedient repair and install team with mobile "
-            "welder."
+            "Field expedient repair and install team with mobile welder."
         ),
         materials={"steel_stock": True, "fasteners": True},
         equipment={"welder": 1, "vehicle_lift": 1},
@@ -121,8 +120,7 @@ def seed_demo_data(session: Session) -> None:
         kind=ArtifactKind.PART_MODEL,
         title="Suspension bracket STL",
         description=(
-            "Printable replacement bracket model approved for demo "
-            "workflow."
+            "Printable replacement bracket model approved for demo workflow."
         ),
         file_name="mrzr-suspension-bracket-v1.stl",
         file_path="data/artifacts/mrzr-suspension-bracket-v1.stl",
