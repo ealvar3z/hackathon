@@ -10,14 +10,16 @@ from sqlalchemy import select
 from forgenet.config import get_settings
 from forgenet.storage import create_all, create_session_factory
 from forgenet.storage.seed import seed_demo_data
-from forgenet.storage.tables import Incident, Job
+from forgenet.storage.tables import Capability, Incident, Job
 from forgenet.transport import (
     PyTAKRuntime,
+    build_capability_cot,
     build_incident_cot,
     build_job_cot,
     parse_cot_event,
     record_published_cot,
     record_received_cot,
+    upsert_capability_from_cot,
 )
 
 
@@ -54,6 +56,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     publish_job.add_argument("--job-id", help="Job ID to publish")
     publish_job.add_argument("--cot-url", help="Override the default CoT URL")
+
+    publish_capability = subparsers.add_parser(
+        "publish-capability",
+        help="Publish a capability record as a CoT event via PyTAK",
+    )
+    publish_capability.add_argument(
+        "--capability-id",
+        help="Capability ID to publish",
+    )
+    publish_capability.add_argument(
+        "--cot-url",
+        help="Override the default CoT URL",
+    )
 
     receive_once = subparsers.add_parser(
         "receive-once",
@@ -163,6 +178,50 @@ async def _publish_job(job_id: str | None, cot_url: str | None) -> None:
         print(f"Published job {job.id} to {cot_url or settings.cot_url}")
 
 
+async def _publish_capability(
+    capability_id: str | None,
+    cot_url: str | None,
+) -> None:
+    settings = get_settings()
+    create_all(settings.db_path)
+    session_factory = create_session_factory(settings.db_path)
+
+    with session_factory() as session:
+        query = (
+            select(Capability)
+            .where(Capability.active.is_(True))
+            .order_by(Capability.created_at.asc())
+        )
+        if capability_id:
+            query = query.where(Capability.id == capability_id)
+        capability = session.scalar(query.limit(1))
+        if capability is None:
+            raise SystemExit("No capability found to publish")
+
+        payload = build_capability_cot(capability)
+        runtime = PyTAKRuntime(cot_url or settings.cot_url)
+        await runtime.start()
+        try:
+            await runtime.publish(payload)
+        finally:
+            await runtime.stop()
+
+        record_published_cot(
+            session,
+            summary=f"Published capability {capability.id} as CoT",
+            capability_id=capability.id,
+            payload={
+                "uid": f"forgenet-capability-{capability.id}",
+                "cot_url": cot_url or settings.cot_url,
+                "kind": "capability",
+            },
+        )
+        print(
+            "Published capability "
+            f"{capability.id} to {cot_url or settings.cot_url}"
+        )
+
+
 async def _receive_once(cot_url: str | None, timeout: float) -> None:
     settings = get_settings()
     create_all(settings.db_path)
@@ -176,8 +235,11 @@ async def _receive_once(cot_url: str | None, timeout: float) -> None:
 
     parsed = parse_cot_event(data)
     with session_factory() as session:
+        capability = upsert_capability_from_cot(session, parsed)
         event = record_received_cot(session, parsed)
 
+    if capability is not None:
+        print(f"Upserted capability {capability.id} from inbound CoT")
     print(f"Persisted inbound CoT event as audit event {event.id}")
 
 
@@ -205,6 +267,12 @@ def main() -> None:
 
     if args.command == "publish-job":
         asyncio.run(_publish_job(args.job_id, args.cot_url))
+        return
+
+    if args.command == "publish-capability":
+        asyncio.run(
+            _publish_capability(args.capability_id, args.cot_url)
+        )
         return
 
     if args.command == "receive-once":
