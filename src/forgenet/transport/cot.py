@@ -8,9 +8,10 @@ from typing import Any
 
 import pytak
 
-from forgenet.storage.tables import Incident, Job
+from forgenet.storage.tables import Capability, Incident, Job
 
 FORGENET_DETAIL_TAG = "forgenet"
+FORGENET_COT_TYPE_CAPABILITY = "c-f-forgenet"
 FORGENET_COT_TYPE_INCIDENT = "b-m-r"
 FORGENET_COT_TYPE_JOB = "b-m-t"
 
@@ -125,6 +126,45 @@ def build_job_cot(job: Job) -> bytes:
     forge.set("job_type", job.job_type)
     if job.course_of_action:
         forge.set("course_of_action", job.course_of_action)
+
+    return pytak.DEFAULT_XML_DECLARATION + b"\n" + ET.tostring(event)
+
+
+def build_capability_cot(capability: Capability) -> bytes:
+    """Encode a capability as a ForgeNet CoT event."""
+
+    uid = f"forgenet-capability-{capability.id}"
+    event = _base_event(uid=uid, cot_type=FORGENET_COT_TYPE_CAPABILITY)
+
+    point = ET.SubElement(event, "point")
+    point.set("lat", "0.0")
+    point.set("lon", "0.0")
+    point.set("hae", "9999999.0")
+    point.set("ce", "9999999.0")
+    point.set("le", "9999999.0")
+
+    detail = ET.SubElement(event, "detail")
+    if capability.callsign:
+        contact = ET.SubElement(detail, "contact")
+        contact.set("callsign", capability.callsign)
+
+    remarks = ET.SubElement(detail, "remarks")
+    remarks.text = capability.description or capability.title
+
+    forge = ET.SubElement(detail, FORGENET_DETAIL_TAG)
+    forge.set("object", "capability")
+    forge.set("capability_id", capability.id)
+    forge.set("node_id", capability.node_id)
+    forge.set("capability_type", capability.capability_type.value)
+    forge.set("title", capability.title)
+    forge.set("availability_status", capability.availability_status)
+    if capability.throughput_per_day is not None:
+        forge.set(
+            "throughput_per_day",
+            str(capability.throughput_per_day),
+        )
+    if capability.lead_time_minutes is not None:
+        forge.set("lead_time_minutes", str(capability.lead_time_minutes))
 
     return pytak.DEFAULT_XML_DECLARATION + b"\n" + ET.tostring(event)
 

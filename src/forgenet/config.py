@@ -14,7 +14,7 @@ class Settings:
 
     db_path: Path = DEFAULT_DB_PATH
     artifacts_dir: Path = Path("data/artifacts")
-    cot_url: str = "udp+wo://239.2.3.1:6969"
+    cot_url: str = "udp://239.2.3.1:6969"
 
 
 def get_settings() -> Settings:

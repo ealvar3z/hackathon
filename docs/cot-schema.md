@@ -100,13 +100,20 @@ UID strategy:
 
 Capability advertisement is the next transport item to add.
 
-Expected ForgeNet detail attributes:
+Current CoT type:
+
+- `c-f-forgenet`
+
+Current ForgeNet detail attributes:
 
 - `object="capability"`
 - `capability_id`
 - `node_id`
 - `capability_type`
+- `title`
 - `availability_status`
+- `throughput_per_day`
+- `lead_time_minutes`
 
 ## Supporting Detail
 
