@@ -73,12 +73,21 @@ uv run python -m forgenet.app bootstrap
 
 ### Run the app
 
-The interactive TUI entrypoint will be added in the next stage. The
-current command shape is:
+Bootstrap once, then launch the local ALOC console:
+
+```bash
+uv run python -m forgenet.app bootstrap
+uv run python -m forgenet.app tui
+```
+
+Other useful commands:
 
 ```bash
 uv run python -m forgenet.app init-db
 uv run python -m forgenet.app seed-demo
+uv run python -m forgenet.app publish-incident
+uv run python -m forgenet.app publish-capability
+uv run python -m forgenet.app receive-once
 ```
 
 ### Lint
