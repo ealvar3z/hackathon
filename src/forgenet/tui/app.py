@@ -147,19 +147,13 @@ class ForgeNetTUIApplication:
         """Build the static TUI layout."""
 
         nav_box = urwid.LineBox(self.nav_listbox, title="Pages")
-        list_box = urwid.Pile(
-            [
-                ("pack", urwid.AttrMap(self.page_title, "panel_title")),
-                (1, urwid.Divider("-")),
-                ("weight", 1, urwid.LineBox(self.record_listbox)),
-            ]
+        list_box = urwid.Frame(
+            body=urwid.LineBox(self.record_listbox),
+            header=urwid.AttrMap(self.page_title, "panel_title"),
         )
-        detail_box = urwid.Pile(
-            [
-                ("pack", urwid.AttrMap(self.detail_title, "panel_title")),
-                (1, urwid.Divider("-")),
-                ("weight", 1, urwid.LineBox(self.detail_listbox)),
-            ]
+        detail_box = urwid.Frame(
+            body=urwid.LineBox(self.detail_listbox),
+            header=urwid.AttrMap(self.detail_title, "panel_title"),
         )
         content = urwid.Columns(
             [
