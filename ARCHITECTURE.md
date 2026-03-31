@@ -3,7 +3,7 @@
 ## Scope
 
 `section4` is an implementation effort for
-[project-adrian.txt](/Users/eax/repos/hackathon/docs/project-adrian.txt).
+[project-adrian.pdf](https://github.com/ealvar3z/hackathon/blob/main/docs/project-adrian.pdf).
 The source document is treated as the normative design basis in the
 same way an implementation would treat an RFC.
 
@@ -44,16 +44,16 @@ delivery paths and operator interfaces.
 The hackathon demo topology is intentionally simple:
 
 - `ATAK` on Android EUDs
-  - field-node interface
-  - event and operational state visibility
+    - field-node interface
+    - event and operational state visibility
 - `s4net` on the laptop
-  - local-first operator console
-  - implemented first as a TUI
+    - local-first operator console
+    - implemented first as a TUI
 - `section4` runtime on the laptop
-  - local persistence
-  - protocol processing
-  - synchronization logic
-  - decision-support logic
+    - local persistence
+    - protocol processing
+    - synchronization logic
+    - decision-support logic
 
 This proves the key architectural point:
 
