@@ -1,22 +1,22 @@
-# ForgeNet CoT Schema
+# section4 CoT Schema
 
 This document defines the initial Cursor-on-Target mapping used by
-ForgeNet.
+section4.
 
-ForgeNet uses CoT as the wire format for exchanging operational events.
-ForgeNet itself remains the application protocol and system of record.
+section4 uses CoT as the wire format for exchanging operational events.
+section4 itself remains the application protocol and system of record.
 
 ## Principles
 
 - Keep CoT payloads terse.
 - Put W3 fields in the CoT base schema.
-- Put ForgeNet workflow data under `detail/forgenet`.
+- Put section4 workflow data under `detail/section4`.
 - Use stable `uid` values for incident and job updates.
 - Persist the full workflow state in SQLite, not in CoT.
 
 ## Base CoT Fields
 
-Every ForgeNet CoT event must include:
+Every section4 CoT event must include:
 
 - `event.version`
 - `event.type`
@@ -34,27 +34,27 @@ Every ForgeNet CoT event must include:
 These follow the CoT base schema described in
 [dev-guide-to-cot.txt](/Users/eax/repos/hackathon/docs/dev-guide-to-cot.txt).
 
-## ForgeNet Detail Extension
+## section4 Detail Extension
 
-ForgeNet-specific data lives under:
+section4-specific data lives under:
 
 ```xml
 <detail>
-  <forgenet ... />
+  <section4 ... />
 </detail>
 ```
 
-The `forgenet` element is the application extension point.
+The `section4` element is the application extension point.
 
 ## Event Categories
 
-ForgeNet currently uses these categories:
+section4 currently uses these categories:
 
 - `incident`
 - `job`
 - `capability`
 
-Each category is identified in `detail/forgenet` via the `object`
+Each category is identified in `detail/section4` via the `object`
 attribute.
 
 ## Incident Events
@@ -63,7 +63,7 @@ Current CoT type:
 
 - `b-m-r`
 
-Current ForgeNet detail attributes:
+Current section4 detail attributes:
 
 - `object="incident"`
 - `incident_id`
@@ -75,7 +75,7 @@ Current ForgeNet detail attributes:
 UID strategy:
 
 - external UID if one exists
-- otherwise `forgenet-incident-<incident_id>`
+- otherwise `section4-incident-<incident_id>`
 
 ## Job Events
 
@@ -83,7 +83,7 @@ Current CoT type:
 
 - `b-m-t`
 
-Current ForgeNet detail attributes:
+Current section4 detail attributes:
 
 - `object="job"`
 - `job_id`
@@ -94,7 +94,7 @@ Current ForgeNet detail attributes:
 
 UID strategy:
 
-- `forgenet-job-<job_id>`
+- `section4-job-<job_id>`
 
 ## Capability Events
 
@@ -102,9 +102,9 @@ Capability advertisement is the next transport item to add.
 
 Current CoT type:
 
-- `c-f-forgenet`
+- `c-f-section4`
 
-Current ForgeNet detail attributes:
+Current section4 detail attributes:
 
 - `object="capability"`
 - `capability_id`
@@ -117,17 +117,17 @@ Current ForgeNet detail attributes:
 
 ## Supporting Detail
 
-When available, ForgeNet should also include:
+When available, section4 should also include:
 
 - `detail/contact@callsign`
 - `detail/remarks`
 
 Use these for operator readability, while keeping workflow semantics in
-`detail/forgenet`.
+`detail/section4`.
 
 ## Persistence Rules
 
-ForgeNet stores:
+section4 stores:
 
 - incidents
 - jobs

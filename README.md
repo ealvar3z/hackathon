@@ -1,24 +1,44 @@
-# ForgeNet
+# section4
 
-ForgeNet is a Python application for contested logistics workflows
+```text
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@      @@@@@@      @@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@      @@@@@@@@      @@@@@@@@@@@@@@@  @@@@@@                                    @@@@@@@
+@@@@@@@@@@@@@       @@@@@@@@@       @@@@@@@@@@@@@  @@@@@@      @@@@@@@@@@@@@@@@@@@@@@@@@     @@@@@@@
+@@@@@@@@@@@@       @@@@@@@@@@@       @@@@@@@@@@@@  @@@@@@      @@@@@@       @@@@@@@@@@@@     @@@@@@@
+@@@@@@@@@@       @@@@@@@@@@@@@@       @@@@@@@@@@@  @@@@@@@    @@@@@@@      @@@@@@@@@@@@@     @@@@@@@
+@@@@@@@        @@@@      @@@@@@@@@        @@@@@@@  @@@@@@                                     @@@@@@
+@@@@@@     @@@@@@@      @@@@@@@@@@@@@      @@@@@@  @@@@@@                                      @@@@@@
+@@@@@@@@ @@@@@@@@      @@@@@@@@@@@@@@@@  @@@@@@@@  @@@@@@@@@@@@@@      @@@@@@@@@@@      @@@@@@@@@@@@
+@@@@@@@@@@@@@@@       @@@@@@@@@       @@@@@@@@@@@  @@@@@@@@@             @@@@@@      @@@@@@@@@@@@@@@
+@@@@@@@                                   @@@@@@@  @@@@@@@@@@@@@@                         @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@  @@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+```
+
+section4 is a Python application for contested logistics workflows
 built around a local ALOC node, ATAK end-user devices, and TAK/CoT
 event exchange via `PyTAK`.
 
 The current MVP topology is:
 
-- `ALOC node`: Laptop running ForgeNet, local persistence, the ALOC
+- `ALOC node`: Laptop running section4, local persistence, the ALOC
   TUI, and a `PyTAK` transport adapter
 - `EUD 1`: Android device running ATAK as the forward requester
 - `EUD 2`: Android device running ATAK as the maintenance or
   fabrication-capable responder
 
-ForgeNet owns the business logic and state. `PyTAK` is used as a
+section4 owns the business logic and state. `PyTAK` is used as a
 Python library to publish and consume CoT events. `TAK Server` is
 optional infrastructure and is not required for the first demo.
 
 ## Why This Stack
 
-ForgeNet follows the seam lines already proven in the source material
+section4 follows the seam lines already proven in the source material
 under [`docs/`](./docs):
 
 - `PyTAK` provides Python-side TAK/CoT send and receive primitives
@@ -31,16 +51,16 @@ logistics workflow system that integrates with the TAK ecosystem.
 
 ## Planned Capabilities
 
-The first ForgeNet workflow is:
+The first section4 workflow is:
 
 1. A forward node reports a failed component and low local stock
-2. ForgeNet ingests the report and stores it locally
-3. ForgeNet ranks candidate courses of action:
+2. section4 ingests the report and stores it locally
+3. section4 ranks candidate courses of action:
    - local repair
    - additive fabrication
    - reroute from another node
 4. A task is assigned to a capable responder node
-5. ForgeNet publishes operational state to ATAK clients via CoT
+5. section4 publishes operational state to ATAK clients via CoT
 6. The ALOC UI shows readiness impact, ETA, task state, and audit
    history
 
@@ -68,7 +88,7 @@ uv sync
 ### Bootstrap the local database
 
 ```bash
-uv run python -m forgenet.app bootstrap
+uv run python -m section4.app bootstrap
 ```
 
 ### Run the app
@@ -76,18 +96,18 @@ uv run python -m forgenet.app bootstrap
 Bootstrap once, then launch the local ALOC console:
 
 ```bash
-uv run python -m forgenet.app bootstrap
-uv run python -m forgenet.app tui
+uv run python -m section4.app bootstrap
+uv run python -m section4.app tui
 ```
 
 Other useful commands:
 
 ```bash
-uv run python -m forgenet.app init-db
-uv run python -m forgenet.app seed-demo
-uv run python -m forgenet.app publish-incident
-uv run python -m forgenet.app publish-capability
-uv run python -m forgenet.app receive-once
+uv run python -m section4.app init-db
+uv run python -m section4.app seed-demo
+uv run python -m section4.app publish-incident
+uv run python -m section4.app publish-capability
+uv run python -m section4.app receive-once
 ```
 
 ### Lint

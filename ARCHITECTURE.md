@@ -1,8 +1,8 @@
-# ForgeNet Architecture
+# section4 Architecture
 
 ## Scope
 
-ForgeNet is an ALOC-focused logistics workflow application that runs as
+section4 is an ALOC-focused logistics workflow application that runs as
 a local Python service and integrates with TAK clients through
 `PyTAK`.
 
@@ -14,14 +14,14 @@ guidebook for this project. In practice, that means:
   not as the MVP foundation
 - borrow useful runtime and persistence patterns from prior reference
   projects without inheriting their transport assumptions
-- keep ForgeNet's workflow state in its own database
+- keep section4's workflow state in its own database
 
 ## Deployment Topology
 
 ### MVP Demo Topology
 
 - `ALOC node`
-  - laptop runs ForgeNet
+  - laptop runs section4
   - stores incidents, jobs, capabilities, artifacts, and events locally
   - hosts the operator-facing TUI
   - publishes and consumes CoT via `PyTAK`
@@ -39,17 +39,17 @@ guidebook for this project. In practice, that means:
 For the MVP:
 
 - TAK Server is not required
-- ForgeNet remains the system of record
+- section4 remains the system of record
 - `PyTAK` is used as an in-process library, not as a standalone service
 
 For later phases:
 
-- ForgeNet can connect to TAK Server if we need standard TAK
+- section4 can connect to TAK Server if we need standard TAK
   infrastructure, multi-client routing, or cloud deployment
 
 ## Architectural Layers
 
-ForgeNet should be implemented as three explicit layers.
+section4 should be implemented as three explicit layers.
 
 ### 1. Transport Layer
 
@@ -57,7 +57,7 @@ Responsibilities:
 
 - initialise `PyTAK`
 - manage CoT send and receive loops
-- translate between CoT events and ForgeNet domain objects
+- translate between CoT events and section4 domain objects
 - isolate TAK-specific logic from the rest of the application
 
 Reference guides:
@@ -79,7 +79,7 @@ Responsibilities:
 - ETA estimation
 - event and audit recording
 
-This is the part that is genuinely ForgeNet-specific.
+This is the part that is genuinely section4-specific.
 
 ### 3. Presentation Layer
 
@@ -96,7 +96,7 @@ UI comes later. ATAK is not the ALOC workflow console.
 
 ## Persistence Strategy
 
-ForgeNet keeps its own persistence.
+section4 keeps its own persistence.
 
 Store locally:
 
@@ -114,7 +114,7 @@ Use:
 
 Why:
 
-- TAK and CoT are event and interoperability layers, not ForgeNet's
+- TAK and CoT are event and interoperability layers, not section4's
   domain database
 - TAK Server persistence is for TAK infrastructure, not for replacing
   application-level workflow state
@@ -125,7 +125,7 @@ Use `PyTAK` for:
 
 - publishing incident markers and job updates
 - ingesting field-originated events from ATAK
-- translating ForgeNet workflow state into TAK-visible operational
+- translating section4 workflow state into TAK-visible operational
   events
 
 Do not depend on TAK Server for:
@@ -137,7 +137,7 @@ Do not depend on TAK Server for:
 
 ## FAQ
 
-### Why ForgeNet Is Not Built On TAK Server
+### Why section4 Is Not Built On TAK Server
 
 The cloud solution in
 [aws-serverless-tak](/Users/eax/repos/hackathon/docs/aws-serverless-tak)
@@ -148,10 +148,10 @@ is an infrastructure solution:
 - EFS, S3, Route53, certificates, firewalling, and secrets
 
 That is useful later, but it is not the fastest or safest path for a
-hackathon MVP. ForgeNet needs an application runtime and workflow
+hackathon MVP. section4 needs an application runtime and workflow
 database first, not cloud TAK infrastructure first.
 
-### Why ForgeNet Still Needs Its Own UI
+### Why section4 Still Needs Its Own UI
 
 ATAK is useful for field awareness and operational event visibility,
 but it is not sufficient as the primary ALOC workflow console for:
@@ -182,12 +182,12 @@ Tooling:
 ## Proposed Repository Shape
 
 ```text
-forgenet/
+section4/
   pyproject.toml
   README.md
   ARCHITECTURE.md
   docs/
-  src/forgenet/
+  src/section4/
     __init__.py
     app.py
     config.py
@@ -210,8 +210,8 @@ forgenet/
 3. database schema and persistence layer
 4. `PyTAK` runtime bootstrap
 5. workflow services
-6. ForgeNet TUI
-7. ForgeNet web UI
+6. section4 TUI
+7. section4 web UI
 
 ## Implementation Rules
 
@@ -219,6 +219,6 @@ forgenet/
 - keep the runtime in one Python process unless there is a clear reason
   not to
 - keep the domain model separate from transport and UI concerns
-- treat `PyTAK` as a library inside ForgeNet, not as the application
+- treat `PyTAK` as a library inside section4, not as the application
   itself
 - do not introduce TAK Server into the MVP without a concrete demo need
