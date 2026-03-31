@@ -2,184 +2,253 @@
 
 ## Scope
 
-section4 is an ALOC-focused logistics workflow application that runs as
-a local Python service and integrates with TAK clients through
-`PyTAK`.
+`section4` is an implementation effort for
+[project-adrian.txt](/Users/eax/repos/hackathon/docs/project-adrian.txt).
+The source document is treated as the normative design basis in the
+same way an implementation would treat an RFC.
 
-The source code under [`docs/`](./docs) is the implementation
-guidebook for this project. In practice, that means:
+The project objective is not just to display logistics data. It is to
+build the data capture, synchronization, and decision-support substrate
+that ADRIAN argues is missing in contested, disconnected, degraded, and
+intermittent environments.
 
-- use `PyTAK` as the Python transport adapter for CoT traffic
-- treat `sample-serverless-tak` as a later infrastructure reference,
-  not as the MVP foundation
-- borrow useful runtime and persistence patterns from prior reference
-  projects without inheriting their transport assumptions
-- keep section4's workflow state in its own database
+The design center is the tactical logistics user operating at the point
+of need with constrained communications, connected/disconnected
+synchronization, and the need to move from data to supportability and
+sustainment decisions.
 
-## Deployment Topology
+## Architectural Intent
 
-### MVP Demo Topology
+ADRIAN repeatedly implies four architectural requirements:
 
-- `ALOC node`
-  - laptop runs section4
-  - stores incidents, jobs, capabilities, artifacts, and events locally
-  - hosts the operator-facing TUI
-  - publishes and consumes CoT via `PyTAK`
+1. the system must remain homogeneous across the analyzed logistics
+   functions
+2. it must support connected and disconnected synchronization
+3. it must preserve compact exchange over low-bandwidth pathways, with
+   HF data-burst as the lowest denominator assumption
+4. it must produce a logistics common operational picture that enables
+   decision-making, not just status display
 
-- `EUD 1`
-  - Android phone with ATAK
-  - acts as forward requester
+`section4` therefore separates:
 
-- `EUD 2`
-  - Android phone with ATAK
-  - acts as maintenance or fabrication-capable responder
+1. `LXDR-Core`
+2. `LXDR-Link`
+3. `LXDR-Transport`
+4. operator applications and decision-support tooling
 
-### TAK Server Position
+This keeps the ADRIAN-derived data model stable while allowing multiple
+delivery paths and operator interfaces.
 
-For the MVP:
+## Demo Topology
 
-- TAK Server is not required
-- section4 remains the system of record
-- `PyTAK` is used as an in-process library, not as a standalone service
+The hackathon demo topology is intentionally simple:
 
-For later phases:
+- `ATAK` on Android EUDs
+  - field-node interface
+  - event and operational state visibility
+- `s4net` on the laptop
+  - local-first operator console
+  - implemented first as a TUI
+- `section4` runtime on the laptop
+  - local persistence
+  - protocol processing
+  - synchronization logic
+  - decision-support logic
 
-- section4 can connect to TAK Server if we need standard TAK
-  infrastructure, multi-client routing, or cloud deployment
+This proves the key architectural point:
 
-## Architectural Layers
+- the protocol core is transport and interface agnostic
+- the field nodes can use one operational interface
+- the laptop can use another
+- the same ADRIAN-derived exchange model remains underneath both
 
-section4 should be implemented as three explicit layers.
+## Protocol Stack
 
-### 1. Transport Layer
+### LXDR-Core
 
-Responsibilities:
+`LXDR-Core` is the ADRIAN-derived payload model.
 
-- initialise `PyTAK`
-- manage CoT send and receive loops
-- translate between CoT events and section4 domain objects
-- isolate TAK-specific logic from the rest of the application
+It defines:
 
-Reference guides:
+- generated request header
+- function-specific segments
+- canonical field registry
+- exchange metadata such as `Pass`, `Not Passed`, and `Sync Response`
+- canonical text-burst representation
+- packed representations for constrained transport
 
-- [classes.py](/Users/eax/repos/hackathon/docs/pytak/src/pytak/classes.py)
-- [client_functions.py](/Users/eax/repos/hackathon/docs/pytak/src/pytak/client_functions.py)
-- [send_receive.py](/Users/eax/repos/hackathon/docs/pytak/examples/send_receive.py)
-- [cot-schema.md](/Users/eax/repos/hackathon/docs/cot-schema.md)
+This layer is derived from:
 
-### 2. Domain Layer
+- the request header sections and tables
+- the function and sub-function schemas
+- Appendix F canonical field/data block structure
 
-Responsibilities:
+Current implementation direction:
 
-- incident intake
-- capability matching
-- job creation and tracking
-- course-of-action scoring
-- readiness impact calculation
-- ETA estimation
-- event and audit recording
+- semantic models for headers and requests
+- segment registry
+- canonical field registry
+- canonical text-burst codec
+- packed codecs for constrained exchange
 
-This is the part that is genuinely section4-specific.
+### LXDR-Link
 
-### 3. Presentation Layer
+`LXDR-Link` is the transport-agnostic delivery and synchronization
+envelope around one or more `LXDR-Core` objects.
 
-Responsibilities:
+It exists because ADRIAN requires:
 
-- operator dashboard
-- incident detail views
-- capability views
-- job board
-- artifact visibility
+- connected/disconnected synchronization
+- continuity between local placeholder identity and synchronized
+  enterprise identity
+- compact exchange over constrained pathways
+- store-and-forward behavior across interruptions
 
-The first operator surface is a local TUI built with `urwid`. The web
-UI comes later. ATAK is not the ALOC workflow console.
+`LXDR-Link` is responsible for:
+
+- message identity distinct from request identity
+- sender and recipient addressing
+- delivery method selection
+- representation selection
+- fragmentation and reassembly
+- deduplication
+- acknowledgement and retry
+- synchronization bundles
+- integrity and confidentiality metadata hooks
+
+Current implemented representations:
+
+- `INLINE_TEXT`
+- `INLINE_STRUCTURED`
+- `INLINE_PACKED`
+- `BUNDLE`
+
+### LXDR-Transport
+
+`LXDR-Transport` is the bearer-adapter layer.
+
+This layer moves opaque `LXDR-Link` frames over an available path. It
+must not redefine ADRIAN request semantics.
+
+Example transport paths include:
+
+- HF data-burst
+- local IP transport
+- message relay
+- export/import workflows
+- bridges into existing operational ecosystems
+
+The current demo still uses ATAK-facing integration to show state on
+Android EUDs, but ATAK is not the architecture center. It is one
+interface path over a transport-agnostic protocol core.
+
+## Applications
+
+### s4net
+
+`s4net` is the laptop operator application.
+
+Its job is to provide a local-first operations view over:
+
+- requests
+- capabilities
+- jobs
+- artifacts
+- synchronization state
+- event history
+- decision-support outputs
+
+The first implementation is a TUI because it is fast to iterate and
+keeps the workflow close to the operator model. A web UI may follow
+later, but it should mirror the same page, report, and workflow shapes.
+
+### ATAK Demo Nodes
+
+ATAK on Android EUDs remains part of the demo because it gives us:
+
+- realistic field-node interaction
+- a familiar operational interface
+- proof that `section4` can project state into an existing ecosystem
+
+ATAK is not the authoritative data model. `section4` owns the ADRIAN
+request model and synchronization state.
+
+## Data Model
+
+The architecture follows ADRIAN's hierarchy:
+
+- data field
+- data block
+- data file
+
+In `section4`, that becomes:
+
+- canonical field registry entries
+- segment definitions built from those fields
+- requests composed of headers plus segments
+- link frames carrying one or more requests
+- bundles supporting synchronized exchange
+
+This hierarchy is critical because it lets the system remain consistent
+across mobility, supply, maintenance, health, and the other logistics
+functions.
 
 ## Persistence Strategy
 
-section4 keeps its own persistence.
+`section4` keeps its own persistence.
 
-Store locally:
+The local store is the system of record for:
 
-- incidents
+- requests
 - capabilities
 - jobs
-- artifacts metadata
+- artifacts and references
 - event and audit history
-- course-of-action decisions
+- synchronization state
+- decision-support outputs
 
-Use:
+The current implementation uses:
 
-- `SQLite` for the MVP
-- `SQLAlchemy` as the ORM and query layer
+- `SQLite`
+- `SQLAlchemy`
 
 Why:
 
-- TAK and CoT are event and interoperability layers, not section4's
-  domain database
-- TAK Server persistence is for TAK infrastructure, not for replacing
-  application-level workflow state
+- ADRIAN requires continuity across disconnected periods
+- the operator console must work locally first
+- external interfaces are transport or projection layers, not the
+  authoritative workflow database
 
-## TAK Integration Strategy
+## Decision Support
 
-Use `PyTAK` for:
+The target outcome is a logistics COP that enables decisions.
 
-- publishing incident markers and job updates
-- ingesting field-originated events from ATAK
-- translating section4 workflow state into TAK-visible operational
-  events
+That means the system should evolve from:
 
-Do not depend on TAK Server for:
+- data capture
+- request exchange
+- synchronization
 
-- incident storage
-- job state transitions
-- artifact metadata
-- course-of-action history
+into:
 
-## FAQ
+- supportability analysis
+- candidate course-of-action comparison
+- sustainment and routing decisions
+- operator-facing reasoning support
 
-### Why section4 Is Not Built On TAK Server
+One explicit hackathon objective is to build toward an ADRIAN-specialized
+LLM workflow that can reason over:
 
-The cloud solution in
-[aws-serverless-tak](/Users/eax/repos/hackathon/docs/aws-serverless-tak)
-is an infrastructure solution:
+- request content
+- synchronization state
+- supportability constraints
+- response options
+- logistics interdependencies
 
-- ECS/Fargate deployment
-- Aurora Serverless database for TAK Server
-- EFS, S3, Route53, certificates, firewalling, and secrets
+The LLM is not the protocol. It sits above the ADRIAN-derived data model
+and uses it as structured input.
 
-That is useful later, but it is not the fastest or safest path for a
-hackathon MVP. section4 needs an application runtime and workflow
-database first, not cloud TAK infrastructure first.
-
-### Why section4 Still Needs Its Own UI
-
-ATAK is useful for field awareness and operational event visibility,
-but it is not sufficient as the primary ALOC workflow console for:
-
-- reviewing incidents as records
-- comparing candidate COAs
-- managing assignments and queues
-- tracking readiness impact
-- inspecting artifact history
-
-The ALOC node therefore needs a purpose-built TUI and later a web UI.
-
-## Proposed Python Stack
-
-- `pytak`
-- `sqlalchemy`
-- `pydantic`
-- `urwid`
-- `fastapi`
-- `jinja2`
-- `uvicorn`
-
-Tooling:
-
-- `uv` for dependency and task execution
-- `ruff` for linting and formatting
-
-## Proposed Repository Shape
+## Repository Shape
 
 ```text
 section4/
@@ -187,15 +256,17 @@ section4/
   README.md
   ARCHITECTURE.md
   docs/
+    project-adrian.txt
+    project-adrian.pdf
+    lxdr-protocol.md
+  assets/
   src/section4/
-    __init__.py
     app.py
     config.py
-    transport/
-    domain/
+    lxdr/
     storage/
+    transport/
     tui/
-    web/
     services/
   tests/
   data/
@@ -203,22 +274,26 @@ section4/
     artifacts/
 ```
 
-## Initial Build Order
+## Current Build Order
 
-1. project metadata and architecture documents
-2. package skeleton and repository layout
-3. database schema and persistence layer
-4. `PyTAK` runtime bootstrap
-5. workflow services
-6. section4 TUI
-7. section4 web UI
+1. `section4` project identity and local runtime
+2. ADRIAN-derived `LXDR` protocol draft
+3. `LXDR-Core` scaffolding
+4. `LXDR-Link` serialization and parsing
+5. packed codecs for constrained exchange
+6. synchronization bundles
+7. next: router, inbox/outbox, and DDIL message handling
+8. later: richer operator workflows and ADRIAN-guided decision support
 
 ## Implementation Rules
 
-- default to patterns already proven in the reference code
-- keep the runtime in one Python process unless there is a clear reason
-  not to
-- keep the domain model separate from transport and UI concerns
-- treat `PyTAK` as a library inside section4, not as the application
-  itself
-- do not introduce TAK Server into the MVP without a concrete demo need
+- treat
+  [project-adrian.txt](/Users/eax/repos/hackathon/docs/project-adrian.txt)
+  as normative
+- do not invent ADRIAN payload fields where the source is silent
+- separate ADRIAN payload semantics from link/session behavior
+- separate link/session behavior from bearer adapters
+- keep the local operator application functional while disconnected
+- prefer compact, deterministic encodings for constrained paths
+- use structured representations for development and interoperability,
+  but do not confuse them with the long-term constrained wire format
