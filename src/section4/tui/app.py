@@ -114,7 +114,7 @@ class S4NetTUIApplication:
         self.page_title = urwid.Text("", align="left")
         self.detail_title = urwid.Text("", align="left")
         self.header = urwid.AttrMap(
-            urwid.Text(" s4net / section4 ", align="center"),
+            urwid.Text(" s4net ", align="center"),
             "header",
         )
         self.nav_listbox = FocusListBox(
