@@ -1,4 +1,4 @@
-"""Urwid-based TUI shell for local section4 operations."""
+"""Urwid-based s4net console for local section4 operations."""
 
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ from section4.tui.data import (
 
 @dataclass(frozen=True)
 class PageDefinition:
-    """A navigable page in the section4 operator shell."""
+    """A navigable page in the s4net operator console."""
 
     key: str
     title: str
@@ -79,12 +79,12 @@ PALETTE = [
 ]
 
 PAGES = [
-    PageDefinition("dashboard", "Dashboard"),
-    PageDefinition("incidents", "Incidents"),
+    PageDefinition("dashboard", "COP"),
+    PageDefinition("incidents", "Requests"),
     PageDefinition("capabilities", "Capabilities"),
-    PageDefinition("jobs", "Jobs"),
+    PageDefinition("jobs", "Tasks"),
     PageDefinition("artifacts", "Artifacts"),
-    PageDefinition("events", "Events"),
+    PageDefinition("events", "Sync Log"),
 ]
 
 PUBLISH_LABELS = {
@@ -94,8 +94,8 @@ PUBLISH_LABELS = {
 }
 
 
-class Section4TUIApplication:
-    """Read-only operator shell over section4 persistence."""
+class S4NetTUIApplication:
+    """Local-first s4net operator console over section4 persistence."""
 
     def __init__(
         self,
@@ -114,7 +114,7 @@ class Section4TUIApplication:
         self.page_title = urwid.Text("", align="left")
         self.detail_title = urwid.Text("", align="left")
         self.header = urwid.AttrMap(
-            urwid.Text(" section4 ", align="center"),
+            urwid.Text(" s4net / section4 ", align="center"),
             "header",
         )
         self.nav_listbox = FocusListBox(
@@ -146,7 +146,7 @@ class Section4TUIApplication:
     def _build_body(self) -> urwid.Widget:
         """Build the static TUI layout."""
 
-        nav_box = urwid.LineBox(self.nav_listbox, title="Pages")
+        nav_box = urwid.LineBox(self.nav_listbox, title="Views")
         list_box = urwid.Frame(
             body=urwid.LineBox(self.record_listbox),
             header=urwid.AttrMap(self.page_title, "panel_title"),
@@ -194,7 +194,7 @@ class Section4TUIApplication:
         """Render keyboard help plus an optional status message."""
 
         help_text = " h/l panes  j/k move  g/G top/bottom  enter open  "
-        help_text += "p publish  r refresh  q quit "
+        help_text += "p publish ATAK  r refresh  q quit "
         if message:
             self.footer_text.set_text(
                 [(style, message), ("footer", " | "), help_text]
@@ -271,8 +271,8 @@ class Section4TUIApplication:
     def _render_dashboard(self, dashboard: DashboardData) -> None:
         """Render the dashboard summary page."""
 
-        self.page_title.set_text("Dashboard")
-        self.detail_title.set_text("Recent Events")
+        self.page_title.set_text("Logistics COP")
+        self.detail_title.set_text("Sync and Event Log")
         self.list_walker.clear()
         self.detail_walker.clear()
 
@@ -455,8 +455,8 @@ class Section4TUIApplication:
 
 
 def run_tui(db_path: str | Path, cot_url: str) -> None:
-    """Start the section4 TUI for the given SQLite database."""
+    """Start the s4net console for the given SQLite database."""
 
     create_all(db_path)
     session_factory = create_session_factory(db_path)
-    Section4TUIApplication(session_factory, cot_url).run()
+    S4NetTUIApplication(session_factory, cot_url).run()

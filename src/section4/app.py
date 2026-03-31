@@ -28,7 +28,7 @@ def build_parser() -> argparse.ArgumentParser:
     """Create the top-level CLI parser."""
 
     parser = argparse.ArgumentParser(
-        description="section4 local operator tooling"
+        description="section4 and s4net operator tooling"
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -84,7 +84,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     subparsers.add_parser(
         "tui",
-        help="Launch the local section4 urwid operator console",
+        help="Launch the local s4net urwid operator console",
     )
 
     return parser
