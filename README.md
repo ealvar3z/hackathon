@@ -1,5 +1,6 @@
 # section4
-![section4 logo](assets/section4.png)
+
+![section4 logo](assets/section4-small.png)
 
 section4 is a Python project to implement the ideas in
 [`project-adrian.txt`](./docs/project-adrian.txt): a logistics common
@@ -10,14 +11,14 @@ is a logistics COP that enables decision-making at the tactical edge.
 The project is now centered on `LXDR`:
 
 - `LXDR-Core`
-  - ADRIAN-derived request header, segment schemas, and canonical field
-    registry
+    - ADRIAN-derived request header, segment schemas, and canonical field
+      registry
 - `LXDR-Link`
-  - transport-agnostic delivery, sync, bundle, and DDIL exchange
-    envelope
+    - transport-agnostic delivery, sync, bundle, and DDIL exchange
+      envelope
 - `LXDR-Transport`
-  - bearer adapters for whatever path is available, with HF data-burst
-    as the lowest denominator design assumption
+    - bearer adapters for whatever path is available, with HF data-burst
+      as the lowest denominator design assumption
 
 section4 is not trying to build a generic dashboard. It is trying to
 build the logistics data and synchronization substrate that
@@ -100,9 +101,9 @@ The first concrete workflow still looks like:
 1. A forward node reports a failed component and low local stock
 2. section4 ingests the report and stores it locally
 3. section4 ranks candidate courses of action:
-   - local repair
-   - additive fabrication
-   - reroute from another node
+    - local repair
+    - additive fabrication
+    - reroute from another node
 4. A task is assigned to a capable responder node
 5. section4 publishes operational state to ATAK clients via CoT
 6. The ALOC UI shows readiness impact, ETA, task state, and audit
