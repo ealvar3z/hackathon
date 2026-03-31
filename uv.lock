@@ -279,7 +279,7 @@ wheels = [
 ]
 
 [[package]]
-name = "forgenet"
+name = "section4"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

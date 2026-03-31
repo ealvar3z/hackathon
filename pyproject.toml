@@ -1,7 +1,7 @@
 [project]
-name = "forgenet"
+name = "section4"
 version = "0.1.0"
-description = "ForgeNet ALOC node for logistics workflows with a local TUI and PyTAK transport."
+description = "section4 ALOC node for logistics workflows with a local TUI and PyTAK transport."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -30,7 +30,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/forgenet"]
+packages = ["src/section4"]
 
 [tool.ruff]
 target-version = "py312"
