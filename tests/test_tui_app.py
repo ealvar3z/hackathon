@@ -28,7 +28,7 @@ def test_s4net_header_and_page_labels_match_current_contract(
     session_factory = build_seeded_session_factory(tmp_path)
     app = S4NetTUIApplication(session_factory, "udp://239.2.3.1:6969")
 
-    assert app.header.original_widget.text == " s4net / section4 "
+    assert app.header.original_widget.text == " s4net "
     assert [page.title for page in PAGES] == [
         "COP",
         "Requests",
