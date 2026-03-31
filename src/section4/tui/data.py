@@ -1,4 +1,4 @@
-"""Read-only data loading helpers for the section4 TUI."""
+"""Read-only data loading helpers for the s4net console."""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ class BrowserItem:
 
 @dataclass(frozen=True)
 class DashboardData:
-    """Top-level dashboard values for the ALOC TUI."""
+    """Top-level dashboard values for the s4net COP view."""
 
     summary_lines: list[DetailLine]
     recent_event_lines: list[DetailLine]
@@ -96,21 +96,21 @@ def load_dashboard(session: Session) -> DashboardData:
     ).all()
 
     summary_lines = [
-        _section("Summary"),
-        DetailLine(f"Incidents: {incident_count}"),
+        _section("COP Summary"),
+        DetailLine(f"Requests: {incident_count}"),
         DetailLine(f"Capabilities: {capability_count}"),
-        DetailLine(f"Jobs: {job_count}"),
+        DetailLine(f"Tasks: {job_count}"),
         DetailLine(f"Artifacts: {artifact_count}"),
         DetailLine(f"Events: {event_count}"),
         _blank(),
-        _section("Latest Incident"),
+        _section("Latest Request"),
         DetailLine(
             f"{latest_incident.title} [{latest_incident.status}]"
             if latest_incident
             else "-"
         ),
         _blank(),
-        _section("Latest Job"),
+        _section("Latest Task"),
         DetailLine(
             f"{latest_job.title} [{latest_job.status}]" if latest_job else "-"
         ),
@@ -121,6 +121,7 @@ def load_dashboard(session: Session) -> DashboardData:
         )
         for event in recent_events
     ] or [DetailLine("No events recorded.", style="muted")]
+    recent_event_lines.insert(0, _section("Latest Events"))
     return DashboardData(
         summary_lines=summary_lines,
         recent_event_lines=recent_event_lines,
@@ -128,7 +129,7 @@ def load_dashboard(session: Session) -> DashboardData:
 
 
 def load_incident_items(session: Session) -> list[BrowserItem]:
-    """Load incidents for the incidents page."""
+    """Load incidents for the ADRIAN request page."""
 
     incidents = session.scalars(
         select(Incident).order_by(Incident.updated_at.desc())
@@ -143,7 +144,8 @@ def load_incident_items(session: Session) -> list[BrowserItem]:
                 ),
                 detail_lines=[
                     _section("Overview"),
-                    _field("ID", incident.id),
+                    _field("Request ID", incident.id),
+                    _field("Request UID", incident.external_uid),
                     _field("Status", incident.status),
                     _field("Unit", incident.unit_name),
                     _field("Reporting callsign", incident.reporting_callsign),
@@ -156,7 +158,7 @@ def load_incident_items(session: Session) -> list[BrowserItem]:
                     _field("Recommended COA", incident.recommended_coa),
                     _field("ETA minutes", incident.eta_minutes),
                     _blank(),
-                    _section("Part"),
+                    _section("Requested Support"),
                     _field("Component", incident.failed_component),
                     _field("Part number", incident.part_number),
                     _blank(),
@@ -219,7 +221,7 @@ def load_capability_items(session: Session) -> list[BrowserItem]:
 
 
 def load_job_items(session: Session) -> list[BrowserItem]:
-    """Load jobs for the jobs page."""
+    """Load jobs for the task page."""
 
     jobs = session.scalars(select(Job).order_by(Job.updated_at.desc())).all()
     items: list[BrowserItem] = []
@@ -254,7 +256,7 @@ def load_job_items(session: Session) -> list[BrowserItem]:
 
 
 def load_event_items(session: Session) -> list[BrowserItem]:
-    """Load recent events for the event browser page."""
+    """Load recent events for the sync and event log page."""
 
     events = session.scalars(
         select(Event).order_by(Event.occurred_at.desc())
@@ -336,14 +338,14 @@ def load_page_items(
         if page_name == "dashboard":
             return load_dashboard(session)
         if page_name == "incidents":
-            return ("Incidents", load_incident_items(session))
+            return ("Requests", load_incident_items(session))
         if page_name == "capabilities":
             return ("Capabilities", load_capability_items(session))
         if page_name == "jobs":
-            return ("Jobs", load_job_items(session))
+            return ("Tasks", load_job_items(session))
         if page_name == "artifacts":
             return ("Artifacts", load_artifact_items(session))
         if page_name == "events":
-            return ("Events", load_event_items(session))
+            return ("Sync Log", load_event_items(session))
 
     raise ValueError(f"Unknown page name: {page_name}")
