@@ -2,13 +2,16 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from section4.lxdr.header import LXDRHeader
+from section4.lxdr.link import LXDRLinkFrame
 from section4.lxdr.request import LXDRRequestContainer
 from section4.lxdr.router import LXDRRouter
 from section4.lxdr.router_store import PersistentLXDRRouter
 from section4.lxdr.segments import PAX_MOVEMENT, LXDRSegment
+from section4.lxdr.types import DeliveryMethod, LinkRepresentation, LinkState
 from section4.storage import create_all, create_session_factory
 from section4.storage.tables import (
     LXDRInboundFrame,
@@ -71,6 +74,35 @@ def build_router(tmp_path: Path) -> tuple[PersistentLXDRRouter, Path]:
     )
 
 
+def build_sync_response_frame(
+    local_id: str,
+    sync_id: str,
+) -> LXDRLinkFrame:
+    """Build a synchronization response frame for a single request."""
+
+    return LXDRLinkFrame(
+        link_message_id="sync-msg-1",
+        sender_id="ALOC",
+        recipient_id="NODE1",
+        created_at_local="2027OCT13T15470352",
+        delivery_method=DeliveryMethod.SYNCHRONIZATION,
+        representation=LinkRepresentation.INLINE_STRUCTURED,
+        payload_count=1,
+        payloads=[
+            json.dumps(
+                {
+                    "local_request_id": local_id,
+                    "sync_request_id": sync_id,
+                },
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+        ],
+        state=LinkState.DELIVERED,
+        sync_of=local_id,
+    )
+
+
 def test_persistent_router_stores_outbound_frames(tmp_path: Path) -> None:
     """Queued outbound requests should also be persisted."""
 
@@ -123,10 +155,17 @@ def test_persistent_router_stores_inbound_frame_dedupe_record(
     router, db_path = build_router(tmp_path)
 
     router.record_inbound_frame(
-        link_message_id="inbound-001",
-        sender_id="ALOC",
-        recipient_id="NODE1",
-        payload_count=1,
+        LXDRLinkFrame(
+            link_message_id="inbound-001",
+            sender_id="ALOC",
+            recipient_id="NODE1",
+            created_at_local="2027OCT13T15470352",
+            delivery_method=DeliveryMethod.DIRECT,
+            representation=LinkRepresentation.INLINE_STRUCTURED,
+            payload_count=1,
+            payloads=["{}"],
+            state=LinkState.DELIVERED,
+        )
     )
 
     session_factory = create_session_factory(db_path)
@@ -136,6 +175,7 @@ def test_persistent_router_stores_inbound_frame_dedupe_record(
     assert len(rows) == 1
     assert rows[0].link_message_id == "inbound-001"
     assert rows[0].sender_id == "ALOC"
+    assert rows[0].payload_json["sender_id"] == "ALOC"
 
 
 def test_persistent_router_updates_request_sync_identifier(
@@ -162,6 +202,34 @@ def test_persistent_router_updates_request_sync_identifier(
     assert row.request_unique_identification_local == "3838JBNM5X"
     assert row.request_unique_identification_sync == "ABCD1234EFGH"
     assert row.state == "SYNCED"
+    assert request_row.request_unique_identification_sync == "ABCD1234EFGH"
+    assert request_row.latest_frame_state == "SYNCED"
+
+
+def test_persistent_router_processes_sync_response_frame(
+    tmp_path: Path,
+) -> None:
+    """Inbound sync frames should update request and inbound frame state."""
+
+    router, db_path = build_router(tmp_path)
+    router.queue_request(
+        request=build_sample_request("3838JBNM5X"),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+
+    updates = router.receive_inbound_frame(
+        build_sync_response_frame("3838JBNM5X", "ABCD1234EFGH")
+    )
+
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        inbound_row = session.query(LXDRInboundFrame).one()
+        request_row = session.query(LXDRRequestRecord).one()
+
+    assert updates == 1
+    assert inbound_row.link_message_id == "sync-msg-1"
+    assert inbound_row.payload_json["sync_of"] == "3838JBNM5X"
     assert request_row.request_unique_identification_sync == "ABCD1234EFGH"
     assert request_row.latest_frame_state == "SYNCED"
 

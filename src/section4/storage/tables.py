@@ -304,6 +304,7 @@ class LXDRInboundFrame(Base):
     sender_id: Mapped[str] = mapped_column(String(255), index=True)
     recipient_id: Mapped[str] = mapped_column(String(255), index=True)
     payload_count: Mapped[int] = mapped_column(Integer)
+    payload_json: Mapped[dict[str, Any] | None] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
 
 

@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import json
+from dataclasses import asdict
 
 from section4.lxdr.header import LXDRHeader
 from section4.lxdr.link import LXDRLinkFrame
 from section4.lxdr.request import LXDRRequestContainer
-from section4.lxdr.router import LXDRRouter
+from section4.lxdr.router import (
+    LXDRRouter,
+    parse_sync_response_payload,
+)
 from section4.lxdr.segments import PAX_MOVEMENT, LXDRSegment
 from section4.lxdr.types import DeliveryMethod, LinkRepresentation, LinkState
 
@@ -174,3 +178,38 @@ def test_router_rejects_sync_response_for_unknown_request() -> None:
     frame = build_sync_response_frame("MISSING0001", "ABCD1234EFGH")
 
     assert router.apply_sync_response(frame) == 0
+
+
+def test_parse_sync_response_payload_returns_canonical_record() -> None:
+    """Sync response payload parsing should normalize the two IDs."""
+
+    record = parse_sync_response_payload(
+        '{"local_request_id":"3838JBNM5X","sync_request_id":"ABCD1234EFGH"}'
+    )
+
+    assert asdict(record) == {
+        "local_request_id": "3838JBNM5X",
+        "sync_request_id": "ABCD1234EFGH",
+    }
+
+
+def test_router_processes_inbound_sync_response_frame() -> None:
+    """Inbound frame processing should dedupe and apply sync updates."""
+
+    router = LXDRRouter(sender_id="NODE1")
+    router.queue_request(
+        request=build_sample_request("3838JBNM5X"),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+
+    frame = build_sync_response_frame("3838JBNM5X", "ABCD1234EFGH")
+
+    assert router.process_inbound_frame(frame) == 1
+    assert router.process_inbound_frame(frame) == 0
+
+    request = router.request_by_local_id("3838JBNM5X")
+    assert request is not None
+    assert request.header.request_unique_identification_sync == (
+        "ABCD1234EFGH"
+    )
