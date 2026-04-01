@@ -38,6 +38,7 @@ class LXDRRouter:
         self._message_counter = 0
         self._outbox: list[OutboxEntry] = []
         self._inbox_seen: set[str] = set()
+        self._received_requests: list[LXDRRequestContainer] = []
 
     @property
     def outbox_size(self) -> int:
@@ -89,6 +90,11 @@ class LXDRRouter:
             ):
                 return entry.request
         return None
+
+    def received_requests(self) -> list[LXDRRequestContainer]:
+        """Return a copy of received ADRIAN requests."""
+
+        return list(self._received_requests)
 
     def build_sync_bundle(
         self,
@@ -156,7 +162,14 @@ class LXDRRouter:
         ):
             return self.apply_sync_response(frame)
 
-        return 0
+        return self.ingest_inbound_requests(frame)
+
+    def ingest_inbound_requests(self, frame: LXDRLinkFrame) -> int:
+        """Decode and store received ADRIAN requests without dedupe."""
+
+        requests = frame.embedded_requests()
+        self._received_requests.extend(requests)
+        return len(requests)
 
     def _next_message_id(self) -> str:
         """Generate a deterministic local message identity."""

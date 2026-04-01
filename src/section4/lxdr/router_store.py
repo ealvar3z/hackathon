@@ -9,6 +9,7 @@ from section4.lxdr.codec.text_burst import render_request_container
 from section4.lxdr.link import LXDRLinkFrame
 from section4.lxdr.request import LXDRRequestContainer
 from section4.lxdr.router import LXDRRouter, parse_sync_response_payload
+from section4.lxdr.types import DeliveryMethod
 from section4.storage.tables import (
     LXDRInboundFrame,
     LXDROutboundFrame,
@@ -101,15 +102,32 @@ class PersistentLXDRRouter:
             return 0
 
         self.record_inbound_frame(frame)
-        updates = 0
-        for payload in frame.payloads:
-            record = parse_sync_response_payload(payload)
-            updates += self.apply_sync_update(
-                local_request_id=record.local_request_id,
-                sync_request_id=record.sync_request_id,
-            )
+        if (
+            frame.delivery_method is DeliveryMethod.SYNCHRONIZATION
+            or frame.sync_of is not None
+        ):
+            updates = 0
+            for payload in frame.payloads:
+                record = parse_sync_response_payload(payload)
+                updates += self.apply_sync_update(
+                    local_request_id=record.local_request_id,
+                    sync_request_id=record.sync_request_id,
+                )
+            return updates
 
-        return updates
+        requests = frame.embedded_requests()
+        with self.session_factory() as session:
+            for request in requests:
+                self._upsert_request_record(
+                    session=session,
+                    request=request,
+                    frame=frame,
+                    direction="RECEIVED",
+                )
+            session.commit()
+
+        self.memory_router.ingest_inbound_requests(frame)
+        return len(requests)
 
     def apply_sync_update(
         self,
@@ -263,12 +281,15 @@ class PersistentLXDRRouter:
         session: Session,
         request: LXDRRequestContainer,
         frame: LXDRLinkFrame,
+        direction: str = "OUTBOUND",
     ) -> None:
         """Create or update a persisted ADRIAN request record."""
 
         local_request_id = request.header.request_unique_identification_local
         record = session.scalar(
             select(LXDRRequestRecord).where(
+                LXDRRequestRecord.request_direction == direction,
+                LXDRRequestRecord.source_sender_id == frame.sender_id,
                 LXDRRequestRecord.request_unique_identification_local
                 == local_request_id
             )
@@ -279,6 +300,9 @@ class PersistentLXDRRouter:
                 request_unique_identification_sync=(
                     request.header.request_unique_identification_sync
                 ),
+                request_direction=direction,
+                source_sender_id=frame.sender_id,
+                source_recipient_id=frame.recipient_id,
                 request_type=request.primary_request_type(),
                 primary_segment_name=request.primary_segment_name(),
                 request_priority=request.header.request_priority,
@@ -305,6 +329,9 @@ class PersistentLXDRRouter:
         record.request_unique_identification_sync = (
             request.header.request_unique_identification_sync
         )
+        record.request_direction = direction
+        record.source_sender_id = frame.sender_id
+        record.source_recipient_id = frame.recipient_id
         record.request_type = request.primary_request_type()
         record.primary_segment_name = request.primary_segment_name()
         record.request_priority = request.header.request_priority
@@ -336,6 +363,7 @@ class PersistentLXDRRouter:
 
         record = session.scalar(
             select(LXDRRequestRecord).where(
+                LXDRRequestRecord.request_direction == "OUTBOUND",
                 LXDRRequestRecord.request_unique_identification_local
                 == local_request_id
             )
@@ -356,6 +384,7 @@ class PersistentLXDRRouter:
 
         record = session.scalar(
             select(LXDRRequestRecord).where(
+                LXDRRequestRecord.request_direction == "OUTBOUND",
                 LXDRRequestRecord.request_unique_identification_local
                 == request.header.request_unique_identification_local
             )

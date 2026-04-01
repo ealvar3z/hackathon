@@ -83,6 +83,31 @@ def build_sync_response_frame(
     )
 
 
+def build_inbound_request_frame(
+    local_id: str = "REMOTE0001",
+) -> LXDRLinkFrame:
+    """Build a direct inbound frame carrying one ADRIAN request."""
+
+    request = build_sample_request(local_id)
+    return LXDRLinkFrame(
+        link_message_id="inbound-req-1",
+        sender_id="ALOC",
+        recipient_id="NODE1",
+        created_at_local="2027OCT13T16010352",
+        delivery_method=DeliveryMethod.DIRECT,
+        representation=LinkRepresentation.INLINE_STRUCTURED,
+        payload_count=1,
+        payloads=[
+            json.dumps(
+                request.to_dict(),
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+        ],
+        state=LinkState.DELIVERED,
+    )
+
+
 def test_router_queues_outbound_request_as_created_frame() -> None:
     """Queuing a request should create an outbox entry and queued frame."""
 
@@ -212,4 +237,21 @@ def test_router_processes_inbound_sync_response_frame() -> None:
     assert request is not None
     assert request.header.request_unique_identification_sync == (
         "ABCD1234EFGH"
+    )
+
+
+def test_router_processes_inbound_request_frame() -> None:
+    """Inbound request frames should be decoded into received requests."""
+
+    router = LXDRRouter(sender_id="NODE1")
+    frame = build_inbound_request_frame()
+
+    assert router.process_inbound_frame(frame) == 1
+    assert router.process_inbound_frame(frame) == 0
+
+    received = router.received_requests()
+    assert len(received) == 1
+    assert (
+        received[0].header.request_unique_identification_local
+        == "REMOTE0001"
     )

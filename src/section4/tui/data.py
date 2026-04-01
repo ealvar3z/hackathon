@@ -189,6 +189,9 @@ def load_request_items(session: Session) -> list[BrowserItem]:
                         "Request ID",
                         request.request_unique_identification_local,
                     ),
+                    _field("Direction", request.request_direction),
+                    _field("Source sender", request.source_sender_id),
+                    _field("Source recipient", request.source_recipient_id),
                     _field(
                         "Sync request ID",
                         request.request_unique_identification_sync,
@@ -435,8 +438,12 @@ def _fmt_request_summary(request: LXDRRequestRecord) -> str:
     """Create a compact summary label for a persisted ADRIAN request."""
 
     request_type = request.request_type or "UNSPEC"
+    direction = "RX" if request.request_direction == "RECEIVED" else "TX"
     local_id = request.request_unique_identification_local
-    summary = f"{request_type} {local_id} P{request.request_priority}"
+    summary = (
+        f"{direction} {request_type} "
+        f"{local_id} P{request.request_priority}"
+    )
     if request.request_unique_identification_sync:
         summary += f" -> {request.request_unique_identification_sync}"
     return summary

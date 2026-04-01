@@ -103,6 +103,31 @@ def build_sync_response_frame(
     )
 
 
+def build_inbound_request_frame(
+    local_id: str = "REMOTE0001",
+) -> LXDRLinkFrame:
+    """Build a direct inbound frame carrying one ADRIAN request."""
+
+    request = build_sample_request(local_id)
+    return LXDRLinkFrame(
+        link_message_id="inbound-req-1",
+        sender_id="ALOC",
+        recipient_id="NODE1",
+        created_at_local="2027OCT13T16010352",
+        delivery_method=DeliveryMethod.DIRECT,
+        representation=LinkRepresentation.INLINE_STRUCTURED,
+        payload_count=1,
+        payloads=[
+            json.dumps(
+                request.to_dict(),
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+        ],
+        state=LinkState.DELIVERED,
+    )
+
+
 def test_persistent_router_stores_outbound_frames(tmp_path: Path) -> None:
     """Queued outbound requests should also be persisted."""
 
@@ -141,6 +166,9 @@ def test_persistent_router_stores_adrian_request_record(
         row = session.query(LXDRRequestRecord).one()
 
     assert row.request_unique_identification_local == "3838JBNM5X"
+    assert row.request_direction == "OUTBOUND"
+    assert row.source_sender_id == "NODE1"
+    assert row.source_recipient_id == "ALOC"
     assert row.request_type == "PM"
     assert row.primary_segment_name == "mobility_pax"
     assert row.latest_frame_state == "QUEUED"
@@ -232,6 +260,31 @@ def test_persistent_router_processes_sync_response_frame(
     assert inbound_row.payload_json["sync_of"] == "3838JBNM5X"
     assert request_row.request_unique_identification_sync == "ABCD1234EFGH"
     assert request_row.latest_frame_state == "SYNCED"
+
+
+def test_persistent_router_persists_inbound_request_frame(
+    tmp_path: Path,
+) -> None:
+    """Inbound request frames should persist received ADRIAN requests."""
+
+    router, db_path = build_router(tmp_path)
+
+    updates = router.receive_inbound_frame(
+        build_inbound_request_frame("REMOTE0001")
+    )
+
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        inbound_row = session.query(LXDRInboundFrame).one()
+        request_row = session.query(LXDRRequestRecord).one()
+
+    assert updates == 1
+    assert inbound_row.link_message_id == "inbound-req-1"
+    assert request_row.request_unique_identification_local == "REMOTE0001"
+    assert request_row.request_direction == "RECEIVED"
+    assert request_row.source_sender_id == "ALOC"
+    assert request_row.source_recipient_id == "NODE1"
+    assert request_row.latest_frame_state == "DELIVERED"
 
 
 def test_persistent_router_tracks_send_attempts(tmp_path: Path) -> None:

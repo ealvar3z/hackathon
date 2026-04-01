@@ -317,10 +317,17 @@ class LXDRRequestRecord(Base):
         String(36), primary_key=True, default=_new_id
     )
     request_unique_identification_local: Mapped[str] = mapped_column(
-        String(10), unique=True, index=True
+        String(10), index=True
     )
     request_unique_identification_sync: Mapped[str | None] = mapped_column(
-        String(12), unique=True, index=True
+        String(12), index=True
+    )
+    request_direction: Mapped[str] = mapped_column(String(16), index=True)
+    source_sender_id: Mapped[str | None] = mapped_column(
+        String(255), index=True
+    )
+    source_recipient_id: Mapped[str | None] = mapped_column(
+        String(255), index=True
     )
     request_type: Mapped[str | None] = mapped_column(String(16), index=True)
     primary_segment_name: Mapped[str | None] = mapped_column(
@@ -386,6 +393,13 @@ Index(
     "ix_lxdr_requests_type_state",
     LXDRRequestRecord.request_type,
     LXDRRequestRecord.latest_frame_state,
+)
+Index(
+    "ix_lxdr_requests_direction_sender_local",
+    LXDRRequestRecord.request_direction,
+    LXDRRequestRecord.source_sender_id,
+    LXDRRequestRecord.request_unique_identification_local,
+    unique=True,
 )
 Index(
     "ix_logistics_status_node_item",

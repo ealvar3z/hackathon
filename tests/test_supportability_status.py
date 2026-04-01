@@ -33,6 +33,9 @@ def test_supportability_prefers_on_hand_stock_over_fabrication(
     with session_factory() as session:
         request = LXDRRequestRecord(
             request_unique_identification_local="3838JBNM5X",
+            request_direction="OUTBOUND",
+            source_sender_id="NODE1",
+            source_recipient_id="ALOC",
             request_type="SR",
             primary_segment_name="supply_request",
             request_priority="02",
@@ -89,6 +92,9 @@ def test_supportability_prefers_fabrication_when_stock_is_zero(
     with session_factory() as session:
         request = LXDRRequestRecord(
             request_unique_identification_local="3838JBNM5X",
+            request_direction="OUTBOUND",
+            source_sender_id="NODE1",
+            source_recipient_id="ALOC",
             request_type="PM",
             primary_segment_name="mobility_pax",
             request_priority="02",
@@ -143,6 +149,9 @@ def test_supportability_marks_request_blocked_without_stock_or_capability(
     with session_factory() as session:
         request = LXDRRequestRecord(
             request_unique_identification_local="3838JBNM5X",
+            request_direction="OUTBOUND",
+            source_sender_id="NODE1",
+            source_recipient_id="ALOC",
             request_type="SR",
             primary_segment_name="supply_request",
             request_priority="02",

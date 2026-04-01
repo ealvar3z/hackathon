@@ -110,7 +110,7 @@ def test_request_page_uses_adrian_request_language(tmp_path: Path) -> None:
     assert any(
         text == "Recommended COA: fabricate" for text in detail_texts
     )
-    assert "PM 3838JBNM5X P02" in app.current_items[0].label
+    assert "TX PM 3838JBNM5X P02" in app.current_items[0].label
 
 
 def test_sync_log_page_shows_persisted_lxdr_frames(tmp_path: Path) -> None:
