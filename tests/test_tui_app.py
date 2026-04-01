@@ -8,6 +8,7 @@ from section4.lxdr.router import LXDRRouter
 from section4.lxdr.router_store import PersistentLXDRRouter
 from section4.storage import create_all, create_session_factory
 from section4.storage.seed import seed_demo_data
+from section4.storage.tables import LogisticsStatusReport
 from section4.tui.app import PAGES, S4NetTUIApplication
 from tests.test_lxdr_router_store import build_sample_request
 
@@ -53,6 +54,8 @@ def test_dashboard_uses_cop_and_sync_framing(tmp_path: Path) -> None:
     assert app.list_walker[0].text == "COP SUMMARY"
     assert app.detail_walker[0].text == "LATEST EVENTS"
     dashboard_texts = [widget.text for widget in app.list_walker]
+    assert "SUPPORTABILITY" in dashboard_texts
+    assert "Status reports: 0" in dashboard_texts
     assert "LXDR LIFECYCLE" in dashboard_texts
     assert "Outbound frames: 0" in dashboard_texts
     assert "Synced: 0" in dashboard_texts
@@ -66,6 +69,22 @@ def test_request_page_uses_adrian_request_language(tmp_path: Path) -> None:
     session_factory = create_session_factory(db_path)
     with session_factory() as session:
         seed_demo_data(session)
+        session.add(
+            LogisticsStatusReport(
+                node_id="atak-node-3",
+                callsign="NODE3",
+                report_type="on_hand_usage",
+                item_reference="BRKT-4421",
+                on_hand_quantity=0,
+                usage_rate_per_day=1.0,
+                required_quantity=1,
+                required_by_local="2027OCT15",
+                delivery_method="direct",
+                transport_mode="ground",
+                payload_json={},
+            )
+        )
+        session.commit()
 
     router = PersistentLXDRRouter(
         session_factory=session_factory,
@@ -86,6 +105,10 @@ def test_request_page_uses_adrian_request_language(tmp_path: Path) -> None:
     assert any(text == "Request ID: 3838JBNM5X" for text in detail_texts)
     assert any(
         text == "Request type: PM" for text in detail_texts
+    )
+    assert any(text == "SUPPORTABILITY" for text in detail_texts)
+    assert any(
+        text == "Recommended COA: fabricate" for text in detail_texts
     )
     assert "PM 3838JBNM5X P02" in app.current_items[0].label
 
