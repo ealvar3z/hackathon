@@ -12,10 +12,12 @@ from section4.storage.tables import (
     Capability,
     Event,
     Job,
+    LogisticsStatusReport,
     LXDRInboundFrame,
     LXDROutboundFrame,
     LXDRRequestRecord,
 )
+from section4.supportability import assess_request_supportability
 
 
 @dataclass(frozen=True)
@@ -81,8 +83,7 @@ def load_dashboard(session: Session) -> DashboardData:
     """Load aggregate counts and recent audit events."""
 
     request_count = (
-        session.scalar(select(func.count()).select_from(LXDRRequestRecord))
-        or 0
+        session.scalar(select(func.count()).select_from(LXDRRequestRecord)) or 0
     )
     capability_count = (
         session.scalar(select(func.count()).select_from(Capability)) or 0
@@ -97,6 +98,10 @@ def load_dashboard(session: Session) -> DashboardData:
     )
     inbound_count = (
         session.scalar(select(func.count()).select_from(LXDRInboundFrame)) or 0
+    )
+    status_report_count = (
+        session.scalar(select(func.count()).select_from(LogisticsStatusReport))
+        or 0
     )
     queued_count = _count_outbound_state(session, "QUEUED")
     sending_count = _count_outbound_state(session, "SENDING")
@@ -123,6 +128,9 @@ def load_dashboard(session: Session) -> DashboardData:
         DetailLine(f"Tasks: {job_count}"),
         DetailLine(f"Artifacts: {artifact_count}"),
         DetailLine(f"Events: {event_count}"),
+        _blank(),
+        _section("Supportability"),
+        DetailLine(f"Status reports: {status_report_count}"),
         _blank(),
         _section("LXDR Lifecycle"),
         DetailLine(f"Outbound frames: {outbound_count}"),
@@ -163,6 +171,10 @@ def load_request_items(session: Session) -> list[BrowserItem]:
     ).all()
     items: list[BrowserItem] = []
     for request in requests:
+        assessment = assess_request_supportability(
+            session=session,
+            request=request,
+        )
         items.append(
             BrowserItem(
                 item_id=request.id,
@@ -196,6 +208,15 @@ def load_request_items(session: Session) -> list[BrowserItem]:
                     _field("Segment count", request.segment_count),
                     _field("Latest frame", request.latest_frame_state),
                     _field("Latest link", request.latest_link_message_id),
+                    _blank(),
+                    _section("Supportability"),
+                    _field("Supportable", assessment.supportable),
+                    _field(
+                        "Recommended COA",
+                        assessment.recommended_course_of_action,
+                    ),
+                    _field("Supporting node", assessment.supporting_node_id),
+                    _field("Rationale", assessment.rationale),
                     _blank(),
                     _section("Canonical Text"),
                     DetailLine(request.canonical_text),
@@ -378,8 +399,7 @@ def load_sync_log_items(session: Session) -> list[BrowserItem]:
             BrowserItem(
                 item_id=row.id,
                 label=(
-                    f"IN {row.link_message_id} "
-                    f"[{row.payload_count} payloads]"
+                    f"IN {row.link_message_id} [{row.payload_count} payloads]"
                 ),
                 detail_lines=[
                     _section("Inbound Frame"),

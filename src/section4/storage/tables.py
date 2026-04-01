@@ -345,6 +345,34 @@ class LXDRRequestRecord(Base):
     )
 
 
+class LogisticsStatusReport(Base):
+    """Compact on-hand and usage report for logistics decision support."""
+
+    __tablename__ = "logistics_status_reports"
+
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=_new_id
+    )
+    node_id: Mapped[str] = mapped_column(String(255), index=True)
+    callsign: Mapped[str | None] = mapped_column(String(255))
+    report_type: Mapped[str] = mapped_column(String(64), index=True)
+    item_reference: Mapped[str] = mapped_column(String(255), index=True)
+    on_hand_quantity: Mapped[int | None] = mapped_column(Integer)
+    usage_rate_per_day: Mapped[float | None] = mapped_column(Float)
+    required_quantity: Mapped[int | None] = mapped_column(Integer)
+    required_by_local: Mapped[str | None] = mapped_column(String(32))
+    delivery_method: Mapped[str | None] = mapped_column(String(64))
+    transport_mode: Mapped[str | None] = mapped_column(String(64))
+    payload_json: Mapped[dict[str, Any] | None] = mapped_column(JSON)
+    reported_at: Mapped[datetime] = mapped_column(
+        DateTime, default=_utcnow, index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=_utcnow, onupdate=_utcnow
+    )
+
+
 Index(
     "ix_capabilities_node_type_active",
     Capability.node_id,
@@ -358,4 +386,9 @@ Index(
     "ix_lxdr_requests_type_state",
     LXDRRequestRecord.request_type,
     LXDRRequestRecord.latest_frame_state,
+)
+Index(
+    "ix_logistics_status_node_item",
+    LogisticsStatusReport.node_id,
+    LogisticsStatusReport.item_reference,
 )
