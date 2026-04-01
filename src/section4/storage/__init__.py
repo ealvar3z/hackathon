@@ -7,7 +7,15 @@ from section4.storage.db import (
     create_session_factory,
 )
 from section4.storage.seed import seed_demo_data
-from section4.storage.tables import Artifact, Capability, Event, Incident, Job
+from section4.storage.tables import (
+    Artifact,
+    Capability,
+    Event,
+    Incident,
+    Job,
+    LXDRInboundFrame,
+    LXDROutboundFrame,
+)
 
 __all__ = [
     "Artifact",
@@ -16,6 +24,8 @@ __all__ = [
     "Event",
     "Incident",
     "Job",
+    "LXDRInboundFrame",
+    "LXDROutboundFrame",
     "create_all",
     "create_engine_for_path",
     "create_session_factory",
