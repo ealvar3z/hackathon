@@ -15,6 +15,7 @@ from section4.storage.tables import (
     Job,
     LXDRInboundFrame,
     LXDROutboundFrame,
+    LXDRRequestRecord,
 )
 
 __all__ = [
@@ -26,6 +27,7 @@ __all__ = [
     "Job",
     "LXDRInboundFrame",
     "LXDROutboundFrame",
+    "LXDRRequestRecord",
     "create_all",
     "create_engine_for_path",
     "create_session_factory",

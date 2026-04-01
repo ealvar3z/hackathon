@@ -10,7 +10,11 @@ from section4.lxdr.router import LXDRRouter
 from section4.lxdr.router_store import PersistentLXDRRouter
 from section4.lxdr.segments import PAX_MOVEMENT, LXDRSegment
 from section4.storage import create_all, create_session_factory
-from section4.storage.tables import LXDRInboundFrame, LXDROutboundFrame
+from section4.storage.tables import (
+    LXDRInboundFrame,
+    LXDROutboundFrame,
+    LXDRRequestRecord,
+)
 
 
 def build_sample_header(local_id: str = "3838JBNM5X") -> LXDRHeader:
@@ -87,6 +91,30 @@ def test_persistent_router_stores_outbound_frames(tmp_path: Path) -> None:
     assert rows[0].state == "QUEUED"
 
 
+def test_persistent_router_stores_adrian_request_record(
+    tmp_path: Path,
+) -> None:
+    """Queued requests should persist a first-class ADRIAN request record."""
+
+    router, db_path = build_router(tmp_path)
+    request = build_sample_request("3838JBNM5X")
+    router.queue_request(
+        request=request,
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        row = session.query(LXDRRequestRecord).one()
+
+    assert row.request_unique_identification_local == "3838JBNM5X"
+    assert row.request_type == "PM"
+    assert row.primary_segment_name == "mobility_pax"
+    assert row.latest_frame_state == "QUEUED"
+    assert row.canonical_text.startswith("2027OCT13-15470352-")
+
+
 def test_persistent_router_stores_inbound_frame_dedupe_record(
     tmp_path: Path,
 ) -> None:
@@ -129,10 +157,13 @@ def test_persistent_router_updates_request_sync_identifier(
     session_factory = create_session_factory(db_path)
     with session_factory() as session:
         row = session.query(LXDROutboundFrame).one()
+        request_row = session.query(LXDRRequestRecord).one()
 
     assert row.request_unique_identification_local == "3838JBNM5X"
     assert row.request_unique_identification_sync == "ABCD1234EFGH"
     assert row.state == "SYNCED"
+    assert request_row.request_unique_identification_sync == "ABCD1234EFGH"
+    assert request_row.latest_frame_state == "SYNCED"
 
 
 def test_persistent_router_tracks_send_attempts(tmp_path: Path) -> None:
@@ -153,10 +184,12 @@ def test_persistent_router_tracks_send_attempts(tmp_path: Path) -> None:
     session_factory = create_session_factory(db_path)
     with session_factory() as session:
         row = session.query(LXDROutboundFrame).one()
+        request_row = session.query(LXDRRequestRecord).one()
 
     assert row.state == "SENDING"
     assert row.attempt_count == 1
     assert row.last_attempt_at == "2027OCT13T15480352"
+    assert request_row.latest_frame_state == "SENDING"
 
 
 def test_persistent_router_records_failed_frame_state(tmp_path: Path) -> None:
@@ -177,9 +210,11 @@ def test_persistent_router_records_failed_frame_state(tmp_path: Path) -> None:
     session_factory = create_session_factory(db_path)
     with session_factory() as session:
         row = session.query(LXDROutboundFrame).one()
+        request_row = session.query(LXDRRequestRecord).one()
 
     assert row.state == "FAILED"
     assert row.last_error == "No route available"
+    assert request_row.latest_frame_state == "FAILED"
 
 
 def test_persistent_router_lists_retryable_frames(tmp_path: Path) -> None:

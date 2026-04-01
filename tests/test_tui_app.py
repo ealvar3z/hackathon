@@ -61,18 +61,33 @@ def test_dashboard_uses_cop_and_sync_framing(tmp_path: Path) -> None:
 def test_request_page_uses_adrian_request_language(tmp_path: Path) -> None:
     """The incident browser should now read as an ADRIAN request browser."""
 
-    session_factory = build_seeded_session_factory(tmp_path)
+    db_path = tmp_path / "section4-test.db"
+    create_all(db_path)
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        seed_demo_data(session)
+
+    router = PersistentLXDRRouter(
+        session_factory=session_factory,
+        memory_router=LXDRRouter(sender_id="NODE1"),
+    )
+    router.queue_request(
+        request=build_sample_request("3838JBNM5X"),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+
     app = S4NetTUIApplication(session_factory, "udp://239.2.3.1:6969")
 
     app._on_nav_focus(None, 1)
 
     assert app.page_title.text == "Requests"
     detail_texts = [widget.text for widget in app.detail_walker]
-    assert any(text.startswith("Request ID: ") for text in detail_texts)
+    assert any(text == "Request ID: 3838JBNM5X" for text in detail_texts)
     assert any(
-        text == "Request UID: incident-alpha-001" for text in detail_texts
+        text == "Request type: PM" for text in detail_texts
     )
-    assert "MRZR suspension bracket failure" in app.current_items[0].label
+    assert "PM 3838JBNM5X P02" in app.current_items[0].label
 
 
 def test_sync_log_page_shows_persisted_lxdr_frames(tmp_path: Path) -> None:

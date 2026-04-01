@@ -19,6 +19,20 @@ class LXDRRequestContainer:
     header: LXDRHeader
     segments: list[LXDRSegment]
 
+    def primary_request_type(self) -> str | None:
+        """Return the primary ADRIAN request type from the first segment."""
+
+        if not self.segments:
+            return None
+        return self.segments[0].spec.request_type
+
+    def primary_segment_name(self) -> str | None:
+        """Return the primary segment name from the first segment."""
+
+        if not self.segments:
+            return None
+        return self.segments[0].spec.name
+
     def validate(self) -> None:
         """Validate header and segment count coherence."""
 
