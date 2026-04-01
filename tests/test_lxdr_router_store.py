@@ -133,3 +133,78 @@ def test_persistent_router_updates_request_sync_identifier(
     assert row.request_unique_identification_local == "3838JBNM5X"
     assert row.request_unique_identification_sync == "ABCD1234EFGH"
     assert row.state == "SYNCED"
+
+
+def test_persistent_router_tracks_send_attempts(tmp_path: Path) -> None:
+    """Marking a frame as sending should increment attempt state."""
+
+    router, db_path = build_router(tmp_path)
+    frame = router.queue_request(
+        request=build_sample_request(),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+
+    router.mark_frame_sending(
+        link_message_id=frame.link_message_id,
+        attempted_at="2027OCT13T15480352",
+    )
+
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        row = session.query(LXDROutboundFrame).one()
+
+    assert row.state == "SENDING"
+    assert row.attempt_count == 1
+    assert row.last_attempt_at == "2027OCT13T15480352"
+
+
+def test_persistent_router_records_failed_frame_state(tmp_path: Path) -> None:
+    """A failed frame should persist its failure reason and state."""
+
+    router, db_path = build_router(tmp_path)
+    frame = router.queue_request(
+        request=build_sample_request(),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+
+    router.mark_frame_failed(
+        link_message_id=frame.link_message_id,
+        error_message="No route available",
+    )
+
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        row = session.query(LXDROutboundFrame).one()
+
+    assert row.state == "FAILED"
+    assert row.last_error == "No route available"
+
+
+def test_persistent_router_lists_retryable_frames(tmp_path: Path) -> None:
+    """Failed and queued frames should be visible for retry scheduling."""
+
+    router, _ = build_router(tmp_path)
+    first = router.queue_request(
+        request=build_sample_request("3838JBNM5X"),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+    second = router.queue_request(
+        request=build_sample_request("3838JBNM6X"),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15480352",
+    )
+
+    router.mark_frame_failed(
+        link_message_id=first.link_message_id,
+        error_message="Transient link failure",
+    )
+    router.mark_frame_sent(link_message_id=second.link_message_id)
+
+    retryable = router.retryable_outbound_frames()
+
+    assert [frame.link_message_id for frame in retryable] == [
+        first.link_message_id,
+    ]

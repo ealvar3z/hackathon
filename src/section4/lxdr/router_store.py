@@ -5,6 +5,7 @@ from __future__ import annotations
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
+from section4.lxdr.link import LXDRLinkFrame
 from section4.lxdr.request import LXDRRequestContainer
 from section4.lxdr.router import LXDRRouter
 from section4.storage.tables import LXDRInboundFrame, LXDROutboundFrame
@@ -50,6 +51,7 @@ class PersistentLXDRRouter:
                     representation=frame.representation.value,
                     state=frame.state.value,
                     created_at_local=frame.created_at_local,
+                    attempt_count=frame.attempt_count,
                     correlation_id=frame.correlation_id,
                     payload_json=frame.to_dict(),
                 )
@@ -112,3 +114,97 @@ class PersistentLXDRRouter:
             session.commit()
 
         return 1
+
+    def mark_frame_sending(
+        self,
+        link_message_id: str,
+        attempted_at: str,
+    ) -> int:
+        """Mark an outbound frame as actively sending."""
+
+        with self.session_factory() as session:
+            row = self._get_outbound_row(session, link_message_id)
+            if row is None:
+                return 0
+            row.state = "SENDING"
+            row.attempt_count += 1
+            row.last_attempt_at = attempted_at
+            row.last_error = None
+            self._update_payload_state(
+                row,
+                state="SENDING",
+                attempt_count=row.attempt_count,
+            )
+            session.commit()
+        return 1
+
+    def mark_frame_sent(self, link_message_id: str) -> int:
+        """Mark an outbound frame as sent."""
+
+        with self.session_factory() as session:
+            row = self._get_outbound_row(session, link_message_id)
+            if row is None:
+                return 0
+            row.state = "SENT"
+            self._update_payload_state(row, state="SENT")
+            session.commit()
+        return 1
+
+    def mark_frame_failed(
+        self,
+        link_message_id: str,
+        error_message: str,
+    ) -> int:
+        """Mark an outbound frame as failed with an error message."""
+
+        with self.session_factory() as session:
+            row = self._get_outbound_row(session, link_message_id)
+            if row is None:
+                return 0
+            row.state = "FAILED"
+            row.last_error = error_message
+            self._update_payload_state(row, state="FAILED")
+            session.commit()
+        return 1
+
+    def retryable_outbound_frames(self) -> list[LXDRLinkFrame]:
+        """Return queued or failed frames suitable for retry scheduling."""
+
+        with self.session_factory() as session:
+            rows = session.scalars(
+                select(LXDROutboundFrame).where(
+                    LXDROutboundFrame.state.in_(("QUEUED", "FAILED"))
+                )
+            ).all()
+        return [
+            LXDRLinkFrame.from_dict(row.payload_json)
+            for row in rows
+        ]
+
+    @staticmethod
+    def _get_outbound_row(
+        session: Session,
+        link_message_id: str,
+    ) -> LXDROutboundFrame | None:
+        """Fetch one persisted outbound row by link message ID."""
+
+        return session.scalar(
+            select(LXDROutboundFrame).where(
+                LXDROutboundFrame.link_message_id == link_message_id
+            )
+        )
+
+    @staticmethod
+    def _update_payload_state(
+        row: LXDROutboundFrame,
+        *,
+        state: str,
+        attempt_count: int | None = None,
+    ) -> None:
+        """Keep the stored payload metadata aligned with row state."""
+
+        payload = dict(row.payload_json)
+        payload["state"] = state
+        if attempt_count is not None:
+            payload["attempt_count"] = attempt_count
+        row.payload_json = payload

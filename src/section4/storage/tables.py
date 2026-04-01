@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
@@ -31,9 +31,9 @@ from section4.storage.db import Base
 
 
 def _utcnow() -> datetime:
-    """Return a naive UTC timestamp for SQLite storage."""
+    """Return a timezone-aware UTC timestamp for SQLite storage."""
 
-    return datetime.utcnow()
+    return datetime.now(UTC)
 
 
 def _new_id() -> str:
@@ -279,6 +279,9 @@ class LXDROutboundFrame(Base):
     representation: Mapped[str] = mapped_column(String(64), index=True)
     state: Mapped[str] = mapped_column(String(64), index=True)
     created_at_local: Mapped[str] = mapped_column(String(32))
+    attempt_count: Mapped[int] = mapped_column(Integer, default=0)
+    last_attempt_at: Mapped[str | None] = mapped_column(String(32))
+    last_error: Mapped[str | None] = mapped_column(Text)
     correlation_id: Mapped[str | None] = mapped_column(String(255), index=True)
     payload_json: Mapped[dict[str, Any]] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
