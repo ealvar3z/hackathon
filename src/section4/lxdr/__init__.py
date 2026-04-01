@@ -10,6 +10,7 @@ from section4.lxdr.link import (
 from section4.lxdr.registry import APPENDIX_F_FIELDS, CanonicalFieldRegistry
 from section4.lxdr.request import LXDRRequestContainer
 from section4.lxdr.router import LXDRRouter, OutboxEntry
+from section4.lxdr.router_store import PersistentLXDRRouter
 
 __all__ = [
     "APPENDIX_F_FIELDS",
@@ -17,6 +18,7 @@ __all__ = [
     "LXDRHeader",
     "LXDRLinkFrame",
     "LXDRRequestContainer",
+    "PersistentLXDRRouter",
     "LXDRRouter",
     "OutboxEntry",
     "embed_bundle",

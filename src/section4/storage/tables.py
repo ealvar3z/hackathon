@@ -256,6 +256,54 @@ class Event(Base):
     artifact: Mapped[Artifact | None] = relationship(back_populates="events")
 
 
+class LXDROutboundFrame(Base):
+    """Persisted outbound LXDR router state."""
+
+    __tablename__ = "lxdr_outbound_frames"
+
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=_new_id
+    )
+    link_message_id: Mapped[str] = mapped_column(
+        String(255), unique=True, index=True
+    )
+    sender_id: Mapped[str] = mapped_column(String(255), index=True)
+    recipient_id: Mapped[str] = mapped_column(String(255), index=True)
+    request_unique_identification_local: Mapped[str] = mapped_column(
+        String(10), index=True
+    )
+    request_unique_identification_sync: Mapped[str | None] = mapped_column(
+        String(12), index=True
+    )
+    delivery_method: Mapped[str] = mapped_column(String(64), index=True)
+    representation: Mapped[str] = mapped_column(String(64), index=True)
+    state: Mapped[str] = mapped_column(String(64), index=True)
+    created_at_local: Mapped[str] = mapped_column(String(32))
+    correlation_id: Mapped[str | None] = mapped_column(String(255), index=True)
+    payload_json: Mapped[dict[str, Any]] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=_utcnow, onupdate=_utcnow
+    )
+
+
+class LXDRInboundFrame(Base):
+    """Persisted inbound LXDR frame record for dedupe and audit."""
+
+    __tablename__ = "lxdr_inbound_frames"
+
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=_new_id
+    )
+    link_message_id: Mapped[str] = mapped_column(
+        String(255), unique=True, index=True
+    )
+    sender_id: Mapped[str] = mapped_column(String(255), index=True)
+    recipient_id: Mapped[str] = mapped_column(String(255), index=True)
+    payload_count: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
+
+
 Index(
     "ix_capabilities_node_type_active",
     Capability.node_id,
