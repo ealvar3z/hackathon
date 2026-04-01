@@ -11,10 +11,10 @@ from section4.storage.tables import (
     Artifact,
     Capability,
     Event,
-    Incident,
     Job,
     LXDRInboundFrame,
     LXDROutboundFrame,
+    LXDRRequestRecord,
 )
 
 
@@ -80,8 +80,9 @@ def _blank() -> DetailLine:
 def load_dashboard(session: Session) -> DashboardData:
     """Load aggregate counts and recent audit events."""
 
-    incident_count = (
-        session.scalar(select(func.count()).select_from(Incident)) or 0
+    request_count = (
+        session.scalar(select(func.count()).select_from(LXDRRequestRecord))
+        or 0
     )
     capability_count = (
         session.scalar(select(func.count()).select_from(Capability)) or 0
@@ -102,8 +103,10 @@ def load_dashboard(session: Session) -> DashboardData:
     failed_count = _count_outbound_state(session, "FAILED")
     synced_count = _count_outbound_state(session, "SYNCED")
 
-    latest_incident = session.scalar(
-        select(Incident).order_by(Incident.updated_at.desc()).limit(1)
+    latest_request = session.scalar(
+        select(LXDRRequestRecord)
+        .order_by(LXDRRequestRecord.updated_at.desc())
+        .limit(1)
     )
     latest_job = session.scalar(
         select(Job).order_by(Job.updated_at.desc()).limit(1)
@@ -115,7 +118,7 @@ def load_dashboard(session: Session) -> DashboardData:
 
     summary_lines = [
         _section("COP Summary"),
-        DetailLine(f"Requests: {incident_count}"),
+        DetailLine(f"Requests: {request_count}"),
         DetailLine(f"Capabilities: {capability_count}"),
         DetailLine(f"Tasks: {job_count}"),
         DetailLine(f"Artifacts: {artifact_count}"),
@@ -131,9 +134,7 @@ def load_dashboard(session: Session) -> DashboardData:
         _blank(),
         _section("Latest Request"),
         DetailLine(
-            f"{latest_incident.title} [{latest_incident.status}]"
-            if latest_incident
-            else "-"
+            _fmt_request_summary(latest_request) if latest_request else "-"
         ),
         _blank(),
         _section("Latest Task"),
@@ -154,48 +155,53 @@ def load_dashboard(session: Session) -> DashboardData:
     )
 
 
-def load_incident_items(session: Session) -> list[BrowserItem]:
-    """Load incidents for the ADRIAN request page."""
+def load_request_items(session: Session) -> list[BrowserItem]:
+    """Load persisted ADRIAN requests for the requests page."""
 
-    incidents = session.scalars(
-        select(Incident).order_by(Incident.updated_at.desc())
+    requests = session.scalars(
+        select(LXDRRequestRecord).order_by(LXDRRequestRecord.updated_at.desc())
     ).all()
     items: list[BrowserItem] = []
-    for incident in incidents:
+    for request in requests:
         items.append(
             BrowserItem(
-                item_id=incident.id,
+                item_id=request.id,
                 label=(
-                    f"{incident.title} [{incident.status}] P{incident.priority}"
+                    f"{_fmt_request_summary(request)} "
+                    f"[{request.latest_frame_state}]"
                 ),
                 detail_lines=[
                     _section("Overview"),
-                    _field("Request ID", incident.id),
-                    _field("Request UID", incident.external_uid),
-                    _field("Status", incident.status),
-                    _field("Unit", incident.unit_name),
-                    _field("Reporting callsign", incident.reporting_callsign),
-                    _field("Reporting node", incident.reporting_node_id),
-                    _field("Location", incident.location_label),
-                    _field("Urgency", incident.urgency),
-                    _field("Priority", incident.priority),
-                    _field("Stock on hand", incident.local_stock_on_hand),
-                    _field("Requested quantity", incident.requested_quantity),
-                    _field("Recommended COA", incident.recommended_coa),
-                    _field("ETA minutes", incident.eta_minutes),
+                    _field("Record ID", request.id),
+                    _field(
+                        "Request ID",
+                        request.request_unique_identification_local,
+                    ),
+                    _field(
+                        "Sync request ID",
+                        request.request_unique_identification_sync,
+                    ),
+                    _field("Request type", request.request_type),
+                    _field("Primary segment", request.primary_segment_name),
+                    _field("Priority", request.request_priority),
+                    _field(
+                        "Callsign",
+                        request.element_unit_identification_callsign,
+                    ),
+                    _field(
+                        "Requestor location",
+                        request.physical_location_of_requestor,
+                    ),
+                    _field("Created local", request.created_at_local),
+                    _field("Segment count", request.segment_count),
+                    _field("Latest frame", request.latest_frame_state),
+                    _field("Latest link", request.latest_link_message_id),
                     _blank(),
-                    _section("Requested Support"),
-                    _field("Component", incident.failed_component),
-                    _field("Part number", incident.part_number),
+                    _section("Canonical Text"),
+                    DetailLine(request.canonical_text),
                     _blank(),
-                    _section("Description"),
-                    DetailLine(incident.description),
-                    _blank(),
-                    _section("Mission Impact"),
-                    DetailLine(_fmt_value(incident.mission_impact)),
-                    _blank(),
-                    _section("COA Rationale"),
-                    DetailLine(_fmt_value(incident.recommended_coa_rationale)),
+                    _section("Structured Payload"),
+                    DetailLine(_fmt_value(request.payload_json)),
                 ],
             )
         )
@@ -405,6 +411,14 @@ def _count_outbound_state(session: Session, state: str) -> int:
     )
 
 
+def _fmt_request_summary(request: LXDRRequestRecord) -> str:
+    """Create a compact summary label for a persisted ADRIAN request."""
+
+    request_type = request.request_type or "UNSPEC"
+    local_id = request.request_unique_identification_local
+    return f"{request_type} {local_id} P{request.request_priority}"
+
+
 def load_artifact_items(session: Session) -> list[BrowserItem]:
     """Load artifacts for the artifact browser page."""
 
@@ -446,7 +460,7 @@ def load_page_items(
         if page_name == "dashboard":
             return load_dashboard(session)
         if page_name == "incidents":
-            return ("Requests", load_incident_items(session))
+            return ("Requests", load_request_items(session))
         if page_name == "capabilities":
             return ("Capabilities", load_capability_items(session))
         if page_name == "jobs":

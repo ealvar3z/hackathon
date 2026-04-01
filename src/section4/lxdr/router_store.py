@@ -5,10 +5,15 @@ from __future__ import annotations
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
+from section4.lxdr.codec.text_burst import render_request_container
 from section4.lxdr.link import LXDRLinkFrame
 from section4.lxdr.request import LXDRRequestContainer
 from section4.lxdr.router import LXDRRouter
-from section4.storage.tables import LXDRInboundFrame, LXDROutboundFrame
+from section4.storage.tables import (
+    LXDRInboundFrame,
+    LXDROutboundFrame,
+    LXDRRequestRecord,
+)
 
 
 class PersistentLXDRRouter:
@@ -36,6 +41,11 @@ class PersistentLXDRRouter:
             created_at_local=created_at_local,
         )
         with self.session_factory() as session:
+            self._upsert_request_record(
+                session=session,
+                request=request,
+                frame=frame,
+            )
             session.add(
                 LXDROutboundFrame(
                     link_message_id=frame.link_message_id,
@@ -111,6 +121,12 @@ class PersistentLXDRRouter:
             row.request_unique_identification_sync = sync_request_id
             row.state = "SYNCED"
             row.payload_json = request.to_dict()
+            self._update_request_record(
+                session=session,
+                request=request,
+                latest_link_message_id=row.link_message_id,
+                latest_frame_state="SYNCED",
+            )
             session.commit()
 
         return 1
@@ -135,6 +151,12 @@ class PersistentLXDRRouter:
                 state="SENDING",
                 attempt_count=row.attempt_count,
             )
+            self._update_request_state_by_local_id(
+                session=session,
+                local_request_id=row.request_unique_identification_local,
+                latest_link_message_id=row.link_message_id,
+                latest_frame_state="SENDING",
+            )
             session.commit()
         return 1
 
@@ -147,6 +169,12 @@ class PersistentLXDRRouter:
                 return 0
             row.state = "SENT"
             self._update_payload_state(row, state="SENT")
+            self._update_request_state_by_local_id(
+                session=session,
+                local_request_id=row.request_unique_identification_local,
+                latest_link_message_id=row.link_message_id,
+                latest_frame_state="SENT",
+            )
             session.commit()
         return 1
 
@@ -164,6 +192,12 @@ class PersistentLXDRRouter:
             row.state = "FAILED"
             row.last_error = error_message
             self._update_payload_state(row, state="FAILED")
+            self._update_request_state_by_local_id(
+                session=session,
+                local_request_id=row.request_unique_identification_local,
+                latest_link_message_id=row.link_message_id,
+                latest_frame_state="FAILED",
+            )
             session.commit()
         return 1
 
@@ -208,3 +242,115 @@ class PersistentLXDRRouter:
         if attempt_count is not None:
             payload["attempt_count"] = attempt_count
         row.payload_json = payload
+
+    @staticmethod
+    def _upsert_request_record(
+        session: Session,
+        request: LXDRRequestContainer,
+        frame: LXDRLinkFrame,
+    ) -> None:
+        """Create or update a persisted ADRIAN request record."""
+
+        local_request_id = request.header.request_unique_identification_local
+        record = session.scalar(
+            select(LXDRRequestRecord).where(
+                LXDRRequestRecord.request_unique_identification_local
+                == local_request_id
+            )
+        )
+        if record is None:
+            record = LXDRRequestRecord(
+                request_unique_identification_local=local_request_id,
+                request_unique_identification_sync=(
+                    request.header.request_unique_identification_sync
+                ),
+                request_type=request.primary_request_type(),
+                primary_segment_name=request.primary_segment_name(),
+                request_priority=request.header.request_priority,
+                element_unit_identification_callsign=(
+                    request.header.element_unit_identification_callsign
+                ),
+                physical_location_of_requestor=(
+                    request.header.physical_location_of_requestor
+                ),
+                created_at_local=(
+                    request.header.date_request_created_local
+                    + "T"
+                    + request.header.time_request_created_local
+                ),
+                segment_count=request.header.request_segments,
+                canonical_text=render_request_container(request),
+                payload_json=request.to_dict(),
+                latest_link_message_id=frame.link_message_id,
+                latest_frame_state=frame.state.value,
+            )
+            session.add(record)
+            return
+
+        record.request_unique_identification_sync = (
+            request.header.request_unique_identification_sync
+        )
+        record.request_type = request.primary_request_type()
+        record.primary_segment_name = request.primary_segment_name()
+        record.request_priority = request.header.request_priority
+        record.element_unit_identification_callsign = (
+            request.header.element_unit_identification_callsign
+        )
+        record.physical_location_of_requestor = (
+            request.header.physical_location_of_requestor
+        )
+        record.created_at_local = (
+            request.header.date_request_created_local
+            + "T"
+            + request.header.time_request_created_local
+        )
+        record.segment_count = request.header.request_segments
+        record.canonical_text = render_request_container(request)
+        record.payload_json = request.to_dict()
+        record.latest_link_message_id = frame.link_message_id
+        record.latest_frame_state = frame.state.value
+
+    @staticmethod
+    def _update_request_state_by_local_id(
+        session: Session,
+        local_request_id: str,
+        latest_link_message_id: str,
+        latest_frame_state: str,
+    ) -> None:
+        """Update only the latest visible frame state on a request record."""
+
+        record = session.scalar(
+            select(LXDRRequestRecord).where(
+                LXDRRequestRecord.request_unique_identification_local
+                == local_request_id
+            )
+        )
+        if record is None:
+            return
+        record.latest_link_message_id = latest_link_message_id
+        record.latest_frame_state = latest_frame_state
+
+    def _update_request_record(
+        self,
+        session: Session,
+        request: LXDRRequestContainer,
+        latest_link_message_id: str,
+        latest_frame_state: str,
+    ) -> None:
+        """Update a persisted ADRIAN request record from a live request."""
+
+        record = session.scalar(
+            select(LXDRRequestRecord).where(
+                LXDRRequestRecord.request_unique_identification_local
+                == request.header.request_unique_identification_local
+            )
+        )
+        if record is None:
+            return
+        record.request_unique_identification_sync = (
+            request.header.request_unique_identification_sync
+        )
+        record.canonical_text = render_request_container(request)
+        record.payload_json = request.to_dict()
+        record.latest_link_message_id = latest_link_message_id
+        record.latest_frame_state = latest_frame_state

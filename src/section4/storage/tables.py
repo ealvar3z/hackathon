@@ -307,6 +307,43 @@ class LXDRInboundFrame(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
 
 
+class LXDRRequestRecord(Base):
+    """Persisted ADRIAN request record derived from LXDR-Core payloads."""
+
+    __tablename__ = "lxdr_request_records"
+
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=_new_id
+    )
+    request_unique_identification_local: Mapped[str] = mapped_column(
+        String(10), unique=True, index=True
+    )
+    request_unique_identification_sync: Mapped[str | None] = mapped_column(
+        String(12), unique=True, index=True
+    )
+    request_type: Mapped[str | None] = mapped_column(String(16), index=True)
+    primary_segment_name: Mapped[str | None] = mapped_column(
+        String(128), index=True
+    )
+    request_priority: Mapped[str] = mapped_column(String(2), index=True)
+    element_unit_identification_callsign: Mapped[str] = mapped_column(
+        String(4), index=True
+    )
+    physical_location_of_requestor: Mapped[str] = mapped_column(String(14))
+    created_at_local: Mapped[str] = mapped_column(String(32), index=True)
+    segment_count: Mapped[int] = mapped_column(Integer)
+    canonical_text: Mapped[str] = mapped_column(Text)
+    payload_json: Mapped[dict[str, Any]] = mapped_column(JSON)
+    latest_link_message_id: Mapped[str | None] = mapped_column(
+        String(255), index=True
+    )
+    latest_frame_state: Mapped[str] = mapped_column(String(64), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=_utcnow, onupdate=_utcnow
+    )
+
+
 Index(
     "ix_capabilities_node_type_active",
     Capability.node_id,
@@ -316,3 +353,8 @@ Index(
 Index("ix_jobs_incident_status", Job.incident_id, Job.status)
 Index("ix_artifacts_incident_job", Artifact.incident_id, Artifact.job_id)
 Index("ix_events_kind_occurred", Event.kind, Event.occurred_at)
+Index(
+    "ix_lxdr_requests_type_state",
+    LXDRRequestRecord.request_type,
+    LXDRRequestRecord.latest_frame_state,
+)
