@@ -416,7 +416,10 @@ def _fmt_request_summary(request: LXDRRequestRecord) -> str:
 
     request_type = request.request_type or "UNSPEC"
     local_id = request.request_unique_identification_local
-    return f"{request_type} {local_id} P{request.request_priority}"
+    summary = f"{request_type} {local_id} P{request.request_priority}"
+    if request.request_unique_identification_sync:
+        summary += f" -> {request.request_unique_identification_sync}"
+    return summary
 
 
 def load_artifact_items(session: Session) -> list[BrowserItem]:

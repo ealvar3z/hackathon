@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from section4.lxdr.codec.text_burst import render_request_container
 from section4.lxdr.link import LXDRLinkFrame
 from section4.lxdr.request import LXDRRequestContainer
-from section4.lxdr.router import LXDRRouter
+from section4.lxdr.router import LXDRRouter, parse_sync_response_payload
 from section4.storage.tables import (
     LXDRInboundFrame,
     LXDROutboundFrame,
@@ -71,30 +71,45 @@ class PersistentLXDRRouter:
 
     def record_inbound_frame(
         self,
-        link_message_id: str,
-        sender_id: str,
-        recipient_id: str,
-        payload_count: int,
+        frame: LXDRLinkFrame,
     ) -> None:
         """Persist a received inbound frame identity for dedupe."""
 
         with self.session_factory() as session:
             existing = session.scalar(
                 select(LXDRInboundFrame).where(
-                    LXDRInboundFrame.link_message_id == link_message_id
+                    LXDRInboundFrame.link_message_id == frame.link_message_id
                 )
             )
             if existing is not None:
                 return
             session.add(
                 LXDRInboundFrame(
-                    link_message_id=link_message_id,
-                    sender_id=sender_id,
-                    recipient_id=recipient_id,
-                    payload_count=payload_count,
+                    link_message_id=frame.link_message_id,
+                    sender_id=frame.sender_id,
+                    recipient_id=frame.recipient_id,
+                    payload_count=frame.payload_count,
+                    payload_json=frame.to_dict(),
                 )
             )
             session.commit()
+
+    def receive_inbound_frame(self, frame: LXDRLinkFrame) -> int:
+        """Persist and process one inbound LXDR link frame."""
+
+        if not self.memory_router.accept_inbound_frame(frame):
+            return 0
+
+        self.record_inbound_frame(frame)
+        updates = 0
+        for payload in frame.payloads:
+            record = parse_sync_response_payload(payload)
+            updates += self.apply_sync_update(
+                local_request_id=record.local_request_id,
+                sync_request_id=record.sync_request_id,
+            )
+
+        return updates
 
     def apply_sync_update(
         self,

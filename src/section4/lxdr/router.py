@@ -22,6 +22,14 @@ class OutboxEntry:
     frame: LXDRLinkFrame
 
 
+@dataclass(frozen=True, slots=True)
+class SyncResponseRecord:
+    """Canonical parsed representation of a sync-response payload."""
+
+    local_request_id: str
+    sync_request_id: str
+
+
 class LXDRRouter:
     """Minimal in-memory router for outbound and inbound LXDR traffic."""
 
@@ -120,31 +128,58 @@ class LXDRRouter:
 
         updates = 0
         for payload in frame.payloads:
-            payload_data = json.loads(payload)
-            if not isinstance(payload_data, dict):
-                raise ValueError("Sync response payload must be an object")
-
-            local_request_id = payload_data.get("local_request_id")
-            sync_request_id = payload_data.get("sync_request_id")
-            if not isinstance(local_request_id, str):
-                raise ValueError("Sync response local_request_id is required")
-            if not isinstance(sync_request_id, str):
-                raise ValueError("Sync response sync_request_id is required")
+            record = parse_sync_response_payload(payload)
 
             for entry in self._outbox:
                 if (
                     entry.request.header.request_unique_identification_local
-                    == local_request_id
+                    == record.local_request_id
                 ):
-                    entry.request.header.apply_sync_identifier(sync_request_id)
+                    entry.request.header.apply_sync_identifier(
+                        record.sync_request_id
+                    )
                     entry.frame.state = LinkState.SYNCED
                     updates += 1
                     break
 
         return updates
 
+    def process_inbound_frame(self, frame: LXDRLinkFrame) -> int:
+        """Accept, dedupe, and process one inbound LXDR link frame."""
+
+        if not self.accept_inbound_frame(frame):
+            return 0
+
+        if (
+            frame.delivery_method is DeliveryMethod.SYNCHRONIZATION
+            or frame.sync_of is not None
+        ):
+            return self.apply_sync_response(frame)
+
+        return 0
+
     def _next_message_id(self) -> str:
         """Generate a deterministic local message identity."""
 
         self._message_counter += 1
         return f"{self.sender_id}-msg-{self._message_counter:06d}"
+
+
+def parse_sync_response_payload(payload: str) -> SyncResponseRecord:
+    """Parse one canonical sync-response payload object."""
+
+    payload_data = json.loads(payload)
+    if not isinstance(payload_data, dict):
+        raise ValueError("Sync response payload must be an object")
+
+    local_request_id = payload_data.get("local_request_id")
+    sync_request_id = payload_data.get("sync_request_id")
+    if not isinstance(local_request_id, str):
+        raise ValueError("Sync response local_request_id is required")
+    if not isinstance(sync_request_id, str):
+        raise ValueError("Sync response sync_request_id is required")
+
+    return SyncResponseRecord(
+        local_request_id=local_request_id,
+        sync_request_id=sync_request_id,
+    )

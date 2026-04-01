@@ -122,3 +122,37 @@ def test_sync_log_page_shows_persisted_lxdr_frames(tmp_path: Path) -> None:
     detail_texts = [widget.text for widget in app.detail_walker]
     assert any(text == "State: SENDING" for text in detail_texts)
     assert any(text == "Attempt count: 1" for text in detail_texts)
+
+
+def test_request_page_surfaces_sync_identifier_clearly(tmp_path: Path) -> None:
+    """A synchronized ADRIAN request should show the enterprise ID."""
+
+    db_path = tmp_path / "section4-test.db"
+    create_all(db_path)
+    session_factory = create_session_factory(db_path)
+    with session_factory() as session:
+        seed_demo_data(session)
+
+    router = PersistentLXDRRouter(
+        session_factory=session_factory,
+        memory_router=LXDRRouter(sender_id="NODE1"),
+    )
+    router.queue_request(
+        request=build_sample_request("3838JBNM5X"),
+        recipient_id="ALOC",
+        created_at_local="2027OCT13T15470352",
+    )
+    router.apply_sync_update(
+        local_request_id="3838JBNM5X",
+        sync_request_id="ABCD1234EFGH",
+    )
+
+    app = S4NetTUIApplication(session_factory, "udp://239.2.3.1:6969")
+    app._on_nav_focus(None, 1)
+
+    assert "-> ABCD1234EFGH" in app.current_items[0].label
+    detail_texts = [widget.text for widget in app.detail_walker]
+    assert any(
+        text == "Sync request ID: ABCD1234EFGH"
+        for text in detail_texts
+    )
