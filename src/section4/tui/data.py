@@ -7,7 +7,15 @@ from dataclasses import dataclass
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
-from section4.storage.tables import Artifact, Capability, Event, Incident, Job
+from section4.storage.tables import (
+    Artifact,
+    Capability,
+    Event,
+    Incident,
+    Job,
+    LXDRInboundFrame,
+    LXDROutboundFrame,
+)
 
 
 @dataclass(frozen=True)
@@ -83,6 +91,16 @@ def load_dashboard(session: Session) -> DashboardData:
         session.scalar(select(func.count()).select_from(Artifact)) or 0
     )
     event_count = session.scalar(select(func.count()).select_from(Event)) or 0
+    outbound_count = (
+        session.scalar(select(func.count()).select_from(LXDROutboundFrame)) or 0
+    )
+    inbound_count = (
+        session.scalar(select(func.count()).select_from(LXDRInboundFrame)) or 0
+    )
+    queued_count = _count_outbound_state(session, "QUEUED")
+    sending_count = _count_outbound_state(session, "SENDING")
+    failed_count = _count_outbound_state(session, "FAILED")
+    synced_count = _count_outbound_state(session, "SYNCED")
 
     latest_incident = session.scalar(
         select(Incident).order_by(Incident.updated_at.desc()).limit(1)
@@ -102,6 +120,14 @@ def load_dashboard(session: Session) -> DashboardData:
         DetailLine(f"Tasks: {job_count}"),
         DetailLine(f"Artifacts: {artifact_count}"),
         DetailLine(f"Events: {event_count}"),
+        _blank(),
+        _section("LXDR Lifecycle"),
+        DetailLine(f"Outbound frames: {outbound_count}"),
+        DetailLine(f"Inbound frames: {inbound_count}"),
+        DetailLine(f"Queued: {queued_count}"),
+        DetailLine(f"Sending: {sending_count}"),
+        DetailLine(f"Failed: {failed_count}"),
+        DetailLine(f"Synced: {synced_count}"),
         _blank(),
         _section("Latest Request"),
         DetailLine(
@@ -297,6 +323,88 @@ def load_event_items(session: Session) -> list[BrowserItem]:
     return items
 
 
+def load_sync_log_items(session: Session) -> list[BrowserItem]:
+    """Load persisted LXDR inbound and outbound frame state."""
+
+    outbound_rows = session.scalars(
+        select(LXDROutboundFrame).order_by(LXDROutboundFrame.updated_at.desc())
+    ).all()
+    inbound_rows = session.scalars(
+        select(LXDRInboundFrame).order_by(LXDRInboundFrame.created_at.desc())
+    ).all()
+    items: list[BrowserItem] = []
+
+    for row in outbound_rows:
+        items.append(
+            BrowserItem(
+                item_id=row.id,
+                label=(
+                    f"OUT {row.link_message_id} "
+                    f"[{row.state}] {row.request_unique_identification_local}"
+                ),
+                detail_lines=[
+                    _section("Outbound Frame"),
+                    _field("Message ID", row.link_message_id),
+                    _field("Sender", row.sender_id),
+                    _field("Recipient", row.recipient_id),
+                    _field(
+                        "Local request ID",
+                        row.request_unique_identification_local,
+                    ),
+                    _field(
+                        "Sync request ID",
+                        row.request_unique_identification_sync,
+                    ),
+                    _field("Delivery method", row.delivery_method),
+                    _field("Representation", row.representation),
+                    _field("State", row.state),
+                    _field("Attempt count", row.attempt_count),
+                    _field("Last attempt", row.last_attempt_at),
+                    _field("Last error", row.last_error),
+                    _field("Created local", row.created_at_local),
+                    _field("Correlation ID", row.correlation_id),
+                ],
+            )
+        )
+
+    for row in inbound_rows:
+        items.append(
+            BrowserItem(
+                item_id=row.id,
+                label=(
+                    f"IN {row.link_message_id} "
+                    f"[{row.payload_count} payloads]"
+                ),
+                detail_lines=[
+                    _section("Inbound Frame"),
+                    _field("Message ID", row.link_message_id),
+                    _field("Sender", row.sender_id),
+                    _field("Recipient", row.recipient_id),
+                    _field("Payload count", row.payload_count),
+                    _field(
+                        "Recorded",
+                        row.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    ),
+                ],
+            )
+        )
+
+    return items
+
+
+def _count_outbound_state(session: Session, state: str) -> int:
+    """Count outbound frames in a specific lifecycle state."""
+
+    return (
+        session.scalar(
+            select(func.count())
+            .select_from(LXDROutboundFrame)
+            .where(LXDROutboundFrame.state == state)
+        )
+        or 0
+    )
+
+
 def load_artifact_items(session: Session) -> list[BrowserItem]:
     """Load artifacts for the artifact browser page."""
 
@@ -346,6 +454,6 @@ def load_page_items(
         if page_name == "artifacts":
             return ("Artifacts", load_artifact_items(session))
         if page_name == "events":
-            return ("Sync Log", load_event_items(session))
+            return ("Sync Log", load_sync_log_items(session))
 
     raise ValueError(f"Unknown page name: {page_name}")
