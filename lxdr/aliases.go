@@ -320,3 +320,36 @@ const (
 	CasualtyTypeCodeA                   = CasualtyTypeCode_CASUALTY_TYPE_CODE_A
 	CasualtyTypeCodeB                   = CasualtyTypeCode_CASUALTY_TYPE_CODE_B
 )
+
+const (
+	HealthEvacuationRequestPriorityCodeUnspecified    = HealthEvacuationRequestPriorityCode_HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_UNSPECIFIED
+	HealthEvacuationRequestPriorityCodeA              = HealthEvacuationRequestPriorityCode_HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_A
+	HealthEvacuationRequestPriorityCodeB              = HealthEvacuationRequestPriorityCode_HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_B
+	HealthEvacuationRequestPriorityCodeC              = HealthEvacuationRequestPriorityCode_HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_C
+	HealthEvacuationRequestPriorityCodeD              = HealthEvacuationRequestPriorityCode_HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_D
+	HealthEvacuationRequestPriorityCodeE              = HealthEvacuationRequestPriorityCode_HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_E
+	HealthEvacuationLocationMarkingCodeUnspecified    = HealthEvacuationLocationMarkingCode_HEALTH_EVACUATION_LOCATION_MARKING_CODE_UNSPECIFIED
+	HealthEvacuationLocationMarkingCodeA              = HealthEvacuationLocationMarkingCode_HEALTH_EVACUATION_LOCATION_MARKING_CODE_A
+	HealthEvacuationLocationMarkingCodeB              = HealthEvacuationLocationMarkingCode_HEALTH_EVACUATION_LOCATION_MARKING_CODE_B
+	HealthEvacuationLocationMarkingCodeC              = HealthEvacuationLocationMarkingCode_HEALTH_EVACUATION_LOCATION_MARKING_CODE_C
+	HealthEvacuationLocationMarkingCodeD              = HealthEvacuationLocationMarkingCode_HEALTH_EVACUATION_LOCATION_MARKING_CODE_D
+	HealthEvacuationLocationMarkingCodeE              = HealthEvacuationLocationMarkingCode_HEALTH_EVACUATION_LOCATION_MARKING_CODE_E
+	HealthEvacuationContaminationCodeUnspecified      = HealthEvacuationContaminationCode_HEALTH_EVACUATION_CONTAMINATION_CODE_UNSPECIFIED
+	HealthEvacuationContaminationCodeA                = HealthEvacuationContaminationCode_HEALTH_EVACUATION_CONTAMINATION_CODE_A
+	HealthEvacuationContaminationCodeB                = HealthEvacuationContaminationCode_HEALTH_EVACUATION_CONTAMINATION_CODE_B
+	HealthEvacuationContaminationCodeC                = HealthEvacuationContaminationCode_HEALTH_EVACUATION_CONTAMINATION_CODE_C
+	HealthEvacuationContaminationCodeD                = HealthEvacuationContaminationCode_HEALTH_EVACUATION_CONTAMINATION_CODE_D
+	HealthEvacuationCasualtyTypeCodeUnspecified       = HealthEvacuationCasualtyTypeCode_HEALTH_EVACUATION_CASUALTY_TYPE_CODE_UNSPECIFIED
+	HealthEvacuationCasualtyTypeCodeA                 = HealthEvacuationCasualtyTypeCode_HEALTH_EVACUATION_CASUALTY_TYPE_CODE_A
+	HealthEvacuationCasualtyTypeCodeL                 = HealthEvacuationCasualtyTypeCode_HEALTH_EVACUATION_CASUALTY_TYPE_CODE_L
+	HealthEvacuationRequestedEquipmentCodeUnspecified = HealthEvacuationRequestedEquipmentCode_HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_UNSPECIFIED
+	HealthEvacuationRequestedEquipmentCodeA           = HealthEvacuationRequestedEquipmentCode_HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_A
+	HealthEvacuationRequestedEquipmentCodeB           = HealthEvacuationRequestedEquipmentCode_HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_B
+	HealthEvacuationRequestedEquipmentCodeC           = HealthEvacuationRequestedEquipmentCode_HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_C
+	HealthEvacuationRequestedEquipmentCodeD           = HealthEvacuationRequestedEquipmentCode_HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_D
+	HealthEvacuationSecurityCodeUnspecified           = HealthEvacuationSecurityCode_HEALTH_EVACUATION_SECURITY_CODE_UNSPECIFIED
+	HealthEvacuationSecurityCodeN                     = HealthEvacuationSecurityCode_HEALTH_EVACUATION_SECURITY_CODE_N
+	HealthEvacuationSecurityCodeP                     = HealthEvacuationSecurityCode_HEALTH_EVACUATION_SECURITY_CODE_P
+	HealthEvacuationSecurityCodeE                     = HealthEvacuationSecurityCode_HEALTH_EVACUATION_SECURITY_CODE_E
+	HealthEvacuationSecurityCodeX                     = HealthEvacuationSecurityCode_HEALTH_EVACUATION_SECURITY_CODE_X
+)

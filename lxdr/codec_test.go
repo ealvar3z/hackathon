@@ -60,6 +60,33 @@ func wrapMobilityPax(seg *MobilityPaxRequestSegment) *RequestSegment {
 	}
 }
 
+func wrapEngineerArea(seg *EngineerReconAreaReportSegment) *RequestSegment {
+	return &RequestSegment{
+		FunctionFamily: FunctionFamilyGeneralEngineering,
+		Segment: &RequestSegment_EngineerReconArea{
+			EngineerReconArea: seg,
+		},
+	}
+}
+
+func wrapEngineerZone(seg *EngineerReconZoneReportSegment) *RequestSegment {
+	return &RequestSegment{
+		FunctionFamily: FunctionFamilyGeneralEngineering,
+		Segment: &RequestSegment_EngineerReconZone{
+			EngineerReconZone: seg,
+		},
+	}
+}
+
+func wrapEngineerRoute(seg *EngineerReconRouteReportSegment) *RequestSegment {
+	return &RequestSegment{
+		FunctionFamily: FunctionFamilyGeneralEngineering,
+		Segment: &RequestSegment_EngineerReconRoute{
+			EngineerReconRoute: seg,
+		},
+	}
+}
+
 func wrapEngineerRoad(seg *EngineerReconRoadReportSegment) *RequestSegment {
 	return &RequestSegment{
 		FunctionFamily: FunctionFamilyGeneralEngineering,
@@ -98,6 +125,26 @@ func wrapEOD(seg *ExplosiveOrdnanceDisposalSegment) *RequestSegment {
 	}
 }
 
+func wrapBulkLiquid(
+	seg *GeneralEngineeringBulkLiquidSupportSegment,
+) *RequestSegment {
+	return &RequestSegment{
+		FunctionFamily: FunctionFamilyGeneralEngineering,
+		Segment: &RequestSegment_BulkLiquidSupport{
+			BulkLiquidSupport: seg,
+		},
+	}
+}
+
+func wrapDemolition(seg *GeneralEngineeringDemolitionSegment) *RequestSegment {
+	return &RequestSegment{
+		FunctionFamily: FunctionFamilyGeneralEngineering,
+		Segment: &RequestSegment_Demolition{
+			Demolition: seg,
+		},
+	}
+}
+
 func wrapHealthCollection(seg *HealthCollectionSegment) *RequestSegment {
 	return &RequestSegment{
 		FunctionFamily: FunctionFamilyHealthServices,
@@ -112,6 +159,15 @@ func wrapHealthHold(seg *HealthHoldSegment) *RequestSegment {
 		FunctionFamily: FunctionFamilyHealthServices,
 		Segment: &RequestSegment_HealthHold{
 			HealthHold: seg,
+		},
+	}
+}
+
+func wrapHealthEvacuation(seg *HealthEvacuationSegment) *RequestSegment {
+	return &RequestSegment{
+		FunctionFamily: FunctionFamilyHealthServices,
+		Segment: &RequestSegment_HealthEvacuation{
+			HealthEvacuation: seg,
 		},
 	}
 }
@@ -681,6 +737,225 @@ func TestEngineerRoadReportValidate(t *testing.T) {
 	}
 }
 
+func TestEngineerAreaReportValidate(t *testing.T) {
+	seg := EngineerReconAreaReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		AreaLocation:            "4QFJ123456",
+		WaterSource: &EngineerReconAreaWaterSource{
+			FlowRateVelocity:   "0010",
+			QuantityKiloliters: "0050",
+		},
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ12345678",
+				ItemLabel:    "PIER 3",
+			},
+		},
+		AttachmentIndicator: attachmentPtr(AttachmentIndicatorCodeNo),
+		Narrative:           stringPtr("COASTAL INFRASTRUCTURE"),
+	}
+
+	if err := seg.Validate(); err != nil {
+		t.Fatalf("validate area report: %v", err)
+	}
+}
+
+func TestEngineerAreaReportRejectsMissingItems(t *testing.T) {
+	seg := EngineerReconAreaReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		AreaLocation:            "4QFJ123456",
+	}
+
+	if err := seg.Validate(); err == nil {
+		t.Fatalf("expected area report validation error")
+	}
+}
+
+func TestRequestContainerAcceptsEngineerAreaSegment(t *testing.T) {
+	header := testHeader()
+	area := &EngineerReconAreaReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		AreaLocation:            "4QFJ123456",
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ12345678",
+				ItemLabel:    "PIER 3",
+			},
+		},
+	}
+	container := RequestContainer{
+		Header:   header,
+		Segments: []*RequestSegment{wrapEngineerArea(area)},
+	}
+
+	if err := container.Validate(); err != nil {
+		t.Fatalf("validate container with area segment: %v", err)
+	}
+}
+
+func TestEngineerZoneReportValidate(t *testing.T) {
+	seg := EngineerReconZoneReportSegment{
+		DateOfEvaluationLocal:            "2027OCT21",
+		ElementLeaderZapOrEdiPi:          "1010919789",
+		AmphibiousCrossingClassification: stringPtr("EWHITE400"),
+		EnemyReport: []*EngineerReconZoneEnemyReport{
+			{
+				EnemyLocation: "4QFJ12345678",
+				EnemyLabel:    "BUNKER",
+			},
+		},
+		ZoneLocation: "4QFJ123456",
+		WaterSource: &EngineerReconAreaWaterSource{
+			FlowRateVelocity:   "0010",
+			QuantityKiloliters: "0050",
+		},
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ12345678",
+				ItemLabel:    "FORD SITE",
+			},
+		},
+		AttachmentIndicator: attachmentPtr(AttachmentIndicatorCodeNo),
+		Narrative:           stringPtr("CROSS-COUNTRY TRAFFICABLE"),
+	}
+
+	if err := seg.Validate(); err != nil {
+		t.Fatalf("validate zone report: %v", err)
+	}
+}
+
+func TestEngineerZoneReportRejectsMissingEnemyReport(t *testing.T) {
+	seg := EngineerReconZoneReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		ZoneLocation:            "4QFJ123456",
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ12345678",
+				ItemLabel:    "FORD SITE",
+			},
+		},
+	}
+
+	if err := seg.Validate(); err == nil {
+		t.Fatalf("expected zone report validation error")
+	}
+}
+
+func TestRequestContainerAcceptsEngineerZoneSegment(t *testing.T) {
+	header := testHeader()
+	zone := &EngineerReconZoneReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		EnemyReport: []*EngineerReconZoneEnemyReport{
+			{
+				EnemyLocation: "4QFJ12345678",
+				EnemyLabel:    "BUNKER",
+			},
+		},
+		ZoneLocation: "4QFJ123456",
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ12345678",
+				ItemLabel:    "FORD SITE",
+			},
+		},
+	}
+	container := RequestContainer{
+		Header:   header,
+		Segments: []*RequestSegment{wrapEngineerZone(zone)},
+	}
+
+	if err := container.Validate(); err != nil {
+		t.Fatalf("validate container with zone segment: %v", err)
+	}
+}
+
+func TestEngineerRouteReportValidate(t *testing.T) {
+	seg := EngineerReconRouteReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		EnemyReport: []*EngineerReconZoneEnemyReport{
+			{
+				EnemyLocation: "4QFJ12345678",
+				EnemyLabel:    "BUNKER",
+			},
+		},
+		RouteLocations: []string{"4QFJ12345678", "4QFJ22345678"},
+		WaterSource: &EngineerReconAreaWaterSource{
+			FlowRateVelocity:   "0010",
+			QuantityKiloliters: "0050",
+		},
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ22345678",
+				ItemLabel:    "NARROW PASS",
+			},
+		},
+		AttachmentIndicator: attachmentPtr(AttachmentIndicatorCodeNo),
+		Narrative:           stringPtr("LATERAL ROUTE OBSERVED"),
+	}
+
+	if err := seg.Validate(); err != nil {
+		t.Fatalf("validate route report: %v", err)
+	}
+}
+
+func TestEngineerRouteReportRejectsMissingWaypoints(t *testing.T) {
+	seg := EngineerReconRouteReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		EnemyReport: []*EngineerReconZoneEnemyReport{
+			{
+				EnemyLocation: "4QFJ12345678",
+				EnemyLabel:    "BUNKER",
+			},
+		},
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ22345678",
+				ItemLabel:    "NARROW PASS",
+			},
+		},
+	}
+
+	if err := seg.Validate(); err == nil {
+		t.Fatalf("expected route report validation error")
+	}
+}
+
+func TestRequestContainerAcceptsEngineerRouteSegment(t *testing.T) {
+	header := testHeader()
+	route := &EngineerReconRouteReportSegment{
+		DateOfEvaluationLocal:   "2027OCT21",
+		ElementLeaderZapOrEdiPi: "1010919789",
+		EnemyReport: []*EngineerReconZoneEnemyReport{
+			{
+				EnemyLocation: "4QFJ12345678",
+				EnemyLabel:    "BUNKER",
+			},
+		},
+		RouteLocations: []string{"4QFJ12345678"},
+		ItemsReport: []*EngineerReconAreaItemReport{
+			{
+				ItemLocation: "4QFJ22345678",
+				ItemLabel:    "NARROW PASS",
+			},
+		},
+	}
+	container := RequestContainer{
+		Header:   header,
+		Segments: []*RequestSegment{wrapEngineerRoute(route)},
+	}
+
+	if err := container.Validate(); err != nil {
+		t.Fatalf("validate container with route segment: %v", err)
+	}
+}
+
 func TestEngineerRoadReportRejectsUnknownRoadCodes(t *testing.T) {
 	seg := EngineerReconRoadReportSegment{
 		DateOfEvaluationLocal: "2027OCT21",
@@ -1058,5 +1333,207 @@ func TestRequestContainerAcceptsHealthHoldSegment(t *testing.T) {
 
 	if err := container.Validate(); err != nil {
 		t.Fatalf("validate container with health hold segment: %v", err)
+	}
+}
+
+func TestHealthEvacuationSegmentValidate(t *testing.T) {
+	seg := HealthEvacuationSegment{
+		RequestPriority:       HealthEvacuationRequestPriorityCodeB,
+		LocationOfPickup:      "4QFJ123456",
+		LocationMarking:       ptr(HealthEvacuationLocationMarkingCodeE),
+		LocationContamination: ptr(HealthEvacuationContaminationCodeD),
+		ContactSettings:       "KL9K|30.45",
+		CountOfCasualtiesPrecedence: []*HealthEvacuationPrecedenceCount{
+			{
+				Precedence:    HealthTriagePrecedenceCodeB,
+				CasualtyCount: "01",
+			},
+		},
+		CountOfCasualtyTypes: []*HealthEvacuationCasualtyTypeCount{
+			{
+				CasualtyType:  HealthEvacuationCasualtyTypeCodeL,
+				CasualtyCount: "01",
+			},
+		},
+		RequestedEquipment: ptr(HealthEvacuationRequestedEquipmentCodeA),
+		Security:           ptr(HealthEvacuationSecurityCodeN),
+		Casualties: []*HealthEvacuationCasualtyRecord{
+			{
+				ZapOrEdiPi:                "1010919789",
+				PrimaryMechanismOfInjury:  ptr(HealthPrimaryMechanismCodeE2),
+				MajorInjuryCode:           stringPtr("1"),
+				BodyTemperatureFahrenheit: stringPtr("098"),
+				PulseRateAndLocation:      stringPtr("084W"),
+				BloodPressure:             stringPtr("120080"),
+				RespiratoryRate:           stringPtr("18"),
+				Tourniquets: []*TourniquetTreatment{
+					{
+						Placement: TourniquetPlacementCodeTQRA,
+						Type:      TourniquetTypeCodeE,
+						DateLocal: "2027OCT13",
+						TimeLocal: "1547",
+					},
+				},
+				WoundTreatments:    []WoundTreatmentCode{WoundTreatmentCodeT1},
+				AirwayTreatment:    ptr(AirwayTreatmentCodeA1),
+				BreathingTreatment: ptr(BreathingTreatmentCodeB1),
+				FluidCirculationTreatment: &FluidCirculationTreatment{
+					FluidNameCode: ptr(FluidNameCodeS),
+					VolumeDose:    "0500",
+					Route:         FluidRouteCodeIV,
+					DateLocal:     "2027OCT13",
+					TimeLocal:     "1548",
+				},
+				AnalgesicMedicationTreatment: &AnalgesicMedicationTreatment{
+					MedicationCode: ptr(AnalgesicMedicationCodeK),
+					VolumeDose:     "05",
+					Route:          MedicationRouteCodeR3,
+					DateLocal:      "2027OCT13",
+					TimeLocal:      "1551",
+				},
+				CbrnRelatedExposure: ptr(HealthCBRNExposureCodeX),
+			},
+		},
+	}
+
+	if err := seg.Validate(); err != nil {
+		t.Fatalf("validate health evacuation segment: %v", err)
+	}
+}
+
+func TestHealthEvacuationSegmentRejectsMissingCasualties(t *testing.T) {
+	seg := HealthEvacuationSegment{
+		RequestPriority:  HealthEvacuationRequestPriorityCodeB,
+		LocationOfPickup: "4QFJ123456",
+		ContactSettings:  "KL9K|30.45",
+		CountOfCasualtiesPrecedence: []*HealthEvacuationPrecedenceCount{
+			{Precedence: HealthTriagePrecedenceCodeB, CasualtyCount: "01"},
+		},
+		CountOfCasualtyTypes: []*HealthEvacuationCasualtyTypeCount{
+			{CasualtyType: HealthEvacuationCasualtyTypeCodeL, CasualtyCount: "01"},
+		},
+	}
+
+	if err := seg.Validate(); err == nil {
+		t.Fatalf("expected health evacuation validation error")
+	}
+}
+
+func TestRequestContainerAcceptsHealthEvacuationSegment(t *testing.T) {
+	header := testHeader()
+	evac := &HealthEvacuationSegment{
+		RequestPriority:  HealthEvacuationRequestPriorityCodeC,
+		LocationOfPickup: "4QFJ123456",
+		ContactSettings:  "KL9K|30.45",
+		CountOfCasualtiesPrecedence: []*HealthEvacuationPrecedenceCount{
+			{Precedence: HealthTriagePrecedenceCodeC, CasualtyCount: "01"},
+		},
+		CountOfCasualtyTypes: []*HealthEvacuationCasualtyTypeCount{
+			{CasualtyType: HealthEvacuationCasualtyTypeCodeA, CasualtyCount: "01"},
+		},
+		Casualties: []*HealthEvacuationCasualtyRecord{
+			{ZapOrEdiPi: "1010919789"},
+		},
+	}
+	container := RequestContainer{
+		Header:   header,
+		Segments: []*RequestSegment{wrapHealthEvacuation(evac)},
+	}
+
+	if err := container.Validate(); err != nil {
+		t.Fatalf("validate container with health evacuation segment: %v", err)
+	}
+}
+
+func TestBulkLiquidSupportSegmentValidate(t *testing.T) {
+	seg := GeneralEngineeringBulkLiquidSupportSegment{
+		DateOfEvaluationLocal: "2027OCT21",
+		LocationOfBulkLiquid:  "4QFJ123456",
+		Estimate:              EstimateCodeNo,
+		Fuel:                  stringPtr("FJP81000GAL"),
+		Water:                 stringPtr("W5000GALBULK"),
+		AttachmentIndicator:   attachmentPtr(AttachmentIndicatorCodeNo),
+		Narrative:             stringPtr("COMMERCIAL FUEL POINT"),
+	}
+
+	if err := seg.Validate(); err != nil {
+		t.Fatalf("validate bulk liquid support: %v", err)
+	}
+}
+
+func TestBulkLiquidSupportSegmentRejectsMissingRequiredFields(t *testing.T) {
+	seg := GeneralEngineeringBulkLiquidSupportSegment{
+		DateOfEvaluationLocal: "2027OCT21",
+	}
+
+	if err := seg.Validate(); err == nil {
+		t.Fatalf("expected bulk liquid validation error")
+	}
+}
+
+func TestRequestContainerAcceptsBulkLiquidSupportSegment(t *testing.T) {
+	header := testHeader()
+	seg := &GeneralEngineeringBulkLiquidSupportSegment{
+		DateOfEvaluationLocal: "2027OCT21",
+		LocationOfBulkLiquid:  "4QFJ123456",
+		Estimate:              EstimateCodeYes,
+	}
+	container := RequestContainer{
+		Header:   header,
+		Segments: []*RequestSegment{wrapBulkLiquid(seg)},
+	}
+
+	if err := container.Validate(); err != nil {
+		t.Fatalf("validate container with bulk liquid segment: %v", err)
+	}
+}
+
+func TestDemolitionSegmentValidate(t *testing.T) {
+	seg := GeneralEngineeringDemolitionSegment{
+		DateOfEvaluationLocal: "2027OCT21",
+		Location:              "4QFJ123456",
+		TypeOfDemolition:      "B1",
+		RouteNumber:           "101",
+		DeterminationOfAction: ObstacleDeterminationCode2,
+		Bypass:                BypassCodeYes,
+		BypassGrid:            "4QFJ456789",
+		AttachmentIndicator:   attachmentPtr(AttachmentIndicatorCodeNo),
+		Narrative:             stringPtr("BRIDGE SPAN REQUIRES CHARGES"),
+	}
+
+	if err := seg.Validate(); err != nil {
+		t.Fatalf("validate demolition segment: %v", err)
+	}
+}
+
+func TestDemolitionSegmentRejectsMissingRequiredFields(t *testing.T) {
+	seg := GeneralEngineeringDemolitionSegment{
+		DateOfEvaluationLocal: "2027OCT21",
+		Location:              "4QFJ123456",
+	}
+
+	if err := seg.Validate(); err == nil {
+		t.Fatalf("expected demolition validation error")
+	}
+}
+
+func TestRequestContainerAcceptsDemolitionSegment(t *testing.T) {
+	header := testHeader()
+	seg := &GeneralEngineeringDemolitionSegment{
+		DateOfEvaluationLocal: "2027OCT21",
+		Location:              "4QFJ123456",
+		TypeOfDemolition:      "B1",
+		RouteNumber:           "101",
+		DeterminationOfAction: ObstacleDeterminationCode2,
+		Bypass:                BypassCodeYes,
+		BypassGrid:            "4QFJ456789",
+	}
+	container := RequestContainer{
+		Header:   header,
+		Segments: []*RequestSegment{wrapDemolition(seg)},
+	}
+
+	if err := container.Validate(); err != nil {
+		t.Fatalf("validate container with demolition segment: %v", err)
 	}
 }

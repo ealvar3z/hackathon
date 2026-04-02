@@ -465,6 +465,54 @@ enum CasualtyTypeCode {
   CASUALTY_TYPE_CODE_B = 2;
 }
 
+enum HealthEvacuationRequestPriorityCode {
+  HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_UNSPECIFIED = 0;
+  HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_A = 1;
+  HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_B = 2;
+  HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_C = 3;
+  HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_D = 4;
+  HEALTH_EVACUATION_REQUEST_PRIORITY_CODE_E = 5;
+}
+
+enum HealthEvacuationLocationMarkingCode {
+  HEALTH_EVACUATION_LOCATION_MARKING_CODE_UNSPECIFIED = 0;
+  HEALTH_EVACUATION_LOCATION_MARKING_CODE_A = 1;
+  HEALTH_EVACUATION_LOCATION_MARKING_CODE_B = 2;
+  HEALTH_EVACUATION_LOCATION_MARKING_CODE_C = 3;
+  HEALTH_EVACUATION_LOCATION_MARKING_CODE_D = 4;
+  HEALTH_EVACUATION_LOCATION_MARKING_CODE_E = 5;
+}
+
+enum HealthEvacuationContaminationCode {
+  HEALTH_EVACUATION_CONTAMINATION_CODE_UNSPECIFIED = 0;
+  HEALTH_EVACUATION_CONTAMINATION_CODE_A = 1;
+  HEALTH_EVACUATION_CONTAMINATION_CODE_B = 2;
+  HEALTH_EVACUATION_CONTAMINATION_CODE_C = 3;
+  HEALTH_EVACUATION_CONTAMINATION_CODE_D = 4;
+}
+
+enum HealthEvacuationCasualtyTypeCode {
+  HEALTH_EVACUATION_CASUALTY_TYPE_CODE_UNSPECIFIED = 0;
+  HEALTH_EVACUATION_CASUALTY_TYPE_CODE_A = 1;
+  HEALTH_EVACUATION_CASUALTY_TYPE_CODE_L = 2;
+}
+
+enum HealthEvacuationRequestedEquipmentCode {
+  HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_UNSPECIFIED = 0;
+  HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_A = 1;
+  HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_B = 2;
+  HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_C = 3;
+  HEALTH_EVACUATION_REQUESTED_EQUIPMENT_CODE_D = 4;
+}
+
+enum HealthEvacuationSecurityCode {
+  HEALTH_EVACUATION_SECURITY_CODE_UNSPECIFIED = 0;
+  HEALTH_EVACUATION_SECURITY_CODE_N = 1;
+  HEALTH_EVACUATION_SECURITY_CODE_P = 2;
+  HEALTH_EVACUATION_SECURITY_CODE_E = 3;
+  HEALTH_EVACUATION_SECURITY_CODE_X = 4;
+}
+
 message RequestHeader {
   // Section 9. These fields correspond to the header concept in
   // chapters 1-3 and the canonical text example in section 17.1.
@@ -508,14 +556,20 @@ message RequestSegment {
     MobilityCargoRequestSegment mobility_cargo = 3;
     SupplyRequestSegment supply = 4;
     MaintenanceRequestSegment maintenance = 5;
-    EngineerReconRoadReportSegment engineer_recon_road = 6;
-    EngineerReconLandingZoneReportSegment engineer_recon_landing_zone = 7;
-    GeneralEngineeringObstacleRemovalSegment obstacle_removal = 8;
-    ExplosiveOrdnanceDisposalSegment eod = 9;
-    HealthCollectionSegment health_collection = 10;
-    HealthTriageSegment health_triage = 11;
-    HealthInterventionSegment health_intervention = 12;
-    HealthHoldSegment health_hold = 13;
+    EngineerReconAreaReportSegment engineer_recon_area = 6;
+    EngineerReconZoneReportSegment engineer_recon_zone = 7;
+    EngineerReconRouteReportSegment engineer_recon_route = 8;
+    EngineerReconRoadReportSegment engineer_recon_road = 9;
+    EngineerReconLandingZoneReportSegment engineer_recon_landing_zone = 10;
+    GeneralEngineeringObstacleRemovalSegment obstacle_removal = 11;
+    ExplosiveOrdnanceDisposalSegment eod = 12;
+    GeneralEngineeringBulkLiquidSupportSegment bulk_liquid_support = 13;
+    GeneralEngineeringDemolitionSegment demolition = 14;
+    HealthCollectionSegment health_collection = 15;
+    HealthTriageSegment health_triage = 16;
+    HealthInterventionSegment health_intervention = 17;
+    HealthHoldSegment health_hold = 18;
+    HealthEvacuationSegment health_evacuation = 19;
   }
 }
 
@@ -601,6 +655,57 @@ message MaintenanceRequestSegment {
   optional string narrative = 16;
 }
 
+message EngineerReconAreaItemReport {
+  string item_location = 1;
+  string item_label = 2;
+}
+
+message EngineerReconAreaWaterSource {
+  string flow_rate_velocity = 1;
+  string quantity_kiloliters = 2;
+}
+
+message EngineerReconAreaReportSegment {
+  // Section 3.7.3.1 and Table 19.
+  string date_of_evaluation_local = 1;
+  string element_leader_zap_or_edi_pi = 2;
+  string area_location = 3;
+  optional EngineerReconAreaWaterSource water_source = 4;
+  repeated EngineerReconAreaItemReport items_report = 5;
+  optional AttachmentIndicatorCode attachment_indicator = 6;
+  optional string narrative = 7;
+}
+
+message EngineerReconZoneEnemyReport {
+  string enemy_location = 1;
+  string enemy_label = 2;
+}
+
+message EngineerReconZoneReportSegment {
+  // Section 3.7.3.2 and Table 20.
+  string date_of_evaluation_local = 1;
+  string element_leader_zap_or_edi_pi = 2;
+  optional string amphibious_crossing_classification = 3;
+  repeated EngineerReconZoneEnemyReport enemy_report = 4;
+  string zone_location = 5;
+  optional EngineerReconAreaWaterSource water_source = 6;
+  repeated EngineerReconAreaItemReport items_report = 7;
+  optional AttachmentIndicatorCode attachment_indicator = 8;
+  optional string narrative = 9;
+}
+
+message EngineerReconRouteReportSegment {
+  // Section 3.7.3.3 and Table 21.
+  string date_of_evaluation_local = 1;
+  string element_leader_zap_or_edi_pi = 2;
+  repeated EngineerReconZoneEnemyReport enemy_report = 3;
+  repeated string route_locations = 4;
+  optional EngineerReconAreaWaterSource water_source = 5;
+  repeated EngineerReconAreaItemReport items_report = 6;
+  optional AttachmentIndicatorCode attachment_indicator = 7;
+  optional string narrative = 8;
+}
+
 message EngineerReconRoadReportSegment {
   // Section 3.7.3.4 and Table 22.
   string date_of_evaluation_local = 1;
@@ -665,6 +770,30 @@ message ExplosiveOrdnanceDisposalSegment {
   MunitionTypeCode munition_type = 10;
   optional AttachmentIndicatorCode attachment_indicator = 11;
   optional string narrative = 12;
+}
+
+message GeneralEngineeringBulkLiquidSupportSegment {
+  // Section 3.7.3.13 and Table 31.
+  string date_of_evaluation_local = 1;
+  string location_of_bulk_liquid = 2;
+  EstimateCode estimate = 3;
+  optional string fuel = 4;
+  optional string water = 5;
+  optional AttachmentIndicatorCode attachment_indicator = 6;
+  optional string narrative = 7;
+}
+
+message GeneralEngineeringDemolitionSegment {
+  // Section 3.7.3.14 and Table 32.
+  string date_of_evaluation_local = 1;
+  string location = 2;
+  string type_of_demolition = 3;
+  string route_number = 4;
+  ObstacleDeterminationCode determination_of_action = 5;
+  BypassCode bypass = 6;
+  string bypass_grid = 7;
+  optional AttachmentIndicatorCode attachment_indicator = 8;
+  optional string narrative = 9;
 }
 
 message HealthCollectionSegment {
@@ -774,4 +903,48 @@ message HealthHoldSegment {
   // define new closed-field domains in the source text.
   repeated HealthTriageSegment triage_entries = 1;
   repeated HealthInterventionSegment intervention_entries = 2;
+}
+
+message HealthEvacuationPrecedenceCount {
+  HealthTriagePrecedenceCode precedence = 1;
+  string casualty_count = 2;
+}
+
+message HealthEvacuationCasualtyTypeCount {
+  HealthEvacuationCasualtyTypeCode casualty_type = 1;
+  string casualty_count = 2;
+}
+
+message HealthEvacuationCasualtyRecord {
+  string zap_or_edi_pi = 1;
+  optional HealthPrimaryMechanismCode primary_mechanism_of_injury = 2;
+  optional string major_injury_code = 3;
+  optional string body_temperature_fahrenheit = 4;
+  optional string pulse_rate_and_location = 5;
+  optional string blood_pressure = 6;
+  optional string respiratory_rate = 7;
+  repeated TourniquetTreatment tourniquets = 8;
+  repeated WoundTreatmentCode wound_treatments = 9;
+  optional AirwayTreatmentCode airway_treatment = 10;
+  optional BreathingTreatmentCode breathing_treatment = 11;
+  optional FluidCirculationTreatment fluid_circulation_treatment = 12;
+  optional BloodCirculationTreatment blood_circulation_treatment = 13;
+  optional AnalgesicMedicationTreatment analgesic_medication_treatment = 14;
+  optional AntibioticMedicationTreatment antibiotic_medication_treatment = 15;
+  optional OtherMedicationTreatment other_medication_treatment = 16;
+  optional HealthCBRNExposureCode cbrn_related_exposure = 17;
+}
+
+message HealthEvacuationSegment {
+  // Section 3.8.3.4 and Table 36.
+  HealthEvacuationRequestPriorityCode request_priority = 1;
+  string location_of_pickup = 2;
+  optional HealthEvacuationLocationMarkingCode location_marking = 3;
+  optional HealthEvacuationContaminationCode location_contamination = 4;
+  string contact_settings = 5;
+  repeated HealthEvacuationPrecedenceCount count_of_casualties_precedence = 6;
+  repeated HealthEvacuationCasualtyTypeCount count_of_casualty_types = 7;
+  optional HealthEvacuationRequestedEquipmentCode requested_equipment = 8;
+  optional HealthEvacuationSecurityCode security = 9;
+  repeated HealthEvacuationCasualtyRecord casualties = 10;
 }

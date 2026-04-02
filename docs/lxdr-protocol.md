@@ -323,9 +323,74 @@ normatively introduced in Sections 3.4 through 3.7:
 
 Later families in Chapter 3 remain part of the protocol scope, but this
 draft does not yet define their schemas because this document is limited to
-the preamble and first extracted protocol baseline.
+the extracted baseline needed for initial implementation.
 
-### 10.1 Engineer Reconnaissance Road Report
+The following Chapter 3 reports are intentionally deferred for a later
+protocol increment:
+
+- engineer reconnaissance tunnel report
+- engineer reconnaissance bridge report
+- engineer reconnaissance ford report
+- engineer reconnaissance ferry report
+- engineer reconnaissance river report
+
+### 10.1 Engineer Reconnaissance Area Report
+
+Section 3.7.3.1 defines the area report as a general engineering report
+for threat, terrain, society, and infrastructure within an area a unit
+must move through or occupy.
+
+Its notable protocol properties are:
+
+- date of evaluation or reconnaissance
+- element leader identifier
+- area location
+- optional water source expressed as flow-rate and quantity pair
+- repeatable item reports keyed by location plus free-text label
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 19.
+
+### 10.2 Engineer Reconnaissance Zone Report
+
+Section 3.7.3.2 defines the zone report for vague threat situations or
+when cross-country trafficability information is desired.
+
+Its notable protocol properties are:
+
+- date of evaluation or reconnaissance
+- element leader identifier
+- optional amphibious crossing classification
+- repeatable enemy reports keyed by location plus free-text label
+- zone location
+- optional water source expressed as flow-rate and quantity pair
+- repeatable item reports keyed by location plus free-text label
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 20.
+
+### 10.3 Engineer Reconnaissance Route Report
+
+Section 3.7.3.3 defines the route report for reconnaissance along a
+specified route and adjacent terrain, including lateral routes where
+movement may be restricted.
+
+Its notable protocol properties are:
+
+- date of evaluation or reconnaissance
+- element leader identifier
+- enemy report references
+- repeatable route locations or waypoints
+- optional water source expressed as flow-rate and quantity pair
+- repeatable item reports keyed by location plus free-text label
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 21.
+
+### 10.4 Engineer Reconnaissance Road Report
 
 Section 3.7.3.4 defines the road report as an engineer reconnaissance
 segment for evaluating established-road condition and trafficability
@@ -347,7 +412,7 @@ Its notable protocol properties are:
 
 The canonical segment schema is given in Table 22.
 
-#### 10.1.1 Road Classification
+#### 10.4.1 Road Classification
 
 - `A`
   flat gradients and easy curves
@@ -358,21 +423,21 @@ The canonical segment schema is given in Table 22.
 - `D`
   steep gradients and sharp curves
 
-#### 10.1.2 Drainage
+#### 10.4.2 Drainage
 
 - `A`
   adequate crown/camber with adequate culverts in good condition
 - `B`
   inadequate; poor crown/camber or blocked/poor culverts or ditches
 
-#### 10.1.3 Foundation
+#### 10.4.3 Foundation
 
 - `A`
   stabilized and compacted
 - `B`
   unstable or loose
 
-#### 10.1.4 Surface Type
+#### 10.4.4 Surface Type
 
 - `A`
   concrete
@@ -395,7 +460,7 @@ The canonical segment schema is given in Table 22.
 - `J`
   other
 
-### 10.2 Engineer Reconnaissance Landing Zone Report
+### 10.5 Engineer Reconnaissance Landing Zone Report
 
 Section 3.7.3.10 defines the landing zone report as an engineer
 reconnaissance segment for evaluating usable terrain for aircraft landing
@@ -418,14 +483,14 @@ Its notable protocol properties are:
 
 The canonical segment schema is given in Table 28.
 
-#### 10.2.1 Estimate
+#### 10.5.1 Estimate
 
 - `1`
   yes
 - `0`
   no
 
-#### 10.2.2 Layout Designation
+#### 10.5.2 Layout Designation
 
 - `LZ`
   landing zone
@@ -434,7 +499,7 @@ The canonical segment schema is given in Table 28.
 - `LP`
   landing point
 
-#### 10.2.3 Aircraft Supportability
+#### 10.5.3 Aircraft Supportability
 
 - `A`
   size 4 aircraft
@@ -449,7 +514,7 @@ The canonical segment schema is given in Table 28.
 - `F`
   vertical lift requires VTOL
 
-#### 10.2.4 Approach and Departure Direction
+#### 10.5.4 Approach and Departure Direction
 
 - `S`
   south
@@ -460,14 +525,14 @@ The canonical segment schema is given in Table 28.
 - `W`
   west
 
-#### 10.2.5 Surface Slope
+#### 10.5.5 Surface Slope
 
 - `A`
   less than 7 degrees upslope landing
 - `B`
   greater than 7 degrees side slope landing
 
-#### 10.2.6 Obstacle
+#### 10.5.6 Obstacle
 
 - `1`
   remove
@@ -476,7 +541,7 @@ The canonical segment schema is given in Table 28.
 - `3`
   emplace
 
-### 10.3 General Engineering Obstacle Removal
+### 10.6 General Engineering Obstacle Removal
 
 Section 3.7.3.11 defines obstacle removal as a general engineering
 segment for describing an obstacle, its dimensions, bypass conditions,
@@ -497,7 +562,7 @@ Its notable protocol properties are:
 
 The canonical segment schema is given in Table 29.
 
-#### 10.3.1 Obstacle
+#### 10.6.1 Obstacle
 
 - `1`
   remove
@@ -506,7 +571,7 @@ The canonical segment schema is given in Table 29.
 - `3`
   emplace
 
-#### 10.3.2 Determination of Action
+#### 10.6.2 Determination of Action
 
 - `1`
   use bypass
@@ -517,14 +582,14 @@ The canonical segment schema is given in Table 29.
 - `4`
   continue mission
 
-#### 10.3.3 Bypass
+#### 10.6.3 Bypass
 
 - `1`
   yes
 - `0`
   no
 
-### 10.4 Explosive Ordnance Disposal Clearing/Rendering Safe
+### 10.7 Explosive Ordnance Disposal Clearing/Rendering Safe
 
 Section 3.7.3.12 defines the EOD clearing/rendering safe segment for
 reporting UXO discovery, requested action timing, location, CBRN
@@ -547,7 +612,7 @@ Its notable protocol properties are:
 
 The canonical segment schema is given in Table 30.
 
-#### 10.4.1 Type of CBRN Agent
+#### 10.7.1 Type of CBRN Agent
 
 - `1`
   chemical
@@ -560,7 +625,7 @@ The canonical segment schema is given in Table 30.
 - `5`
   none
 
-#### 10.4.2 Physical Property of CBRN Agent
+#### 10.7.2 Physical Property of CBRN Agent
 
 - `1`
   gas
@@ -571,7 +636,7 @@ The canonical segment schema is given in Table 30.
 - `4`
   ionizing radiation
 
-#### 10.4.3 Contamination Value of CBRN Agent
+#### 10.7.3 Contamination Value of CBRN Agent
 
 - `E`
   external
@@ -582,7 +647,7 @@ The canonical segment schema is given in Table 30.
 - `C`
   contagious casualties
 
-#### 10.4.4 Munition Purpose
+#### 10.7.4 Munition Purpose
 
 - `AA`
   anti-armor
@@ -595,7 +660,7 @@ The canonical segment schema is given in Table 30.
 - `IM`
   improvised
 
-#### 10.4.5 Munition Type
+#### 10.7.5 Munition Type
 
 - `E`
   emplace
@@ -606,7 +671,43 @@ The canonical segment schema is given in Table 30.
 - `P`
   project
 
-### 10.5 Health Services Collection
+### 10.8 General Engineering Bulk Liquid Support
+
+Section 3.7.3.13 defines bulk liquid support as a report of fuels and
+water sources available at local or commercial sites.
+
+Its notable protocol properties are:
+
+- date of evaluation or reconnaissance
+- bulk-liquid location
+- estimate flag
+- optional fuel payload encoded as a typed quantity and unit string
+- optional water payload encoded as a typed quantity, unit, and water-type string
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 31.
+
+### 10.9 General Engineering Demolition
+
+Section 3.7.3.14 defines demolition as a general engineering request when
+an object presents an obstacle to mobility or area use.
+
+Its notable protocol properties are:
+
+- date of evaluation or reconnaissance
+- object location
+- type of demolition as source-defined alpha code text
+- route number
+- determination of action
+- bypass flag
+- bypass grid
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 32.
+
+### 10.10 Health Services Collection
 
 Section 3.8.3.1 defines the collection segment as the initial casualty
 record created at the point of collection.
@@ -628,7 +729,7 @@ Its notable protocol properties are:
 
 The canonical segment schema is given in Table 33.
 
-#### 10.5.1 Service
+#### 10.10.1 Service
 
 When service is manually entered, the source text defines these codes:
 
@@ -651,7 +752,7 @@ When service is manually entered, the source text defines these codes:
 - `EPW`
   enemy prisoner of war
 
-### 10.6 Health Services Treatment Data (Triage Segment)
+### 10.11 Health Services Treatment Data (Triage Segment)
 
 Section 3.8.3.2 defines triage as the first treatment action following
 collection. The protocol-relevant fields in Table 34 are:
@@ -666,7 +767,7 @@ collection. The protocol-relevant fields in Table 34 are:
 
 The source gives closed code domains for the main triage selectors.
 
-#### 10.6.1 Primary Mechanism of Injury
+#### 10.11.1 Primary Mechanism of Injury
 
 - `E1`
   artillery/indirect fire, grenade
@@ -697,7 +798,7 @@ The source gives closed code domains for the main triage selectors.
 - `D4`
   pathological
 
-#### 10.6.2 CBRN Related/Exposure
+#### 10.11.2 CBRN Related/Exposure
 
 - `C`
   chemical
@@ -710,7 +811,7 @@ The source gives closed code domains for the main triage selectors.
 - `X`
   none
 
-#### 10.6.3 Major Signs/Symptoms
+#### 10.11.3 Major Signs/Symptoms
 
 - `B`
   bleeding
@@ -721,14 +822,14 @@ The source gives closed code domains for the main triage selectors.
 - `C`
   incapacitation
 
-#### 10.6.4 Pulse Location
+#### 10.11.4 Pulse Location
 
 - `W`
   wrist
 - `N`
   neck
 
-#### 10.6.5 Responsiveness
+#### 10.11.5 Responsiveness
 
 - `A`
   alert
@@ -739,7 +840,7 @@ The source gives closed code domains for the main triage selectors.
 - `U`
   unresponsive
 
-#### 10.6.6 Triage Precedence
+#### 10.11.6 Triage Precedence
 
 - `A`
   urgent surgical
@@ -752,7 +853,7 @@ The source gives closed code domains for the main triage selectors.
 - `E`
   convenience
 
-### 10.7 Health Services Treatment Data (Intervention Segment)
+### 10.12 Health Services Treatment Data (Intervention Segment)
 
 Section 3.8.3.2 continues treatment with the intervention segment in
 Table 35. The protocol-relevant fields are:
@@ -765,7 +866,7 @@ Table 35. The protocol-relevant fields are:
 - casualty type
 - first responder ZAP or EDI-PI
 
-#### 10.7.1 Tourniquet Placement
+#### 10.12.1 Tourniquet Placement
 
 - `TQXX`
   no tourniquets
@@ -778,7 +879,7 @@ Table 35. The protocol-relevant fields are:
 - `TQLL`
   left leg
 
-#### 10.7.2 Tourniquet Type
+#### 10.12.2 Tourniquet Type
 
 - `E`
   extremity
@@ -787,7 +888,7 @@ Table 35. The protocol-relevant fields are:
 - `T`
   truncal
 
-#### 10.7.3 Wounds Treatment
+#### 10.12.3 Wounds Treatment
 
 - `T1`
   hemostatic dressing
@@ -804,7 +905,7 @@ Table 35. The protocol-relevant fields are:
 - `T7`
   hypothermia prevention
 
-#### 10.7.4 Airway Treatment
+#### 10.12.4 Airway Treatment
 
 - `A0`
   airway intact
@@ -817,7 +918,7 @@ Table 35. The protocol-relevant fields are:
 - `A4`
   supraglottic airway
 
-#### 10.7.5 Breathing Treatment
+#### 10.12.5 Breathing Treatment
 
 - `B0`
   none
@@ -830,7 +931,7 @@ Table 35. The protocol-relevant fields are:
 - `B5`
   chest seal
 
-#### 10.7.6 Fluid Circulation Treatment
+#### 10.12.6 Fluid Circulation Treatment
 
 - fluid names:
   - `S` saline
@@ -840,7 +941,7 @@ Table 35. The protocol-relevant fields are:
   - `IV` intravenous
   - `IO` interosseous
 
-#### 10.7.7 Blood Circulation Treatment
+#### 10.12.7 Blood Circulation Treatment
 
 - `WBD`
   whole blood
@@ -854,7 +955,7 @@ Table 35. The protocol-relevant fields are:
   - `IV` intravenous
   - `IO` interosseous
 
-#### 10.7.8 Analgesic Medication
+#### 10.12.8 Analgesic Medication
 
 - medication names:
   - `K` ketamine
@@ -869,7 +970,7 @@ Table 35. The protocol-relevant fields are:
   - `R6` inhale
   - `R7` rectal
 
-#### 10.7.9 Antibiotic Medication
+#### 10.12.9 Antibiotic Medication
 
 - medication names:
   - `M` moxifloxacin
@@ -885,7 +986,7 @@ Table 35. The protocol-relevant fields are:
   - `R6` inhale
   - `R7` rectal
 
-#### 10.7.10 Other Medication
+#### 10.12.10 Other Medication
 
 - medication names:
   - `I` ibuprofen
@@ -899,14 +1000,14 @@ Table 35. The protocol-relevant fields are:
   - `R6` inhale
   - `R7` rectal
 
-#### 10.7.11 Casualty Type
+#### 10.12.11 Casualty Type
 
 - `A`
   litter
 - `B`
   ambulatory
 
-### 10.8 Health Services Hold
+### 10.13 Health Services Hold
 
 Section 3.8.3.3 does not introduce a new closed-field table. Instead,
 it defines `hold` as continued monitoring and continued treatment after
@@ -921,7 +1022,115 @@ The protocol implication is:
 
 For this draft, `hold` is modeled as an append-only extension of the
 existing triage and intervention records. It introduces no new code
-domains beyond those already defined in sections `10.6` and `10.7`.
+domains beyond those already defined in sections `10.11` and `10.12`.
+
+### 10.14 Health Services Evacuate (CASEVAC)
+
+Section 3.8.3.4 defines `evacuate (CASEVAC)` as the movement of
+casualties to and/or between medical treatment facilities.
+
+The source text makes two protocol implications explicit:
+
+- CASEVAC is a specialized `PAX` movement request
+- the evacuation segment auto-carries selected casualty data from
+  collection, treatment, and hold with minimal user intervention
+
+This draft models CASEVAC as a health-services segment with:
+
+- evacuation request priority
+- pickup location
+- optional pickup-site marking
+- optional contamination indicator
+- contact settings
+- repeated casualty-precedence counts
+- repeated casualty-type counts
+- optional requested equipment
+- optional security status
+- repeated casualty records carrying the auto-populated medical payload
+
+#### 10.14.1 Evacuation Request Priority
+
+- `A`
+  urgent surgical
+- `B`
+  urgent non-surgical
+- `C`
+  priority
+- `D`
+  routine
+- `E`
+  convenience
+
+#### 10.14.2 Location Marking
+
+- `A`
+  panels
+- `B`
+  pyrotechnic
+- `C`
+  smoke
+- `D`
+  IR flash or signal beacon
+- `E`
+  none
+
+#### 10.14.3 Location Contamination
+
+- `A`
+  nuclear or radiological
+- `B`
+  biological
+- `C`
+  chemical
+- `D`
+  none
+
+#### 10.14.4 Casualty Type Count
+
+- `A`
+  ambulatory
+- `L`
+  litter
+
+#### 10.14.5 Requested Equipment
+
+- `A`
+  none
+- `B`
+  hoist
+- `C`
+  extraction equipment
+- `D`
+  ventilation
+
+#### 10.14.6 Security
+
+- `N`
+  no enemy troops in area
+- `P`
+  possible enemy troops in area
+- `E`
+  enemy troops in area
+- `X`
+  enemy troops in area, armed escort required
+
+#### 10.14.7 Casualty Record Payload
+
+Segment `47` in Table 36 is repeatable and is keyed by the casualty
+`ZAP/EDI-PI`. The source text states that, when a casualty is selected
+for evacuation, the following are auto-populated into the evacuation
+request:
+
+- mechanism of injury
+- major injury code
+- last recorded vitals readings
+- last recorded treatments
+- casualty CBRN code
+
+This draft therefore models the CASEVAC casualty payload as a repeatable
+record keyed by `ZAP/EDI-PI`, reusing the already-defined health code
+domains where the whitepaper is explicit and preserving unresolved
+subfields as strings.
 
 ## 11. Mobility Request Requirements
 
@@ -1718,9 +1927,14 @@ The columns are:
 | Engineer landing zone report | [x] | [x] | [x] | [ ] | [ ] |
 | Obstacle removal | [x] | [x] | [x] | [ ] | [ ] |
 | EOD clearing/rendering safe | [x] | [x] | [x] | [ ] | [ ] |
+| Engineer tunnel report | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Engineer bridge report | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Engineer ford report | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Engineer ferry report | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Engineer river report | [ ] | [ ] | [ ] | [ ] | [ ] |
 | Health collection | [x] | [x] | [x] | [ ] | [ ] |
 | Health triage | [x] | [x] | [x] | [ ] | [ ] |
 | Health intervention | [x] | [x] | [x] | [ ] | [ ] |
 | Health hold | [x] | [x] | [x] | [ ] | [ ] |
-| Health evacuate / CASEVAC | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Health evacuate / CASEVAC | [x] | [x] | [x] | [ ] | [ ] |
 | Appendix F canonical registry | [x] | [ ] | [ ] | [ ] | [ ] |

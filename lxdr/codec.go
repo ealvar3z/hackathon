@@ -579,6 +579,66 @@ func (c CasualtyTypeCode) IsValid() bool {
 	return isOneOf(c, CasualtyTypeCodeA, CasualtyTypeCodeB)
 }
 
+func (c HealthEvacuationRequestPriorityCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthEvacuationRequestPriorityCodeA,
+		HealthEvacuationRequestPriorityCodeB,
+		HealthEvacuationRequestPriorityCodeC,
+		HealthEvacuationRequestPriorityCodeD,
+		HealthEvacuationRequestPriorityCodeE,
+	)
+}
+
+func (c HealthEvacuationLocationMarkingCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthEvacuationLocationMarkingCodeA,
+		HealthEvacuationLocationMarkingCodeB,
+		HealthEvacuationLocationMarkingCodeC,
+		HealthEvacuationLocationMarkingCodeD,
+		HealthEvacuationLocationMarkingCodeE,
+	)
+}
+
+func (c HealthEvacuationContaminationCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthEvacuationContaminationCodeA,
+		HealthEvacuationContaminationCodeB,
+		HealthEvacuationContaminationCodeC,
+		HealthEvacuationContaminationCodeD,
+	)
+}
+
+func (c HealthEvacuationCasualtyTypeCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthEvacuationCasualtyTypeCodeA,
+		HealthEvacuationCasualtyTypeCodeL,
+	)
+}
+
+func (c HealthEvacuationRequestedEquipmentCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthEvacuationRequestedEquipmentCodeA,
+		HealthEvacuationRequestedEquipmentCodeB,
+		HealthEvacuationRequestedEquipmentCodeC,
+		HealthEvacuationRequestedEquipmentCodeD,
+	)
+}
+
+func (c HealthEvacuationSecurityCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthEvacuationSecurityCodeN,
+		HealthEvacuationSecurityCodeP,
+		HealthEvacuationSecurityCodeE,
+		HealthEvacuationSecurityCodeX,
+	)
+}
+
 func (h RequestHeader) RenderCanonical() (string, error) {
 	if err := h.Validate(); err != nil {
 		return "", err
@@ -919,6 +979,24 @@ func (s RequestSegment) Validate() error {
 			return err
 		}
 	}
+	if s.GetEngineerReconArea() != nil {
+		count++
+		if err := s.GetEngineerReconArea().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetEngineerReconZone() != nil {
+		count++
+		if err := s.GetEngineerReconZone().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetEngineerReconRoute() != nil {
+		count++
+		if err := s.GetEngineerReconRoute().Validate(); err != nil {
+			return err
+		}
+	}
 	if s.GetEngineerReconRoad() != nil {
 		count++
 		if err := s.GetEngineerReconRoad().Validate(); err != nil {
@@ -943,6 +1021,18 @@ func (s RequestSegment) Validate() error {
 			return err
 		}
 	}
+	if s.GetBulkLiquidSupport() != nil {
+		count++
+		if err := s.GetBulkLiquidSupport().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetDemolition() != nil {
+		count++
+		if err := s.GetDemolition().Validate(); err != nil {
+			return err
+		}
+	}
 	if s.GetHealthCollection() != nil {
 		count++
 		if err := s.GetHealthCollection().Validate(); err != nil {
@@ -964,6 +1054,12 @@ func (s RequestSegment) Validate() error {
 	if s.GetHealthHold() != nil {
 		count++
 		if err := s.GetHealthHold().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetHealthEvacuation() != nil {
+		count++
+		if err := s.GetHealthEvacuation().Validate(); err != nil {
 			return err
 		}
 	}
@@ -1093,6 +1189,147 @@ func (s MaintenanceRequestSegment) Validate() error {
 		{"location of equipment", s.LocationOfEquipment},
 	}
 	return validateRequiredFields(required)
+}
+
+func (s EngineerReconAreaReportSegment) Validate() error {
+	if s.DateOfEvaluationLocal == "" {
+		return errors.New("engineer area date of evaluation is required")
+	}
+	if s.ElementLeaderZapOrEdiPi == "" {
+		return errors.New("engineer area element leader is required")
+	}
+	if s.AreaLocation == "" {
+		return errors.New("engineer area location is required")
+	}
+	if len(s.ItemsReport) == 0 {
+		return errors.New("engineer area items report requires at least one entry")
+	}
+	for _, item := range s.ItemsReport {
+		if item == nil {
+			return errors.New("engineer area item report must not be nil")
+		}
+		if item.ItemLocation == "" {
+			return errors.New("engineer area item location is required")
+		}
+		if item.ItemLabel == "" {
+			return errors.New("engineer area item label is required")
+		}
+	}
+	if water := s.GetWaterSource(); water != nil {
+		if water.FlowRateVelocity == "" || water.QuantityKiloliters == "" {
+			return errors.New("engineer area water source flow and quantity are required")
+		}
+	}
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
+		return errors.New("engineer area attachment indicator must be 0 or 1")
+	}
+	return nil
+}
+
+func (s EngineerReconZoneReportSegment) Validate() error {
+	if s.DateOfEvaluationLocal == "" {
+		return errors.New("engineer zone date of evaluation is required")
+	}
+	if s.ElementLeaderZapOrEdiPi == "" {
+		return errors.New("engineer zone element leader is required")
+	}
+	if len(s.EnemyReport) == 0 {
+		return errors.New("engineer zone enemy report requires at least one entry")
+	}
+	for _, enemy := range s.EnemyReport {
+		if enemy == nil {
+			return errors.New("engineer zone enemy report must not be nil")
+		}
+		if enemy.EnemyLocation == "" {
+			return errors.New("engineer zone enemy location is required")
+		}
+		if enemy.EnemyLabel == "" {
+			return errors.New("engineer zone enemy label is required")
+		}
+	}
+	if s.ZoneLocation == "" {
+		return errors.New("engineer zone location is required")
+	}
+	if water := s.GetWaterSource(); water != nil {
+		if water.FlowRateVelocity == "" || water.QuantityKiloliters == "" {
+			return errors.New("engineer zone water source flow and quantity are required")
+		}
+	}
+	if len(s.ItemsReport) == 0 {
+		return errors.New("engineer zone items report requires at least one entry")
+	}
+	for _, item := range s.ItemsReport {
+		if item == nil {
+			return errors.New("engineer zone item report must not be nil")
+		}
+		if item.ItemLocation == "" {
+			return errors.New("engineer zone item location is required")
+		}
+		if item.ItemLabel == "" {
+			return errors.New("engineer zone item label is required")
+		}
+	}
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
+		return errors.New("engineer zone attachment indicator must be 0 or 1")
+	}
+	return nil
+}
+
+func (s EngineerReconRouteReportSegment) Validate() error {
+	if s.DateOfEvaluationLocal == "" {
+		return errors.New("engineer route date of evaluation is required")
+	}
+	if s.ElementLeaderZapOrEdiPi == "" {
+		return errors.New("engineer route element leader is required")
+	}
+	if len(s.EnemyReport) == 0 {
+		return errors.New("engineer route enemy report requires at least one entry")
+	}
+	for _, enemy := range s.EnemyReport {
+		if enemy == nil {
+			return errors.New("engineer route enemy report must not be nil")
+		}
+		if enemy.EnemyLocation == "" {
+			return errors.New("engineer route enemy location is required")
+		}
+		if enemy.EnemyLabel == "" {
+			return errors.New("engineer route enemy label is required")
+		}
+	}
+	if len(s.RouteLocations) == 0 {
+		return errors.New("engineer route locations require at least one waypoint")
+	}
+	for _, waypoint := range s.RouteLocations {
+		if waypoint == "" {
+			return errors.New("engineer route waypoint must not be empty")
+		}
+	}
+	if water := s.GetWaterSource(); water != nil {
+		if water.FlowRateVelocity == "" || water.QuantityKiloliters == "" {
+			return errors.New("engineer route water source flow and quantity are required")
+		}
+	}
+	if len(s.ItemsReport) == 0 {
+		return errors.New("engineer route items report requires at least one entry")
+	}
+	for _, item := range s.ItemsReport {
+		if item == nil {
+			return errors.New("engineer route item report must not be nil")
+		}
+		if item.ItemLocation == "" {
+			return errors.New("engineer route item location is required")
+		}
+		if item.ItemLabel == "" {
+			return errors.New("engineer route item label is required")
+		}
+	}
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
+		return errors.New("engineer route attachment indicator must be 0 or 1")
+	}
+	return nil
 }
 
 func (s EngineerReconRoadReportSegment) Validate() error {
@@ -1255,6 +1492,52 @@ func (s ExplosiveOrdnanceDisposalSegment) Validate() error {
 	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
 		!s.GetAttachmentIndicator().IsValid() {
 		return errors.New("eod attachment indicator must be 0 or 1")
+	}
+	return nil
+}
+
+func (s GeneralEngineeringBulkLiquidSupportSegment) Validate() error {
+	if s.DateOfEvaluationLocal == "" {
+		return errors.New("bulk liquid date of evaluation is required")
+	}
+	if s.LocationOfBulkLiquid == "" {
+		return errors.New("bulk liquid location is required")
+	}
+	if !s.Estimate.IsValid() {
+		return errors.New("bulk liquid estimate is required")
+	}
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
+		return errors.New("bulk liquid attachment indicator must be 0 or 1")
+	}
+	return nil
+}
+
+func (s GeneralEngineeringDemolitionSegment) Validate() error {
+	if s.DateOfEvaluationLocal == "" {
+		return errors.New("demolition date of evaluation is required")
+	}
+	if s.Location == "" {
+		return errors.New("demolition location is required")
+	}
+	if s.TypeOfDemolition == "" {
+		return errors.New("demolition type is required")
+	}
+	if s.RouteNumber == "" {
+		return errors.New("demolition route number is required")
+	}
+	if !s.DeterminationOfAction.IsValid() {
+		return errors.New("demolition determination of action is required")
+	}
+	if !s.Bypass.IsValid() {
+		return errors.New("demolition bypass is required")
+	}
+	if s.BypassGrid == "" {
+		return errors.New("demolition bypass grid is required")
+	}
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
+		return errors.New("demolition attachment indicator must be 0 or 1")
 	}
 	return nil
 }
@@ -1435,6 +1718,78 @@ func (s HealthHoldSegment) Validate() error {
 	return nil
 }
 
+func (s HealthEvacuationSegment) Validate() error {
+	if !s.RequestPriority.IsValid() {
+		return errors.New("health evacuation request priority is required")
+	}
+	if s.LocationOfPickup == "" {
+		return errors.New("health evacuation location of pickup is required")
+	}
+	if s.GetLocationMarking() !=
+		HealthEvacuationLocationMarkingCodeUnspecified &&
+		!s.GetLocationMarking().IsValid() {
+		return errors.New("health evacuation location marking is invalid")
+	}
+	if s.GetLocationContamination() !=
+		HealthEvacuationContaminationCodeUnspecified &&
+		!s.GetLocationContamination().IsValid() {
+		return errors.New("health evacuation location contamination is invalid")
+	}
+	if s.ContactSettings == "" {
+		return errors.New("health evacuation contact settings are required")
+	}
+	if len(s.CountOfCasualtiesPrecedence) == 0 ||
+		len(s.CountOfCasualtiesPrecedence) > 5 {
+		return errors.New("health evacuation precedence counts require 1 to 5 entries")
+	}
+	for _, entry := range s.CountOfCasualtiesPrecedence {
+		if entry == nil {
+			return errors.New("health evacuation precedence count must not be nil")
+		}
+		if !entry.Precedence.IsValid() {
+			return errors.New("health evacuation precedence code is invalid")
+		}
+		if entry.CasualtyCount == "" {
+			return errors.New("health evacuation precedence casualty count is required")
+		}
+	}
+	if len(s.CountOfCasualtyTypes) == 0 || len(s.CountOfCasualtyTypes) > 2 {
+		return errors.New("health evacuation casualty type counts require 1 to 2 entries")
+	}
+	for _, entry := range s.CountOfCasualtyTypes {
+		if entry == nil {
+			return errors.New("health evacuation casualty type count must not be nil")
+		}
+		if !entry.CasualtyType.IsValid() {
+			return errors.New("health evacuation casualty type is invalid")
+		}
+		if entry.CasualtyCount == "" {
+			return errors.New("health evacuation casualty type count is required")
+		}
+	}
+	if s.GetRequestedEquipment() !=
+		HealthEvacuationRequestedEquipmentCodeUnspecified &&
+		!s.GetRequestedEquipment().IsValid() {
+		return errors.New("health evacuation requested equipment is invalid")
+	}
+	if s.GetSecurity() != HealthEvacuationSecurityCodeUnspecified &&
+		!s.GetSecurity().IsValid() {
+		return errors.New("health evacuation security is invalid")
+	}
+	if len(s.Casualties) == 0 {
+		return errors.New("health evacuation requires at least one casualty record")
+	}
+	for _, casualty := range s.Casualties {
+		if casualty == nil {
+			return errors.New("health evacuation casualty must not be nil")
+		}
+		if err := validateHealthEvacuationCasualtyRecord(casualty); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func validateFluidCirculationTreatment(treatment *FluidCirculationTreatment) error {
 	if treatment.GetFluidNameCode() == FluidNameCodeUnspecified &&
 		treatment.GetOtherFluidName() == "" {
@@ -1521,6 +1876,76 @@ func validateOtherMedicationTreatment(treatment *OtherMedicationTreatment) error
 	}
 	if !treatment.GetRoute().IsValid() {
 		return errors.New("other medication treatment route is required")
+	}
+	return nil
+}
+
+func validateHealthEvacuationCasualtyRecord(
+	record *HealthEvacuationCasualtyRecord,
+) error {
+	if record.GetZapOrEdiPi() == "" {
+		return errors.New("health evacuation casualty zap or edi-pi is required")
+	}
+	if record.GetPrimaryMechanismOfInjury() !=
+		HealthPrimaryMechanismCodeUnspecified &&
+		!record.GetPrimaryMechanismOfInjury().IsValid() {
+		return errors.New("health evacuation casualty primary mechanism is invalid")
+	}
+	for _, treatment := range record.GetTourniquets() {
+		if treatment == nil {
+			return errors.New("health evacuation casualty tourniquet must not be nil")
+		}
+		if !treatment.Placement.IsValid() {
+			return errors.New("health evacuation casualty tourniquet placement is invalid")
+		}
+		if !treatment.Type.IsValid() {
+			return errors.New("health evacuation casualty tourniquet type is invalid")
+		}
+		if treatment.DateLocal == "" || treatment.TimeLocal == "" {
+			return errors.New("health evacuation casualty tourniquet date and time are required")
+		}
+	}
+	for _, treatment := range record.GetWoundTreatments() {
+		if !treatment.IsValid() {
+			return errors.New("health evacuation casualty wound treatment is invalid")
+		}
+	}
+	if record.GetAirwayTreatment() != AirwayTreatmentCodeUnspecified &&
+		!record.GetAirwayTreatment().IsValid() {
+		return errors.New("health evacuation casualty airway treatment is invalid")
+	}
+	if record.GetBreathingTreatment() != BreathingTreatmentCodeUnspecified &&
+		!record.GetBreathingTreatment().IsValid() {
+		return errors.New("health evacuation casualty breathing treatment is invalid")
+	}
+	if treatment := record.GetFluidCirculationTreatment(); treatment != nil {
+		if err := validateFluidCirculationTreatment(treatment); err != nil {
+			return fmt.Errorf("health evacuation casualty fluid treatment: %w", err)
+		}
+	}
+	if treatment := record.GetBloodCirculationTreatment(); treatment != nil {
+		if err := validateBloodCirculationTreatment(treatment); err != nil {
+			return fmt.Errorf("health evacuation casualty blood treatment: %w", err)
+		}
+	}
+	if treatment := record.GetAnalgesicMedicationTreatment(); treatment != nil {
+		if err := validateAnalgesicMedicationTreatment(treatment); err != nil {
+			return fmt.Errorf("health evacuation casualty analgesic treatment: %w", err)
+		}
+	}
+	if treatment := record.GetAntibioticMedicationTreatment(); treatment != nil {
+		if err := validateAntibioticMedicationTreatment(treatment); err != nil {
+			return fmt.Errorf("health evacuation casualty antibiotic treatment: %w", err)
+		}
+	}
+	if treatment := record.GetOtherMedicationTreatment(); treatment != nil {
+		if err := validateOtherMedicationTreatment(treatment); err != nil {
+			return fmt.Errorf("health evacuation casualty other medication treatment: %w", err)
+		}
+	}
+	if record.GetCbrnRelatedExposure() != HealthCBRNExposureCodeUnspecified &&
+		!record.GetCbrnRelatedExposure().IsValid() {
+		return errors.New("health evacuation casualty cbrn exposure is invalid")
 	}
 	return nil
 }
