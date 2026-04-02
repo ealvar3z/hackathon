@@ -18,15 +18,128 @@ func isOneOf[T comparable](value T, allowed ...T) bool {
 }
 
 func ParseRequestPriorityCode(input string) (RequestPriorityCode, error) {
-	code := RequestPriorityCode(input)
-	if !code.IsValid() {
+	switch input {
+	case "01":
+		return RequestPriorityCode01, nil
+	case "02":
+		return RequestPriorityCode02, nil
+	case "03":
+		return RequestPriorityCode03, nil
+	case "04":
+		return RequestPriorityCode04, nil
+	case "05":
+		return RequestPriorityCode05, nil
+	case "06":
+		return RequestPriorityCode06, nil
+	case "07":
+		return RequestPriorityCode07, nil
+	case "08":
+		return RequestPriorityCode08, nil
+	case "09":
+		return RequestPriorityCode09, nil
+	case "10":
+		return RequestPriorityCode10, nil
+	case "11":
+		return RequestPriorityCode11, nil
+	case "12":
+		return RequestPriorityCode12, nil
+	case "13":
+		return RequestPriorityCode13, nil
+	case "14":
+		return RequestPriorityCode14, nil
+	case "15":
+		return RequestPriorityCode15, nil
+	default:
 		return RequestPriorityCodeUnspecified, fmt.Errorf(
 			"invalid request priority code: %q",
 			input,
 		)
 	}
+}
 
-	return code, nil
+func formatRequestPriorityCode(code RequestPriorityCode) string {
+	switch code {
+	case RequestPriorityCode01:
+		return "01"
+	case RequestPriorityCode02:
+		return "02"
+	case RequestPriorityCode03:
+		return "03"
+	case RequestPriorityCode04:
+		return "04"
+	case RequestPriorityCode05:
+		return "05"
+	case RequestPriorityCode06:
+		return "06"
+	case RequestPriorityCode07:
+		return "07"
+	case RequestPriorityCode08:
+		return "08"
+	case RequestPriorityCode09:
+		return "09"
+	case RequestPriorityCode10:
+		return "10"
+	case RequestPriorityCode11:
+		return "11"
+	case RequestPriorityCode12:
+		return "12"
+	case RequestPriorityCode13:
+		return "13"
+	case RequestPriorityCode14:
+		return "14"
+	case RequestPriorityCode15:
+		return "15"
+	default:
+		return ""
+	}
+}
+
+func formatMobilityPaxRequestTypeCode(code MobilityPaxRequestTypeCode) string {
+	if code == MobilityPaxRequestTypeCodePM {
+		return "PM"
+	}
+	return ""
+}
+
+func formatMobilityCargoRequestTypeCode(
+	code MobilityCargoRequestTypeCode,
+) string {
+	if code == MobilityCargoRequestTypeCodeCM {
+		return "CM"
+	}
+	return ""
+}
+
+func formatCargoHMICCode(code CargoHMICCode) string {
+	switch code {
+	case CargoHMICCodeD:
+		return "D"
+	case CargoHMICCodeN:
+		return "N"
+	case CargoHMICCodeP:
+		return "P"
+	case CargoHMICCodeY:
+		return "Y"
+	default:
+		return ""
+	}
+}
+
+func formatCargoHandlingCode(code CargoHandlingCode) string {
+	switch code {
+	case CargoHandlingCodeC:
+		return "C"
+	case CargoHandlingCodeM:
+		return "M"
+	case CargoHandlingCodeT:
+		return "T"
+	case CargoHandlingCodeR:
+		return "R"
+	case CargoHandlingCodeX:
+		return "X"
+	default:
+		return ""
+	}
 }
 
 func (c RequestPriorityCode) IsValid() bool {
@@ -238,6 +351,234 @@ func (c BypassCode) IsValid() bool {
 	return isOneOf(c, BypassCodeNo, BypassCodeYes)
 }
 
+func (c CBRNAgentTypeCode) IsValid() bool {
+	return isOneOf(
+		c,
+		CBRNAgentTypeCode1,
+		CBRNAgentTypeCode2,
+		CBRNAgentTypeCode3,
+		CBRNAgentTypeCode4,
+		CBRNAgentTypeCode5,
+	)
+}
+
+func (c CBRNPhysicalPropertyCode) IsValid() bool {
+	return isOneOf(
+		c,
+		CBRNPhysicalPropertyCode1,
+		CBRNPhysicalPropertyCode2,
+		CBRNPhysicalPropertyCode3,
+		CBRNPhysicalPropertyCode4,
+	)
+}
+
+func (c CBRNContaminationValueCode) IsValid() bool {
+	return isOneOf(
+		c,
+		CBRNContaminationValueCodeE,
+		CBRNContaminationValueCodeI,
+		CBRNContaminationValueCodeW,
+		CBRNContaminationValueCodeC,
+	)
+}
+
+func (c MunitionPurposeCode) IsValid() bool {
+	return isOneOf(
+		c,
+		MunitionPurposeCodeAA,
+		MunitionPurposeCodeAP,
+		MunitionPurposeCodeFL,
+		MunitionPurposeCodeSM,
+		MunitionPurposeCodeIM,
+	)
+}
+
+func (c MunitionTypeCode) IsValid() bool {
+	return isOneOf(
+		c,
+		MunitionTypeCodeE,
+		MunitionTypeCodeD,
+		MunitionTypeCodeT,
+		MunitionTypeCodeP,
+	)
+}
+
+func (c HealthCollectionRequestTypeCode) IsValid() bool {
+	return isOneOf(c, HealthCollectionRequestTypeCodeCR)
+}
+
+func (c HealthPrimaryMechanismCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthPrimaryMechanismCodeE1,
+		HealthPrimaryMechanismCodeE2,
+		HealthPrimaryMechanismCodeE3,
+		HealthPrimaryMechanismCodeE4,
+		HealthPrimaryMechanismCodeE5,
+		HealthPrimaryMechanismCodeP1,
+		HealthPrimaryMechanismCodeP2,
+		HealthPrimaryMechanismCodeP3,
+		HealthPrimaryMechanismCodeP4,
+		HealthPrimaryMechanismCodeP5,
+		HealthPrimaryMechanismCodeD1,
+		HealthPrimaryMechanismCodeD2,
+		HealthPrimaryMechanismCodeD3,
+		HealthPrimaryMechanismCodeD4,
+	)
+}
+
+func (c HealthCBRNExposureCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthCBRNExposureCodeC,
+		HealthCBRNExposureCodeB,
+		HealthCBRNExposureCodeR,
+		HealthCBRNExposureCodeN,
+		HealthCBRNExposureCodeX,
+	)
+}
+
+func (c HealthMajorSignsSymptomsCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthMajorSignsSymptomsCodeB,
+		HealthMajorSignsSymptomsCodeR,
+		HealthMajorSignsSymptomsCodeX,
+		HealthMajorSignsSymptomsCodeC,
+	)
+}
+
+func (c ServiceCode) IsValid() bool {
+	return isOneOf(
+		c,
+		ServiceCodeUSA,
+		ServiceCodeUSSF,
+		ServiceCodeUSAF,
+		ServiceCodeUSCG,
+		ServiceCodeUSN,
+		ServiceCodeUSMC,
+		ServiceCodeUSCIV,
+		ServiceCodeNONUS,
+		ServiceCodeEPW,
+	)
+}
+
+func (c HealthPulseLocationCode) IsValid() bool {
+	return isOneOf(c, HealthPulseLocationCodeW, HealthPulseLocationCodeN)
+}
+
+func (c HealthResponsivenessCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthResponsivenessCodeA,
+		HealthResponsivenessCodeV,
+		HealthResponsivenessCodeP,
+		HealthResponsivenessCodeU,
+	)
+}
+
+func (c HealthTriagePrecedenceCode) IsValid() bool {
+	return isOneOf(
+		c,
+		HealthTriagePrecedenceCodeA,
+		HealthTriagePrecedenceCodeB,
+		HealthTriagePrecedenceCodeC,
+		HealthTriagePrecedenceCodeD,
+		HealthTriagePrecedenceCodeE,
+	)
+}
+
+func (c TourniquetPlacementCode) IsValid() bool {
+	return isOneOf(
+		c,
+		TourniquetPlacementCodeTQXX,
+		TourniquetPlacementCodeTQRA,
+		TourniquetPlacementCodeTQLA,
+		TourniquetPlacementCodeTQRL,
+		TourniquetPlacementCodeTQLL,
+	)
+}
+
+func (c TourniquetTypeCode) IsValid() bool {
+	return isOneOf(c, TourniquetTypeCodeE, TourniquetTypeCodeJ, TourniquetTypeCodeT)
+}
+
+func (c WoundTreatmentCode) IsValid() bool {
+	return isOneOf(
+		c,
+		WoundTreatmentCodeT1,
+		WoundTreatmentCodeT2,
+		WoundTreatmentCodeT3,
+		WoundTreatmentCodeT4,
+		WoundTreatmentCodeT5,
+		WoundTreatmentCodeT6,
+		WoundTreatmentCodeT7,
+	)
+}
+
+func (c AirwayTreatmentCode) IsValid() bool {
+	return isOneOf(
+		c,
+		AirwayTreatmentCodeA0,
+		AirwayTreatmentCodeA1,
+		AirwayTreatmentCodeA2,
+		AirwayTreatmentCodeA3,
+		AirwayTreatmentCodeA4,
+	)
+}
+
+func (c BreathingTreatmentCode) IsValid() bool {
+	return isOneOf(
+		c,
+		BreathingTreatmentCodeB0,
+		BreathingTreatmentCodeB1,
+		BreathingTreatmentCodeB3,
+		BreathingTreatmentCodeB4,
+		BreathingTreatmentCodeB5,
+	)
+}
+
+func (c FluidNameCode) IsValid() bool {
+	return isOneOf(c, FluidNameCodeS, FluidNameCodeR, FluidNameCodeH)
+}
+
+func (c FluidRouteCode) IsValid() bool {
+	return isOneOf(c, FluidRouteCodeIV, FluidRouteCodeIO)
+}
+
+func (c BloodProductCode) IsValid() bool {
+	return isOneOf(c, BloodProductCodeWBD, BloodProductCodeRBC, BloodProductCodeFFP, BloodProductCodeFDP)
+}
+
+func (c MedicationRouteCode) IsValid() bool {
+	return isOneOf(
+		c,
+		MedicationRouteCodeR1,
+		MedicationRouteCodeR2,
+		MedicationRouteCodeR3,
+		MedicationRouteCodeR4,
+		MedicationRouteCodeR5,
+		MedicationRouteCodeR6,
+		MedicationRouteCodeR7,
+	)
+}
+
+func (c AnalgesicMedicationCode) IsValid() bool {
+	return isOneOf(c, AnalgesicMedicationCodeK, AnalgesicMedicationCodeF, AnalgesicMedicationCodeM)
+}
+
+func (c AntibioticMedicationCode) IsValid() bool {
+	return isOneOf(c, AntibioticMedicationCodeM, AntibioticMedicationCodeE, AntibioticMedicationCodeP, AntibioticMedicationCodeA)
+}
+
+func (c OtherMedicationCode) IsValid() bool {
+	return isOneOf(c, OtherMedicationCodeI, OtherMedicationCodeT)
+}
+
+func (c CasualtyTypeCode) IsValid() bool {
+	return isOneOf(c, CasualtyTypeCodeA, CasualtyTypeCodeB)
+}
+
 func (h RequestHeader) RenderCanonical() (string, error) {
 	if err := h.Validate(); err != nil {
 		return "", err
@@ -248,9 +589,9 @@ func (h RequestHeader) RenderCanonical() (string, error) {
 		h.LocalSystemDate,
 		h.LocalSystemTime,
 		h.SynchronizedGeospatialReference,
-		h.LocalRequestID,
-		h.RequestPriority,
-		h.ElementUnitIDOrCallsign,
+		h.LocalRequestId,
+		formatRequestPriorityCode(h.RequestPriority),
+		h.ElementUnitIdOrCallsign,
 		h.RequestSegmentCount,
 	), nil
 }
@@ -273,9 +614,9 @@ func ParseCanonicalHeader(input string) (RequestHeader, error) {
 		LocalSystemDate:                 parts[0],
 		LocalSystemTime:                 parts[1],
 		SynchronizedGeospatialReference: parts[2],
-		LocalRequestID:                  parts[3],
-		ElementUnitIDOrCallsign:         parts[5],
-		RequestSegmentCount:             uint8(count),
+		LocalRequestId:                  parts[3],
+		ElementUnitIdOrCallsign:         parts[5],
+		RequestSegmentCount:             uint32(count),
 	}
 
 	priority, err := ParseRequestPriorityCode(parts[4])
@@ -292,11 +633,11 @@ func ParseCanonicalHeader(input string) (RequestHeader, error) {
 }
 
 func (r SynchronizedResponse) RenderCanonical() (string, error) {
-	if r.LocalRequestID == "" || r.SynchronizedRequestID == "" {
+	if r.LocalRequestId == "" || r.SynchronizedRequestId == "" {
 		return "", errors.New("sync response requires both request IDs")
 	}
 
-	return r.LocalRequestID + "-" + r.SynchronizedRequestID, nil
+	return r.LocalRequestId + "-" + r.SynchronizedRequestId, nil
 }
 
 func ParseSynchronizedResponse(input string) (SynchronizedResponse, error) {
@@ -309,8 +650,8 @@ func ParseSynchronizedResponse(input string) (SynchronizedResponse, error) {
 	}
 
 	resp := SynchronizedResponse{
-		LocalRequestID:        parts[0],
-		SynchronizedRequestID: parts[1],
+		LocalRequestId:        parts[0],
+		SynchronizedRequestId: parts[1],
 	}
 
 	_, err := resp.RenderCanonical()
@@ -329,14 +670,14 @@ func (s MobilityPaxRequestSegment) RenderCanonical() (string, error) {
 	return fmt.Sprintf(
 		"%d-%s-%s-%s-%s-%s-%s-%s-%s-%s",
 		s.SegmentNumber,
-		s.RequestTypeCode,
-		s.RequestPriority,
-		s.ZAPOrEDIPI,
+		formatMobilityPaxRequestTypeCode(s.RequestTypeCode),
+		formatRequestPriorityCode(s.RequestPriority),
+		s.ZapOrEdiPi,
 		s.EarliestDepartureDateLocal,
 		s.LatestDepartureDateLocal,
 		s.DepartureLocation,
 		s.DestinationLocation,
-		s.TotalEstimatedBaggageLBS,
+		s.TotalEstimatedBaggageWeightLbs,
 		s.HazardousMaterialType,
 	), nil
 }
@@ -361,17 +702,17 @@ func ParseCanonicalPAXSegment(
 	}
 
 	segment := MobilityPaxRequestSegment{
-		SegmentNumber:              uint8(segNum),
-		ZAPOrEDIPI:                 parts[3],
-		EarliestDepartureDateLocal: parts[4],
-		LatestDepartureDateLocal:   parts[5],
-		DepartureLocation:          parts[6],
-		DestinationLocation:        parts[7],
-		TotalEstimatedBaggageLBS:   parts[8],
-		HazardousMaterialType:      parts[9],
+		SegmentNumber:                  uint32(segNum),
+		ZapOrEdiPi:                     parts[3],
+		EarliestDepartureDateLocal:     parts[4],
+		LatestDepartureDateLocal:       parts[5],
+		DepartureLocation:              parts[6],
+		DestinationLocation:            parts[7],
+		TotalEstimatedBaggageWeightLbs: parts[8],
+		HazardousMaterialType:          parts[9],
 	}
 
-	if parts[1] != string(MobilityPaxRequestTypeCodePM) {
+	if parts[1] != "PM" {
 		return MobilityPaxRequestSegment{}, fmt.Errorf(
 			"invalid pax request type code: %q",
 			parts[1],
@@ -400,17 +741,17 @@ func (s MobilityCargoRequestSegment) RenderCanonical() (string, error) {
 	return fmt.Sprintf(
 		"%d-%s-%s-%s-%s-%s-%s-%s-%s-%s-%s-%s-%s-%s-%s-%s",
 		s.SegmentNumber,
-		s.RequestTypeCode,
-		s.RequestPriority,
-		s.ItemByNIIN,
+		formatMobilityCargoRequestTypeCode(s.RequestTypeCode),
+		formatRequestPriorityCode(s.RequestPriority),
+		s.ItemByNiin,
 		s.ItemQuantity,
 		s.SerialNumber,
-		s.GrossWeightLBS,
+		s.GrossWeightLbs,
 		s.ActualHeightInches,
 		s.ActualWidthInches,
 		s.ActualLengthInches,
-		s.HMIC,
-		s.Handling,
+		formatCargoHMICCode(s.Hmic),
+		formatCargoHandlingCode(s.Handling),
 		s.EarliestDepartureDateLocal,
 		s.LatestDepartureDateLocal,
 		s.DepartureLocation,
@@ -438,11 +779,11 @@ func ParseCanonicalCargoSegment(
 	}
 
 	segment := MobilityCargoRequestSegment{
-		SegmentNumber:              uint8(segNum),
-		ItemByNIIN:                 parts[3],
+		SegmentNumber:              uint32(segNum),
+		ItemByNiin:                 parts[3],
 		ItemQuantity:               parts[4],
 		SerialNumber:               parts[5],
-		GrossWeightLBS:             parts[6],
+		GrossWeightLbs:             parts[6],
 		ActualHeightInches:         parts[7],
 		ActualWidthInches:          parts[8],
 		ActualLengthInches:         parts[9],
@@ -452,7 +793,7 @@ func ParseCanonicalCargoSegment(
 		DestinationLocation:        parts[15],
 	}
 
-	if parts[1] != string(MobilityCargoRequestTypeCodeCM) {
+	if parts[1] != "CM" {
 		return MobilityCargoRequestSegment{}, fmt.Errorf(
 			"invalid cargo request type code: %q",
 			parts[1],
@@ -465,8 +806,38 @@ func ParseCanonicalCargoSegment(
 		return MobilityCargoRequestSegment{}, err
 	}
 	segment.RequestPriority = priority
-	segment.HMIC = CargoHMICCode(parts[10])
-	segment.Handling = CargoHandlingCode(parts[11])
+	switch parts[10] {
+	case "D":
+		segment.Hmic = CargoHMICCodeD
+	case "N":
+		segment.Hmic = CargoHMICCodeN
+	case "P":
+		segment.Hmic = CargoHMICCodeP
+	case "Y":
+		segment.Hmic = CargoHMICCodeY
+	default:
+		return MobilityCargoRequestSegment{}, fmt.Errorf(
+			"invalid cargo hmic code: %q",
+			parts[10],
+		)
+	}
+	switch parts[11] {
+	case "C":
+		segment.Handling = CargoHandlingCodeC
+	case "M":
+		segment.Handling = CargoHandlingCodeM
+	case "T":
+		segment.Handling = CargoHandlingCodeT
+	case "R":
+		segment.Handling = CargoHandlingCodeR
+	case "X":
+		segment.Handling = CargoHandlingCodeX
+	default:
+		return MobilityCargoRequestSegment{}, fmt.Errorf(
+			"invalid cargo handling code: %q",
+			parts[11],
+		)
+	}
 
 	if err := segment.Validate(); err != nil {
 		return MobilityCargoRequestSegment{}, err
@@ -485,13 +856,13 @@ func (h RequestHeader) Validate() error {
 	if h.SynchronizedGeospatialReference == "" {
 		return errors.New("header geospatial reference is required")
 	}
-	if h.LocalRequestID == "" {
+	if h.LocalRequestId == "" {
 		return errors.New("header local request ID is required")
 	}
 	if !h.RequestPriority.IsValid() {
 		return errors.New("header request priority is required")
 	}
-	if h.ElementUnitIDOrCallsign == "" {
+	if h.ElementUnitIdOrCallsign == "" {
 		return errors.New("header element/unit identifier is required")
 	}
 	if h.RequestSegmentCount == 0 {
@@ -524,45 +895,75 @@ func (c RequestContainer) Validate() error {
 
 func (s RequestSegment) Validate() error {
 	count := 0
-	if s.MobilityPax != nil {
+	if s.GetMobilityPax() != nil {
 		count++
-		if err := s.MobilityPax.Validate(); err != nil {
+		if err := s.GetMobilityPax().Validate(); err != nil {
 			return err
 		}
 	}
-	if s.MobilityCargo != nil {
+	if s.GetMobilityCargo() != nil {
 		count++
-		if err := s.MobilityCargo.Validate(); err != nil {
+		if err := s.GetMobilityCargo().Validate(); err != nil {
 			return err
 		}
 	}
-	if s.Supply != nil {
+	if s.GetSupply() != nil {
 		count++
-		if err := s.Supply.Validate(); err != nil {
+		if err := s.GetSupply().Validate(); err != nil {
 			return err
 		}
 	}
-	if s.Maintenance != nil {
+	if s.GetMaintenance() != nil {
 		count++
-		if err := s.Maintenance.Validate(); err != nil {
+		if err := s.GetMaintenance().Validate(); err != nil {
 			return err
 		}
 	}
-	if s.EngineerRoad != nil {
+	if s.GetEngineerReconRoad() != nil {
 		count++
-		if err := s.EngineerRoad.Validate(); err != nil {
+		if err := s.GetEngineerReconRoad().Validate(); err != nil {
 			return err
 		}
 	}
-	if s.EngineerLZ != nil {
+	if s.GetEngineerReconLandingZone() != nil {
 		count++
-		if err := s.EngineerLZ.Validate(); err != nil {
+		if err := s.GetEngineerReconLandingZone().Validate(); err != nil {
 			return err
 		}
 	}
-	if s.ObstacleRemoval != nil {
+	if s.GetObstacleRemoval() != nil {
 		count++
-		if err := s.ObstacleRemoval.Validate(); err != nil {
+		if err := s.GetObstacleRemoval().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetEod() != nil {
+		count++
+		if err := s.GetEod().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetHealthCollection() != nil {
+		count++
+		if err := s.GetHealthCollection().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetHealthTriage() != nil {
+		count++
+		if err := s.GetHealthTriage().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetHealthIntervention() != nil {
+		count++
+		if err := s.GetHealthIntervention().Validate(); err != nil {
+			return err
+		}
+	}
+	if s.GetHealthHold() != nil {
+		count++
+		if err := s.GetHealthHold().Validate(); err != nil {
 			return err
 		}
 	}
@@ -586,12 +987,12 @@ func (s MobilityPaxRequestSegment) Validate() error {
 		name  string
 		value string
 	}{
-		{"zap or edi-pi", s.ZAPOrEDIPI},
+		{"zap or edi-pi", s.ZapOrEdiPi},
 		{"earliest departure date", s.EarliestDepartureDateLocal},
 		{"latest departure date", s.LatestDepartureDateLocal},
 		{"departure location", s.DepartureLocation},
 		{"destination location", s.DestinationLocation},
-		{"estimated baggage weight", s.TotalEstimatedBaggageLBS},
+		{"estimated baggage weight", s.TotalEstimatedBaggageWeightLbs},
 		{"hazardous material type", s.HazardousMaterialType},
 	}
 	return validateRequiredFields(required)
@@ -607,7 +1008,7 @@ func (s MobilityCargoRequestSegment) Validate() error {
 	if !s.RequestPriority.IsValid() {
 		return errors.New("cargo request priority is required")
 	}
-	if !s.HMIC.IsValid() {
+	if !s.Hmic.IsValid() {
 		return errors.New("hmic is required")
 	}
 	if !s.Handling.IsValid() {
@@ -617,10 +1018,10 @@ func (s MobilityCargoRequestSegment) Validate() error {
 		name  string
 		value string
 	}{
-		{"item by niin", s.ItemByNIIN},
+		{"item by niin", s.ItemByNiin},
 		{"item quantity", s.ItemQuantity},
 		{"serial number", s.SerialNumber},
-		{"gross weight", s.GrossWeightLBS},
+		{"gross weight", s.GrossWeightLbs},
 		{"actual height", s.ActualHeightInches},
 		{"actual width", s.ActualWidthInches},
 		{"actual length", s.ActualLengthInches},
@@ -642,8 +1043,8 @@ func (s SupplyRequestSegment) Validate() error {
 	if !s.RequestPriority.IsValid() {
 		return errors.New("supply request priority is required")
 	}
-	if s.AttachmentIndicator != AttachmentIndicatorCodeUnspecified &&
-		!s.AttachmentIndicator.IsValid() {
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
 		return errors.New("supply attachment indicator must be 0 or 1")
 	}
 	required := []struct {
@@ -686,7 +1087,7 @@ func (s MaintenanceRequestSegment) Validate() error {
 		name  string
 		value string
 	}{
-		{"niin", s.NIIN},
+		{"niin", s.Niin},
 		{"number of pieces", s.NumberOfPiecesRequiringSupport},
 		{"maintenance support date", s.DateMaintenanceSupportRequiredLocal},
 		{"location of equipment", s.LocationOfEquipment},
@@ -719,8 +1120,8 @@ func (s EngineerReconRoadReportSegment) Validate() error {
 	if s.Obstructions == "" {
 		return errors.New("road obstructions are required")
 	}
-	if s.AttachmentIndicator != AttachmentIndicatorCodeUnspecified &&
-		!s.AttachmentIndicator.IsValid() {
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
 		return errors.New("road attachment indicator must be 0 or 1")
 	}
 	return nil
@@ -769,8 +1170,8 @@ func (s EngineerReconLandingZoneReportSegment) Validate() error {
 	if !s.Obstacle.IsValid() {
 		return errors.New("landing zone obstacle is required")
 	}
-	if s.AttachmentIndicator != AttachmentIndicatorCodeUnspecified &&
-		!s.AttachmentIndicator.IsValid() {
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
 		return errors.New(
 			"landing zone attachment indicator must be 0 or 1",
 		)
@@ -809,11 +1210,317 @@ func (s GeneralEngineeringObstacleRemovalSegment) Validate() error {
 	if s.BypassGrid == "" {
 		return errors.New("obstacle bypass grid is required")
 	}
-	if s.AttachmentIndicator != AttachmentIndicatorCodeUnspecified &&
-		!s.AttachmentIndicator.IsValid() {
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
 		return errors.New(
 			"obstacle attachment indicator must be 0 or 1",
 		)
+	}
+	return nil
+}
+
+func (s ExplosiveOrdnanceDisposalSegment) Validate() error {
+	if s.DateOfUxoDiscovery == "" {
+		return errors.New("date of uxo discovery is required")
+	}
+	if s.RequestedDateOfEodAction == "" {
+		return errors.New("requested date of eod action is required")
+	}
+	if s.LocationOfUxo == "" {
+		return errors.New("location of uxo is required")
+	}
+	if !s.TypeOfCbrnAgent.IsValid() {
+		return errors.New("type of cbrn agent is required")
+	}
+	if s.GetPhysicalPropertyOfCbrnAgent() != CBRNPhysicalPropertyCodeUnspecified &&
+		!s.GetPhysicalPropertyOfCbrnAgent().IsValid() {
+		return errors.New("physical property of cbrn agent is invalid")
+	}
+	if s.GetContaminationValueOfCbrnAgent() != CBRNContaminationValueCodeUnspecified &&
+		!s.GetContaminationValueOfCbrnAgent().IsValid() {
+		return errors.New("contamination value of cbrn agent is invalid")
+	}
+	if s.MunitionColor == "" {
+		return errors.New("munition color is required")
+	}
+	if s.MunitionMarkings == "" {
+		return errors.New("munition markings are required")
+	}
+	if !s.MunitionPurpose.IsValid() {
+		return errors.New("munition purpose is required")
+	}
+	if !s.MunitionType.IsValid() {
+		return errors.New("munition type is required")
+	}
+	if s.GetAttachmentIndicator() != AttachmentIndicatorCodeUnspecified &&
+		!s.GetAttachmentIndicator().IsValid() {
+		return errors.New("eod attachment indicator must be 0 or 1")
+	}
+	return nil
+}
+
+func (s HealthCollectionSegment) Validate() error {
+	if s.SegmentNumber == 0 {
+		return errors.New("health collection segment number is required")
+	}
+	if !s.RequestTypeCode.IsValid() {
+		return errors.New("health collection request type code must be CR")
+	}
+	if !s.RequestPriority.IsValid() {
+		return errors.New("health collection request priority is required")
+	}
+	if s.ZapOrEdiPi == "" {
+		return errors.New("health collection zap or edi-pi is required")
+	}
+	if s.LastName == "" {
+		return errors.New("health collection last name is required")
+	}
+	if s.FirstName == "" {
+		return errors.New("health collection first name is required")
+	}
+	if s.GetService() != ServiceCodeUnspecified && !s.GetService().IsValid() {
+		return errors.New("health collection service is invalid")
+	}
+	if s.Allergies == "" {
+		return errors.New("health collection allergies are required")
+	}
+	if s.DateOfInjuryLocal == "" {
+		return errors.New("health collection date of injury is required")
+	}
+	if s.TimeOfInjuryLocal == "" {
+		return errors.New("health collection time of injury is required")
+	}
+	if s.LocationInjuryOccurred == "" {
+		return errors.New("health collection injury location is required")
+	}
+	return nil
+}
+
+func (s HealthTriageSegment) Validate() error {
+	if !s.PrimaryMechanismOfInjury.IsValid() {
+		return errors.New("health triage primary mechanism is required")
+	}
+	if !s.CbrnRelatedExposure.IsValid() {
+		return errors.New("health triage cbrn exposure is required")
+	}
+	if !s.MajorSignsSymptoms.IsValid() {
+		return errors.New("health triage major signs symptoms is required")
+	}
+	if len(s.InjuryLocations) == 0 || len(s.InjuryLocations) > 10 {
+		return errors.New("health triage injury locations require 1 to 10 entries")
+	}
+	for _, location := range s.InjuryLocations {
+		if location == "" {
+			return errors.New("health triage injury locations must not be empty")
+		}
+	}
+	if s.GetPulseLocation() != HealthPulseLocationCodeUnspecified &&
+		!s.GetPulseLocation().IsValid() {
+		return errors.New("health triage pulse location must be W or N")
+	}
+	if s.GetResponsiveness() != HealthResponsivenessCodeUnspecified &&
+		!s.GetResponsiveness().IsValid() {
+		return errors.New("health triage responsiveness is invalid")
+	}
+	if s.PainScale != nil && *s.PainScale > 10 {
+		return errors.New("health triage pain scale must be 0 to 10")
+	}
+	if !s.TriagePrecedence.IsValid() {
+		return errors.New("health triage precedence is required")
+	}
+	return nil
+}
+
+func (s HealthInterventionSegment) Validate() error {
+	if len(s.Tourniquets) > 4 {
+		return errors.New("health intervention allows at most 4 tourniquets")
+	}
+	for _, treatment := range s.Tourniquets {
+		if treatment == nil {
+			return errors.New("tourniquet treatment must not be nil")
+		}
+		if !treatment.Placement.IsValid() {
+			return errors.New("tourniquet placement is invalid")
+		}
+		if !treatment.Type.IsValid() {
+			return errors.New("tourniquet type is invalid")
+		}
+		if treatment.DateLocal == "" || treatment.TimeLocal == "" {
+			return errors.New("tourniquet date and time are required")
+		}
+	}
+	if len(s.WoundTreatments) == 0 || len(s.WoundTreatments) > 7 {
+		return errors.New("health intervention wound treatments require 1 to 7 entries")
+	}
+	for _, treatment := range s.WoundTreatments {
+		if !treatment.IsValid() {
+			return errors.New("wound treatment is invalid")
+		}
+	}
+	if !s.AirwayTreatment.IsValid() {
+		return errors.New("airway treatment is required")
+	}
+	if !s.BreathingTreatment.IsValid() {
+		return errors.New("breathing treatment is required")
+	}
+	for _, treatment := range s.FluidCirculationTreatments {
+		if treatment == nil {
+			return errors.New("fluid treatment must not be nil")
+		}
+		if err := validateFluidCirculationTreatment(treatment); err != nil {
+			return err
+		}
+	}
+	for _, treatment := range s.BloodCirculationTreatments {
+		if treatment == nil {
+			return errors.New("blood treatment must not be nil")
+		}
+		if err := validateBloodCirculationTreatment(treatment); err != nil {
+			return err
+		}
+	}
+	for _, treatment := range s.AnalgesicMedicationTreatments {
+		if treatment == nil {
+			return errors.New("analgesic treatment must not be nil")
+		}
+		if err := validateAnalgesicMedicationTreatment(treatment); err != nil {
+			return err
+		}
+	}
+	for _, treatment := range s.AntibioticMedicationTreatments {
+		if treatment == nil {
+			return errors.New("antibiotic treatment must not be nil")
+		}
+		if err := validateAntibioticMedicationTreatment(treatment); err != nil {
+			return err
+		}
+	}
+	for _, treatment := range s.OtherMedicationTreatments {
+		if treatment == nil {
+			return errors.New("other medication treatment must not be nil")
+		}
+		if err := validateOtherMedicationTreatment(treatment); err != nil {
+			return err
+		}
+	}
+	if !s.CasualtyType.IsValid() {
+		return errors.New("casualty type is required")
+	}
+	if s.FirstResponderZapOrEdiPi == "" {
+		return errors.New("first responder zap or edi-pi is required")
+	}
+	return nil
+}
+
+func (s HealthHoldSegment) Validate() error {
+	if len(s.TriageEntries) == 0 && len(s.InterventionEntries) == 0 {
+		return errors.New("health hold requires triage or intervention entries")
+	}
+	for _, entry := range s.TriageEntries {
+		if entry == nil {
+			return errors.New("health hold triage entry must not be nil")
+		}
+		if err := entry.Validate(); err != nil {
+			return fmt.Errorf("health hold triage entry: %w", err)
+		}
+	}
+	for _, entry := range s.InterventionEntries {
+		if entry == nil {
+			return errors.New("health hold intervention entry must not be nil")
+		}
+		if err := entry.Validate(); err != nil {
+			return fmt.Errorf("health hold intervention entry: %w", err)
+		}
+	}
+	return nil
+}
+
+func validateFluidCirculationTreatment(treatment *FluidCirculationTreatment) error {
+	if treatment.GetFluidNameCode() == FluidNameCodeUnspecified &&
+		treatment.GetOtherFluidName() == "" {
+		return errors.New("fluid treatment requires a fluid name")
+	}
+	if treatment.GetFluidNameCode() != FluidNameCodeUnspecified &&
+		!treatment.GetFluidNameCode().IsValid() {
+		return errors.New("fluid treatment name code is invalid")
+	}
+	if treatment.GetVolumeDose() == "" || treatment.GetDateLocal() == "" ||
+		treatment.GetTimeLocal() == "" {
+		return errors.New("fluid treatment volume, date, and time are required")
+	}
+	if !treatment.GetRoute().IsValid() {
+		return errors.New("fluid treatment route is required")
+	}
+	return nil
+}
+
+func validateBloodCirculationTreatment(treatment *BloodCirculationTreatment) error {
+	if !treatment.GetBloodProductName().IsValid() {
+		return errors.New("blood treatment product is required")
+	}
+	if treatment.GetVolumeDose() == "" || treatment.GetDateLocal() == "" ||
+		treatment.GetTimeLocal() == "" {
+		return errors.New("blood treatment volume, date, and time are required")
+	}
+	if !treatment.GetRoute().IsValid() {
+		return errors.New("blood treatment route is required")
+	}
+	return nil
+}
+
+func validateAnalgesicMedicationTreatment(treatment *AnalgesicMedicationTreatment) error {
+	if treatment.GetMedicationCode() == AnalgesicMedicationCodeUnspecified &&
+		treatment.GetOtherMedicationName() == "" {
+		return errors.New("analgesic treatment requires a medication")
+	}
+	if treatment.GetMedicationCode() != AnalgesicMedicationCodeUnspecified &&
+		!treatment.GetMedicationCode().IsValid() {
+		return errors.New("analgesic medication code is invalid")
+	}
+	if treatment.GetVolumeDose() == "" || treatment.GetDateLocal() == "" ||
+		treatment.GetTimeLocal() == "" {
+		return errors.New("analgesic treatment volume, date, and time are required")
+	}
+	if !treatment.GetRoute().IsValid() {
+		return errors.New("analgesic treatment route is required")
+	}
+	return nil
+}
+
+func validateAntibioticMedicationTreatment(treatment *AntibioticMedicationTreatment) error {
+	if treatment.GetMedicationCode() == AntibioticMedicationCodeUnspecified &&
+		treatment.GetOtherMedicationName() == "" {
+		return errors.New("antibiotic treatment requires a medication")
+	}
+	if treatment.GetMedicationCode() != AntibioticMedicationCodeUnspecified &&
+		!treatment.GetMedicationCode().IsValid() {
+		return errors.New("antibiotic medication code is invalid")
+	}
+	if treatment.GetVolumeDose() == "" || treatment.GetDateLocal() == "" ||
+		treatment.GetTimeLocal() == "" {
+		return errors.New("antibiotic treatment volume, date, and time are required")
+	}
+	if !treatment.GetRoute().IsValid() {
+		return errors.New("antibiotic treatment route is required")
+	}
+	return nil
+}
+
+func validateOtherMedicationTreatment(treatment *OtherMedicationTreatment) error {
+	if treatment.GetMedicationCode() == OtherMedicationCodeUnspecified &&
+		treatment.GetOtherMedicationName() == "" {
+		return errors.New("other medication treatment requires a medication")
+	}
+	if treatment.GetMedicationCode() != OtherMedicationCodeUnspecified &&
+		!treatment.GetMedicationCode().IsValid() {
+		return errors.New("other medication code is invalid")
+	}
+	if treatment.GetVolumeDose() == "" || treatment.GetDateLocal() == "" ||
+		treatment.GetTimeLocal() == "" {
+		return errors.New("other medication treatment volume, date, and time are required")
+	}
+	if !treatment.GetRoute().IsValid() {
+		return errors.New("other medication treatment route is required")
 	}
 	return nil
 }

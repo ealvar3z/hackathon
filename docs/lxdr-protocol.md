@@ -318,6 +318,8 @@ normatively introduced in Sections 3.4 through 3.7:
 - engineer reconnaissance road report
 - engineer reconnaissance landing zone report
 - general engineering obstacle removal
+- explosive ordnance disposal clearing/rendering safe
+- health services collection
 
 Later families in Chapter 3 remain part of the protocol scope, but this
 draft does not yet define their schemas because this document is limited to
@@ -521,6 +523,405 @@ The canonical segment schema is given in Table 29.
   yes
 - `0`
   no
+
+### 10.4 Explosive Ordnance Disposal Clearing/Rendering Safe
+
+Section 3.7.3.12 defines the EOD clearing/rendering safe segment for
+reporting UXO discovery, requested action timing, location, CBRN
+characteristics, munition details, and optional media.
+
+Its notable protocol properties are:
+
+- date of UXO discovery
+- requested date of EOD action
+- location of UXO
+- type of CBRN agent
+- optional physical property of CBRN agent
+- optional contamination value of CBRN agent
+- munition color
+- munition markings
+- munition purpose
+- munition type
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 30.
+
+#### 10.4.1 Type of CBRN Agent
+
+- `1`
+  chemical
+- `2`
+  biological
+- `3`
+  radiological
+- `4`
+  nuclear
+- `5`
+  none
+
+#### 10.4.2 Physical Property of CBRN Agent
+
+- `1`
+  gas
+- `2`
+  liquid
+- `3`
+  aerosols
+- `4`
+  ionizing radiation
+
+#### 10.4.3 Contamination Value of CBRN Agent
+
+- `E`
+  external
+- `I`
+  internal
+- `W`
+  wound
+- `C`
+  contagious casualties
+
+#### 10.4.4 Munition Purpose
+
+- `AA`
+  anti-armor
+- `AP`
+  anti-personnel
+- `FL`
+  flare
+- `SM`
+  smoke
+- `IM`
+  improvised
+
+#### 10.4.5 Munition Type
+
+- `E`
+  emplace
+- `D`
+  drop
+- `T`
+  throw
+- `P`
+  project
+
+### 10.5 Health Services Collection
+
+Section 3.8.3.1 defines the collection segment as the initial casualty
+record created at the point of collection.
+
+Its notable protocol properties are:
+
+- segment number
+- request type code `CR`
+- request priority derived from triage precedence
+- ZAP or EDI-PI
+- last name
+- first name
+- optional service code
+- optional element/unit identification or callsign
+- allergies/alerts
+- date of injury
+- time of injury
+- location injury occurred
+
+The canonical segment schema is given in Table 33.
+
+#### 10.5.1 Service
+
+When service is manually entered, the source text defines these codes:
+
+- `USA`
+  United States Army
+- `USSF`
+  United States Space Force
+- `USAF`
+  United States Air Force
+- `USCG`
+  United States Coast Guard
+- `USN`
+  United States Navy
+- `USMC`
+  United States Marine Corps
+- `US CIV`
+  United States civilian
+- `NON-US`
+  non-U.S. coalition or NATO personnel
+- `EPW`
+  enemy prisoner of war
+
+### 10.6 Health Services Treatment Data (Triage Segment)
+
+Section 3.8.3.2 defines triage as the first treatment action following
+collection. The protocol-relevant fields in Table 34 are:
+
+- primary mechanism of injury
+- CBRN related/exposure
+- major signs/symptoms
+- one to ten injury locations
+- optional triage/treatment vitals
+- optional responsiveness and pain scale
+- triage precedence
+
+The source gives closed code domains for the main triage selectors.
+
+#### 10.6.1 Primary Mechanism of Injury
+
+- `E1`
+  artillery/indirect fire, grenade
+- `E2`
+  improvised explosive device
+- `E3`
+  landmine
+- `E4`
+  rocket propelled grenade
+- `E5`
+  other type of explosion
+- `P1`
+  blunt force trauma
+- `P2`
+  fall
+- `P3`
+  velocity impact
+- `P4`
+  gunshot wound
+- `P5`
+  knife/bayonet/sharp object
+- `D1`
+  pathogen
+- `D2`
+  allergic reaction
+- `D3`
+  chemical/biological hazard exposure
+- `D4`
+  pathological
+
+#### 10.6.2 CBRN Related/Exposure
+
+- `C`
+  chemical
+- `B`
+  biological
+- `R`
+  radiological
+- `N`
+  nuclear
+- `X`
+  none
+
+#### 10.6.3 Major Signs/Symptoms
+
+- `B`
+  bleeding
+- `R`
+  restricted breathing
+- `X`
+  burned
+- `C`
+  incapacitation
+
+#### 10.6.4 Pulse Location
+
+- `W`
+  wrist
+- `N`
+  neck
+
+#### 10.6.5 Responsiveness
+
+- `A`
+  alert
+- `V`
+  responds to voice
+- `P`
+  responds to pain
+- `U`
+  unresponsive
+
+#### 10.6.6 Triage Precedence
+
+- `A`
+  urgent surgical
+- `B`
+  urgent non-surgical
+- `C`
+  priority
+- `D`
+  routine
+- `E`
+  convenience
+
+### 10.7 Health Services Treatment Data (Intervention Segment)
+
+Section 3.8.3.2 continues treatment with the intervention segment in
+Table 35. The protocol-relevant fields are:
+
+- repeated tourniquet treatment entries
+- one to seven wound treatment selections
+- one airway treatment selection
+- one breathing treatment selection
+- repeated fluid, blood, and medication treatment entries
+- casualty type
+- first responder ZAP or EDI-PI
+
+#### 10.7.1 Tourniquet Placement
+
+- `TQXX`
+  no tourniquets
+- `TQRA`
+  right arm
+- `TQLA`
+  left arm
+- `TQRL`
+  right leg
+- `TQLL`
+  left leg
+
+#### 10.7.2 Tourniquet Type
+
+- `E`
+  extremity
+- `J`
+  junctional
+- `T`
+  truncal
+
+#### 10.7.3 Wounds Treatment
+
+- `T1`
+  hemostatic dressing
+- `T2`
+  pressure bandage
+- `T3`
+  sling or splint
+- `T4`
+  eye shield left
+- `T5`
+  eye shield right
+- `T6`
+  eye shield both
+- `T7`
+  hypothermia prevention
+
+#### 10.7.4 Airway Treatment
+
+- `A0`
+  airway intact
+- `A1`
+  nasopharyngeal airway
+- `A2`
+  cricothyroidotomy
+- `A3`
+  endotracheal tube
+- `A4`
+  supraglottic airway
+
+#### 10.7.5 Breathing Treatment
+
+- `B0`
+  none
+- `B1`
+  O2
+- `B3`
+  needle decompression
+- `B4`
+  chest tube
+- `B5`
+  chest seal
+
+#### 10.7.6 Fluid Circulation Treatment
+
+- fluid names:
+  - `S` saline
+  - `R` ringer's lactate
+  - `H` hextend
+- routes:
+  - `IV` intravenous
+  - `IO` interosseous
+
+#### 10.7.7 Blood Circulation Treatment
+
+- `WBD`
+  whole blood
+- `RBC`
+  red blood cells
+- `FFP`
+  fresh frozen plasma
+- `FDP`
+  lyophilized plasma
+- routes:
+  - `IV` intravenous
+  - `IO` interosseous
+
+#### 10.7.8 Analgesic Medication
+
+- medication names:
+  - `K` ketamine
+  - `F` fentanyl
+  - `M` morphine
+- routes:
+  - `R1` intrathecal
+  - `R2` subcutaneous
+  - `R3` intravenous
+  - `R4` intramuscular
+  - `R5` oral
+  - `R6` inhale
+  - `R7` rectal
+
+#### 10.7.9 Antibiotic Medication
+
+- medication names:
+  - `M` moxifloxacin
+  - `E` ertapenem
+  - `P` penicillin
+  - `A` azithromycin
+- routes:
+  - `R1` intrathecal
+  - `R2` subcutaneous
+  - `R3` intravenous
+  - `R4` intramuscular
+  - `R5` oral
+  - `R6` inhale
+  - `R7` rectal
+
+#### 10.7.10 Other Medication
+
+- medication names:
+  - `I` ibuprofen
+  - `T` tranexamic acid
+- routes:
+  - `R1` intrathecal
+  - `R2` subcutaneous
+  - `R3` intravenous
+  - `R4` intramuscular
+  - `R5` oral
+  - `R6` inhale
+  - `R7` rectal
+
+#### 10.7.11 Casualty Type
+
+- `A`
+  litter
+- `B`
+  ambulatory
+
+### 10.8 Health Services Hold
+
+Section 3.8.3.3 does not introduce a new closed-field table. Instead,
+it defines `hold` as continued monitoring and continued treatment after
+initial treatment.
+
+The protocol implication is:
+
+- no existing data is overwritten
+- additional vitals entries are appended
+- additional treatment entries are appended
+- all appended entries are date/time driven
+
+For this draft, `hold` is modeled as an append-only extension of the
+existing triage and intervention records. It introduces no new code
+domains beyond those already defined in sections `10.6` and `10.7`.
 
 ## 11. Mobility Request Requirements
 
@@ -1282,39 +1683,44 @@ Section 4 should currently be treated as:
 It should not yet be treated as a source of new wire fields unless the
 whitepaper provides explicit exchange structures comparable to those in
 Section 3.
-- baggage weight: `075`
-- hazardous material type: `X`
 
-### 17.7 Cargo Request Schema Example
+## 22. Conformance Matrix
 
-From Table 16, the canonical cargo request schema is:
+Status markers in this table mean:
 
-```text
-0-XX-00-000000000-00000-XXXXXXXXXX-00000-000-000-000-X-X-CCYYMMMDD-CCYYMMMDD-XXXX123456-XXXX123456
-```
+- `[x]`
+  implemented in the current repo
+- `[ ]`
+  not yet implemented
 
-The canonical cargo request example for one MTVR truck, serial number
-`598742`, is:
+The columns are:
 
-```text
-1-CM-02-015519434-1-598742-28000-126-100-315-D-R-2027OCT15-2027OCT20-4QFJ123456-4QFJ456789
-```
+- `Spec`
+  present in this draft
+- `Proto`
+  modeled in `proto/lxdr/v1/lxdr.proto`
+- `Validate`
+  validated in Go
+- `Canon`
+  canonical text parse/render implemented
+- `Fixture`
+  canonical example fixture present
 
-This example represents:
-
-- segment number: `1`
-- request type: `CM`
-- request priority: `02`
-- NIIN: `015519434`
-- item quantity: `1`
-- serial number: `598742`
-- gross weight: `28000`
-- height: `126`
-- width: `100`
-- length: `315`
-- HMIC: `D`
-- handling: `R`
-- earliest departure date: `2027OCT15`
-- latest departure date: `2027OCT20`
-- departure location: `4QFJ123456`
-- destination location: `4QFJ456789`
+| Object / Segment | Spec | Proto | Validate | Canon | Fixture |
+| --- | --- | --- | --- | --- | --- |
+| Request header | [x] | [x] | [x] | [x] | [x] |
+| Synchronized response | [x] | [x] | [x] | [x] | [x] |
+| Mobility PAX | [x] | [x] | [x] | [x] | [x] |
+| Mobility cargo | [x] | [x] | [x] | [x] | [x] |
+| Supply request | [x] | [x] | [x] | [ ] | [ ] |
+| Maintenance request | [x] | [x] | [x] | [ ] | [ ] |
+| Engineer road report | [x] | [x] | [x] | [ ] | [ ] |
+| Engineer landing zone report | [x] | [x] | [x] | [ ] | [ ] |
+| Obstacle removal | [x] | [x] | [x] | [ ] | [ ] |
+| EOD clearing/rendering safe | [x] | [x] | [x] | [ ] | [ ] |
+| Health collection | [x] | [x] | [x] | [ ] | [ ] |
+| Health triage | [x] | [x] | [x] | [ ] | [ ] |
+| Health intervention | [x] | [x] | [x] | [ ] | [ ] |
+| Health hold | [x] | [x] | [x] | [ ] | [ ] |
+| Health evacuate / CASEVAC | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Appendix F canonical registry | [x] | [ ] | [ ] | [ ] | [ ] |

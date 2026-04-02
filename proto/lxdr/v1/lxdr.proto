@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package lxdr.v1;
 
+option go_package = "lxdr/lxdr;lxdr";
+
 // LXDR v1 core schema.
 //
 // This schema is derived strictly from docs/lxdr-protocol.md as it
@@ -17,6 +19,8 @@ package lxdr.v1;
 // - engineer reconnaissance road report segment
 // - engineer reconnaissance landing zone report segment
 // - general engineering obstacle removal segment
+// - explosive ordnance disposal clearing/rendering safe segment
+// - health services collection segment
 //
 // It does not yet model:
 // - general engineering segment families
@@ -239,6 +243,228 @@ enum BypassCode {
   BYPASS_CODE_YES = 2;
 }
 
+enum CBRNAgentTypeCode {
+  CBRN_AGENT_TYPE_CODE_UNSPECIFIED = 0;
+  CBRN_AGENT_TYPE_CODE_1 = 1;
+  CBRN_AGENT_TYPE_CODE_2 = 2;
+  CBRN_AGENT_TYPE_CODE_3 = 3;
+  CBRN_AGENT_TYPE_CODE_4 = 4;
+  CBRN_AGENT_TYPE_CODE_5 = 5;
+}
+
+enum CBRNPhysicalPropertyCode {
+  CBRN_PHYSICAL_PROPERTY_CODE_UNSPECIFIED = 0;
+  CBRN_PHYSICAL_PROPERTY_CODE_1 = 1;
+  CBRN_PHYSICAL_PROPERTY_CODE_2 = 2;
+  CBRN_PHYSICAL_PROPERTY_CODE_3 = 3;
+  CBRN_PHYSICAL_PROPERTY_CODE_4 = 4;
+}
+
+enum CBRNContaminationValueCode {
+  CBRN_CONTAMINATION_VALUE_CODE_UNSPECIFIED = 0;
+  CBRN_CONTAMINATION_VALUE_CODE_E = 1;
+  CBRN_CONTAMINATION_VALUE_CODE_I = 2;
+  CBRN_CONTAMINATION_VALUE_CODE_W = 3;
+  CBRN_CONTAMINATION_VALUE_CODE_C = 4;
+}
+
+enum MunitionPurposeCode {
+  MUNITION_PURPOSE_CODE_UNSPECIFIED = 0;
+  MUNITION_PURPOSE_CODE_AA = 1;
+  MUNITION_PURPOSE_CODE_AP = 2;
+  MUNITION_PURPOSE_CODE_FL = 3;
+  MUNITION_PURPOSE_CODE_SM = 4;
+  MUNITION_PURPOSE_CODE_IM = 5;
+}
+
+enum MunitionTypeCode {
+  MUNITION_TYPE_CODE_UNSPECIFIED = 0;
+  MUNITION_TYPE_CODE_E = 1;
+  MUNITION_TYPE_CODE_D = 2;
+  MUNITION_TYPE_CODE_T = 3;
+  MUNITION_TYPE_CODE_P = 4;
+}
+
+enum HealthCollectionRequestTypeCode {
+  HEALTH_COLLECTION_REQUEST_TYPE_CODE_UNSPECIFIED = 0;
+  HEALTH_COLLECTION_REQUEST_TYPE_CODE_CR = 1;
+}
+
+enum ServiceCode {
+  SERVICE_CODE_UNSPECIFIED = 0;
+  SERVICE_CODE_USA = 1;
+  SERVICE_CODE_USSF = 2;
+  SERVICE_CODE_USAF = 3;
+  SERVICE_CODE_USCG = 4;
+  SERVICE_CODE_USN = 5;
+  SERVICE_CODE_USMC = 6;
+  SERVICE_CODE_US_CIV = 7;
+  SERVICE_CODE_NON_US = 8;
+  SERVICE_CODE_EPW = 9;
+}
+
+enum HealthPrimaryMechanismCode {
+  HEALTH_PRIMARY_MECHANISM_CODE_UNSPECIFIED = 0;
+  HEALTH_PRIMARY_MECHANISM_CODE_E1 = 1;
+  HEALTH_PRIMARY_MECHANISM_CODE_E2 = 2;
+  HEALTH_PRIMARY_MECHANISM_CODE_E3 = 3;
+  HEALTH_PRIMARY_MECHANISM_CODE_E4 = 4;
+  HEALTH_PRIMARY_MECHANISM_CODE_E5 = 5;
+  HEALTH_PRIMARY_MECHANISM_CODE_P1 = 6;
+  HEALTH_PRIMARY_MECHANISM_CODE_P2 = 7;
+  HEALTH_PRIMARY_MECHANISM_CODE_P3 = 8;
+  HEALTH_PRIMARY_MECHANISM_CODE_P4 = 9;
+  HEALTH_PRIMARY_MECHANISM_CODE_P5 = 10;
+  HEALTH_PRIMARY_MECHANISM_CODE_D1 = 11;
+  HEALTH_PRIMARY_MECHANISM_CODE_D2 = 12;
+  HEALTH_PRIMARY_MECHANISM_CODE_D3 = 13;
+  HEALTH_PRIMARY_MECHANISM_CODE_D4 = 14;
+}
+
+enum HealthCBRNExposureCode {
+  HEALTH_CBRN_EXPOSURE_CODE_UNSPECIFIED = 0;
+  HEALTH_CBRN_EXPOSURE_CODE_C = 1;
+  HEALTH_CBRN_EXPOSURE_CODE_B = 2;
+  HEALTH_CBRN_EXPOSURE_CODE_R = 3;
+  HEALTH_CBRN_EXPOSURE_CODE_N = 4;
+  HEALTH_CBRN_EXPOSURE_CODE_X = 5;
+}
+
+enum HealthMajorSignsSymptomsCode {
+  HEALTH_MAJOR_SIGNS_SYMPTOMS_CODE_UNSPECIFIED = 0;
+  HEALTH_MAJOR_SIGNS_SYMPTOMS_CODE_B = 1;
+  HEALTH_MAJOR_SIGNS_SYMPTOMS_CODE_R = 2;
+  HEALTH_MAJOR_SIGNS_SYMPTOMS_CODE_X = 3;
+  HEALTH_MAJOR_SIGNS_SYMPTOMS_CODE_C = 4;
+}
+
+enum HealthPulseLocationCode {
+  HEALTH_PULSE_LOCATION_CODE_UNSPECIFIED = 0;
+  HEALTH_PULSE_LOCATION_CODE_W = 1;
+  HEALTH_PULSE_LOCATION_CODE_N = 2;
+}
+
+enum HealthResponsivenessCode {
+  HEALTH_RESPONSIVENESS_CODE_UNSPECIFIED = 0;
+  HEALTH_RESPONSIVENESS_CODE_A = 1;
+  HEALTH_RESPONSIVENESS_CODE_V = 2;
+  HEALTH_RESPONSIVENESS_CODE_P = 3;
+  HEALTH_RESPONSIVENESS_CODE_U = 4;
+}
+
+enum HealthTriagePrecedenceCode {
+  HEALTH_TRIAGE_PRECEDENCE_CODE_UNSPECIFIED = 0;
+  HEALTH_TRIAGE_PRECEDENCE_CODE_A = 1;
+  HEALTH_TRIAGE_PRECEDENCE_CODE_B = 2;
+  HEALTH_TRIAGE_PRECEDENCE_CODE_C = 3;
+  HEALTH_TRIAGE_PRECEDENCE_CODE_D = 4;
+  HEALTH_TRIAGE_PRECEDENCE_CODE_E = 5;
+}
+
+enum TourniquetPlacementCode {
+  TOURNIQUET_PLACEMENT_CODE_UNSPECIFIED = 0;
+  TOURNIQUET_PLACEMENT_CODE_TQXX = 1;
+  TOURNIQUET_PLACEMENT_CODE_TQRA = 2;
+  TOURNIQUET_PLACEMENT_CODE_TQLA = 3;
+  TOURNIQUET_PLACEMENT_CODE_TQRL = 4;
+  TOURNIQUET_PLACEMENT_CODE_TQLL = 5;
+}
+
+enum TourniquetTypeCode {
+  TOURNIQUET_TYPE_CODE_UNSPECIFIED = 0;
+  TOURNIQUET_TYPE_CODE_E = 1;
+  TOURNIQUET_TYPE_CODE_J = 2;
+  TOURNIQUET_TYPE_CODE_T = 3;
+}
+
+enum WoundTreatmentCode {
+  WOUND_TREATMENT_CODE_UNSPECIFIED = 0;
+  WOUND_TREATMENT_CODE_T1 = 1;
+  WOUND_TREATMENT_CODE_T2 = 2;
+  WOUND_TREATMENT_CODE_T3 = 3;
+  WOUND_TREATMENT_CODE_T4 = 4;
+  WOUND_TREATMENT_CODE_T5 = 5;
+  WOUND_TREATMENT_CODE_T6 = 6;
+  WOUND_TREATMENT_CODE_T7 = 7;
+}
+
+enum AirwayTreatmentCode {
+  AIRWAY_TREATMENT_CODE_UNSPECIFIED = 0;
+  AIRWAY_TREATMENT_CODE_A0 = 1;
+  AIRWAY_TREATMENT_CODE_A1 = 2;
+  AIRWAY_TREATMENT_CODE_A2 = 3;
+  AIRWAY_TREATMENT_CODE_A3 = 4;
+  AIRWAY_TREATMENT_CODE_A4 = 5;
+}
+
+enum BreathingTreatmentCode {
+  BREATHING_TREATMENT_CODE_UNSPECIFIED = 0;
+  BREATHING_TREATMENT_CODE_B0 = 1;
+  BREATHING_TREATMENT_CODE_B1 = 2;
+  BREATHING_TREATMENT_CODE_B3 = 3;
+  BREATHING_TREATMENT_CODE_B4 = 4;
+  BREATHING_TREATMENT_CODE_B5 = 5;
+}
+
+enum FluidNameCode {
+  FLUID_NAME_CODE_UNSPECIFIED = 0;
+  FLUID_NAME_CODE_S = 1;
+  FLUID_NAME_CODE_R = 2;
+  FLUID_NAME_CODE_H = 3;
+}
+
+enum FluidRouteCode {
+  FLUID_ROUTE_CODE_UNSPECIFIED = 0;
+  FLUID_ROUTE_CODE_IV = 1;
+  FLUID_ROUTE_CODE_IO = 2;
+}
+
+enum BloodProductCode {
+  BLOOD_PRODUCT_CODE_UNSPECIFIED = 0;
+  BLOOD_PRODUCT_CODE_WBD = 1;
+  BLOOD_PRODUCT_CODE_RBC = 2;
+  BLOOD_PRODUCT_CODE_FFP = 3;
+  BLOOD_PRODUCT_CODE_FDP = 4;
+}
+
+enum MedicationRouteCode {
+  MEDICATION_ROUTE_CODE_UNSPECIFIED = 0;
+  MEDICATION_ROUTE_CODE_R1 = 1;
+  MEDICATION_ROUTE_CODE_R2 = 2;
+  MEDICATION_ROUTE_CODE_R3 = 3;
+  MEDICATION_ROUTE_CODE_R4 = 4;
+  MEDICATION_ROUTE_CODE_R5 = 5;
+  MEDICATION_ROUTE_CODE_R6 = 6;
+  MEDICATION_ROUTE_CODE_R7 = 7;
+}
+
+enum AnalgesicMedicationCode {
+  ANALGESIC_MEDICATION_CODE_UNSPECIFIED = 0;
+  ANALGESIC_MEDICATION_CODE_K = 1;
+  ANALGESIC_MEDICATION_CODE_F = 2;
+  ANALGESIC_MEDICATION_CODE_M = 3;
+}
+
+enum AntibioticMedicationCode {
+  ANTIBIOTIC_MEDICATION_CODE_UNSPECIFIED = 0;
+  ANTIBIOTIC_MEDICATION_CODE_M = 1;
+  ANTIBIOTIC_MEDICATION_CODE_E = 2;
+  ANTIBIOTIC_MEDICATION_CODE_P = 3;
+  ANTIBIOTIC_MEDICATION_CODE_A = 4;
+}
+
+enum OtherMedicationCode {
+  OTHER_MEDICATION_CODE_UNSPECIFIED = 0;
+  OTHER_MEDICATION_CODE_I = 1;
+  OTHER_MEDICATION_CODE_T = 2;
+}
+
+enum CasualtyTypeCode {
+  CASUALTY_TYPE_CODE_UNSPECIFIED = 0;
+  CASUALTY_TYPE_CODE_A = 1;
+  CASUALTY_TYPE_CODE_B = 2;
+}
+
 message RequestHeader {
   // Section 9. These fields correspond to the header concept in
   // chapters 1-3 and the canonical text example in section 17.1.
@@ -285,6 +511,11 @@ message RequestSegment {
     EngineerReconRoadReportSegment engineer_recon_road = 6;
     EngineerReconLandingZoneReportSegment engineer_recon_landing_zone = 7;
     GeneralEngineeringObstacleRemovalSegment obstacle_removal = 8;
+    ExplosiveOrdnanceDisposalSegment eod = 9;
+    HealthCollectionSegment health_collection = 10;
+    HealthTriageSegment health_triage = 11;
+    HealthInterventionSegment health_intervention = 12;
+    HealthHoldSegment health_hold = 13;
   }
 }
 
@@ -418,4 +649,129 @@ message GeneralEngineeringObstacleRemovalSegment {
   string bypass_grid = 10;
   optional AttachmentIndicatorCode attachment_indicator = 11;
   optional string narrative = 12;
+}
+
+message ExplosiveOrdnanceDisposalSegment {
+  // Section 3.7.3.12 and Table 30.
+  string date_of_uxo_discovery = 1;
+  string requested_date_of_eod_action = 2;
+  string location_of_uxo = 3;
+  CBRNAgentTypeCode type_of_cbrn_agent = 4;
+  optional CBRNPhysicalPropertyCode physical_property_of_cbrn_agent = 5;
+  optional CBRNContaminationValueCode contamination_value_of_cbrn_agent = 6;
+  string munition_color = 7;
+  string munition_markings = 8;
+  MunitionPurposeCode munition_purpose = 9;
+  MunitionTypeCode munition_type = 10;
+  optional AttachmentIndicatorCode attachment_indicator = 11;
+  optional string narrative = 12;
+}
+
+message HealthCollectionSegment {
+  // Section 3.8.3.1 and Table 33.
+  uint32 segment_number = 1;
+  HealthCollectionRequestTypeCode request_type_code = 2;
+  RequestPriorityCode request_priority = 3;
+  string zap_or_edi_pi = 4;
+  string last_name = 5;
+  string first_name = 6;
+  optional ServiceCode service = 7;
+  optional string element_unit_identification_or_callsign = 8;
+  string allergies = 9;
+  string date_of_injury_local = 10;
+  string time_of_injury_local = 11;
+  string location_injury_occurred = 12;
+}
+
+message HealthTriageSegment {
+  // Section 3.8.3.2 and Table 34.
+  HealthPrimaryMechanismCode primary_mechanism_of_injury = 1;
+  HealthCBRNExposureCode cbrn_related_exposure = 2;
+  HealthMajorSignsSymptomsCode major_signs_symptoms = 3;
+  repeated string injury_locations = 4;
+  optional string vitals_check_date_local = 5;
+  optional string vitals_check_time_local = 6;
+  optional string body_temperature_fahrenheit = 7;
+  optional string pulse_rate = 8;
+  optional HealthPulseLocationCode pulse_location = 9;
+  optional string blood_pressure = 10;
+  optional string respiratory_rate = 11;
+  optional string pulse_oximetry_percent = 12;
+  optional HealthResponsivenessCode responsiveness = 13;
+  optional uint32 pain_scale = 14;
+  HealthTriagePrecedenceCode triage_precedence = 15;
+}
+
+message TourniquetTreatment {
+  TourniquetPlacementCode placement = 1;
+  TourniquetTypeCode type = 2;
+  string date_local = 3;
+  string time_local = 4;
+}
+
+message FluidCirculationTreatment {
+  optional FluidNameCode fluid_name_code = 1;
+  optional string other_fluid_name = 2;
+  string volume_dose = 3;
+  FluidRouteCode route = 4;
+  string date_local = 5;
+  string time_local = 6;
+}
+
+message BloodCirculationTreatment {
+  BloodProductCode blood_product_name = 1;
+  string volume_dose = 2;
+  FluidRouteCode route = 3;
+  string date_local = 4;
+  string time_local = 5;
+}
+
+message AnalgesicMedicationTreatment {
+  optional AnalgesicMedicationCode medication_code = 1;
+  optional string other_medication_name = 2;
+  string volume_dose = 3;
+  MedicationRouteCode route = 4;
+  string date_local = 5;
+  string time_local = 6;
+}
+
+message AntibioticMedicationTreatment {
+  optional AntibioticMedicationCode medication_code = 1;
+  optional string other_medication_name = 2;
+  string volume_dose = 3;
+  MedicationRouteCode route = 4;
+  string date_local = 5;
+  string time_local = 6;
+}
+
+message OtherMedicationTreatment {
+  optional OtherMedicationCode medication_code = 1;
+  optional string other_medication_name = 2;
+  string volume_dose = 3;
+  MedicationRouteCode route = 4;
+  string date_local = 5;
+  string time_local = 6;
+}
+
+message HealthInterventionSegment {
+  // Section 3.8.3.2 and Table 35.
+  repeated TourniquetTreatment tourniquets = 1;
+  repeated WoundTreatmentCode wound_treatments = 2;
+  AirwayTreatmentCode airway_treatment = 3;
+  BreathingTreatmentCode breathing_treatment = 4;
+  repeated FluidCirculationTreatment fluid_circulation_treatments = 5;
+  repeated BloodCirculationTreatment blood_circulation_treatments = 6;
+  repeated AnalgesicMedicationTreatment analgesic_medication_treatments = 7;
+  repeated AntibioticMedicationTreatment antibiotic_medication_treatments = 8;
+  repeated OtherMedicationTreatment other_medication_treatments = 9;
+  CasualtyTypeCode casualty_type = 10;
+  string first_responder_zap_or_edi_pi = 11;
+}
+
+message HealthHoldSegment {
+  // Section 3.8.3.3.
+  // Hold adds append-only triage and intervention updates and does not
+  // define new closed-field domains in the source text.
+  repeated HealthTriageSegment triage_entries = 1;
+  repeated HealthInterventionSegment intervention_entries = 2;
 }
