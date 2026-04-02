@@ -1,0 +1,158 @@
+syntax = "proto3";
+
+package lxdr.v1;
+
+// LXDR v1 core schema.
+//
+// This schema is derived strictly from docs/lxdr-protocol.md as it
+// currently stands. It models only the protocol objects and segment
+// families already defined in the draft:
+// - request header
+// - synchronized response
+// - request container
+// - mobility PAX request segment
+// - mobility cargo request segment
+// - supply request segment
+// - maintenance request segment
+//
+// It does not yet model:
+// - general engineering segment families
+// - health services segment families
+// - transport, fragmentation, crypto, or bearer behavior
+
+enum FunctionFamily {
+  FUNCTION_FAMILY_UNSPECIFIED = 0;
+  FUNCTION_FAMILY_MOBILITY = 1;
+  FUNCTION_FAMILY_SUPPLY = 2;
+  FUNCTION_FAMILY_MAINTENANCE = 3;
+  FUNCTION_FAMILY_GENERAL_ENGINEERING = 4;
+  FUNCTION_FAMILY_HEALTH_SERVICES = 5;
+}
+
+message RequestHeader {
+  // Section 9. These fields correspond to the header concept in
+  // chapters 1-3 and the canonical text example in section 17.1.
+
+  string local_system_date = 1;
+  string local_system_time = 2;
+
+  // Calculated and not passed in the canonical exchange rules, but part
+  // of the header model.
+  optional string utc_time = 3;
+  optional string military_dtg = 4;
+
+  string synchronized_geospatial_reference = 5;
+  string local_request_id = 6;
+
+  // Returned as part of synchronized replacement.
+  optional string synchronized_request_id = 7;
+
+  string request_priority = 8;
+  string element_unit_id_or_callsign = 9;
+  uint32 request_segment_count = 10;
+}
+
+message SynchronizedResponse {
+  // Section 9.3 and section 17.2.
+  string local_request_id = 1;
+  string synchronized_request_id = 2;
+}
+
+message RequestContainer {
+  // Section 8. One request header with one or more request segments.
+  RequestHeader header = 1;
+  repeated RequestSegment segments = 2;
+}
+
+message RequestSegment {
+  FunctionFamily function_family = 1;
+
+  oneof segment {
+    MobilityPaxRequestSegment mobility_pax = 2;
+    MobilityCargoRequestSegment mobility_cargo = 3;
+    SupplyRequestSegment supply = 4;
+    MaintenanceRequestSegment maintenance = 5;
+  }
+}
+
+message MobilityPaxRequestSegment {
+  // Section 11.1 and canonical example in section 17.6.
+  uint32 segment_number = 1;
+  string request_type_code = 2;
+  string request_priority = 3;
+  string zap_or_edi_pi = 4;
+  string earliest_departure_date_local = 5;
+  string latest_departure_date_local = 6;
+  string departure_location = 7;
+  string destination_location = 8;
+  string total_estimated_baggage_weight_lbs = 9;
+  string hazardous_material_type = 10;
+
+  // Calculated, not passed.
+  optional uint32 person_count = 11;
+  optional string total_baggage_weight_lbs = 12;
+}
+
+message MobilityCargoRequestSegment {
+  // Section 11.2 and canonical example in section 17.7.
+  uint32 segment_number = 1;
+  string request_type_code = 2;
+  string request_priority = 3;
+  string item_by_niin = 4;
+  string item_quantity = 5;
+  string serial_number = 6;
+  string gross_weight_lbs = 7;
+  string actual_height_inches = 8;
+  string actual_width_inches = 9;
+  string actual_length_inches = 10;
+  string hmic = 11;
+  string handling = 12;
+  string earliest_departure_date_local = 13;
+  string latest_departure_date_local = 14;
+  string departure_location = 15;
+  string destination_location = 16;
+
+  // Calculated, not passed.
+  optional uint32 item_count = 17;
+  optional string total_weight_lbs = 18;
+}
+
+message SupplyRequestSegment {
+  // Section 12.1.
+  uint32 segment_number = 1;
+  string request_type_code = 2;
+  string request_priority = 3;
+
+  // Optional when unknown. Narrative may be used instead.
+  optional string item_by_niin = 4;
+
+  string item_quantity = 5;
+  string required_delivery_date_local = 6;
+  string delivery_location = 7;
+
+  // The current draft defines attachment only as an optional indicator
+  // in the request segment.
+  optional string attachment_indicator = 8;
+  optional string narrative = 9;
+}
+
+message MaintenanceRequestSegment {
+  // Section 13.1.
+  uint32 segment_number = 1;
+  string request_type_code = 2;
+  string request_priority = 3;
+
+  optional string serial_number = 4;
+  string niin = 5;
+  optional string model_of_equipment = 6;
+  optional string item_nomenclature = 7;
+  string number_of_pieces_requiring_support = 8;
+  string equipment_operational_condition = 9;
+  string date_maintenance_support_required_local = 10;
+  string location_of_equipment = 11;
+  string type_of_maintenance_support_required = 12;
+  string type_of_repair = 13;
+  string repair_major_defect = 14;
+  string attachment_indicator = 15;
+  optional string narrative = 16;
+}
