@@ -309,16 +309,218 @@ From Sections 3.4 through 3.8, LXDR MUST be organized by function family:
 - health services
 
 This draft currently records the following early request segment families as
-normatively introduced in Sections 3.4 through 3.6:
+normatively introduced in Sections 3.4 through 3.7:
 
 - mobility PAX request
 - mobility cargo request
 - supply request
 - maintenance request
+- engineer reconnaissance road report
+- engineer reconnaissance landing zone report
+- general engineering obstacle removal
 
 Later families in Chapter 3 remain part of the protocol scope, but this
 draft does not yet define their schemas because this document is limited to
 the preamble and first extracted protocol baseline.
+
+### 10.1 Engineer Reconnaissance Road Report
+
+Section 3.7.3.4 defines the road report as an engineer reconnaissance
+segment for evaluating established-road condition and trafficability
+between a predetermined start and end point.
+
+Its notable protocol properties are:
+
+- date of evaluation/reconnaissance
+- start point location
+- end point location
+- closed one-character code domains for:
+  - road classification
+  - drainage
+  - foundation
+  - surface type
+- required obstructions field
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 22.
+
+#### 10.1.1 Road Classification
+
+- `A`
+  flat gradients and easy curves
+- `B`
+  steep gradient greater than 7 percent
+- `C`
+  sharp curves less than 30 meters
+- `D`
+  steep gradients and sharp curves
+
+#### 10.1.2 Drainage
+
+- `A`
+  adequate crown/camber with adequate culverts in good condition
+- `B`
+  inadequate; poor crown/camber or blocked/poor culverts or ditches
+
+#### 10.1.3 Foundation
+
+- `A`
+  stabilized and compacted
+- `B`
+  unstable or loose
+
+#### 10.1.4 Surface Type
+
+- `A`
+  concrete
+- `B`
+  bituminous
+- `C`
+  brick
+- `D`
+  stone
+- `E`
+  crushed rock
+- `F`
+  water bound macadum
+- `G`
+  gravel
+- `H`
+  lightly metaled
+- `I`
+  natural or stabilized soil
+- `J`
+  other
+
+### 10.2 Engineer Reconnaissance Landing Zone Report
+
+Section 3.7.3.10 defines the landing zone report as an engineer
+reconnaissance segment for evaluating usable terrain for aircraft landing
+and takeoff. It is not an airfield or staging-facility report.
+
+Its notable protocol properties are:
+
+- date of evaluation/reconnaissance
+- location
+- estimate flag
+- layout designation
+- landing point, landing zone, and landing site capacities
+- landing zone width and length
+- aircraft supportability code
+- approach and departure direction codes
+- surface slope code
+- obstacle code
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 28.
+
+#### 10.2.1 Estimate
+
+- `1`
+  yes
+- `0`
+  no
+
+#### 10.2.2 Layout Designation
+
+- `LZ`
+  landing zone
+- `LS`
+  landing site
+- `LP`
+  landing point
+
+#### 10.2.3 Aircraft Supportability
+
+- `A`
+  size 4 aircraft
+- `B`
+  size 4 aircraft
+- `C`
+  size 2 aircraft
+- `D`
+  size 2 aircraft
+- `E`
+  vertical lift requires VTOL
+- `F`
+  vertical lift requires VTOL
+
+#### 10.2.4 Approach and Departure Direction
+
+- `S`
+  south
+- `E`
+  east
+- `N`
+  north
+- `W`
+  west
+
+#### 10.2.5 Surface Slope
+
+- `A`
+  less than 7 degrees upslope landing
+- `B`
+  greater than 7 degrees side slope landing
+
+#### 10.2.6 Obstacle
+
+- `1`
+  remove
+- `2`
+  reduce
+- `3`
+  emplace
+
+### 10.3 General Engineering Obstacle Removal
+
+Section 3.7.3.11 defines obstacle removal as a general engineering
+segment for describing an obstacle, its dimensions, bypass conditions,
+and the engineer recommendation for action.
+
+Its notable protocol properties are:
+
+- date of evaluation/reconnaissance
+- location
+- obstacle code
+- min/max length, width, and depth
+- route number
+- determination of action code
+- bypass code
+- bypass grid
+- optional attachment flag
+- optional narrative
+
+The canonical segment schema is given in Table 29.
+
+#### 10.3.1 Obstacle
+
+- `1`
+  remove
+- `2`
+  reduce
+- `3`
+  emplace
+
+#### 10.3.2 Determination of Action
+
+- `1`
+  use bypass
+- `2`
+  neutralize obstacle
+- `3`
+  breach
+- `4`
+  continue mission
+
+#### 10.3.3 Bypass
+
+- `1`
+  yes
+- `0`
+  no
 
 ## 11. Mobility Request Requirements
 
@@ -425,6 +627,105 @@ The canonical segment schema is given in Table 18.
 This draft therefore does not assume that every two-character request type
 is globally unique across all logistics functions. Function and segment
 context are part of interpretation.
+
+### 13.2 Maintenance Code Domains
+
+Section 3.6.3 defines several maintenance fields as user-facing clear text
+choices that are exchanged as compact codes. For protocol purposes, these
+domains are closed and normative.
+
+#### 13.2.1 Equipment Operational Condition
+
+The maintenance operational condition is a single alpha code:
+
+- `A`
+  operational; can perform all combat functions
+- `B`
+  minor; can perform most combat functions
+- `C`
+  degraded/deadline; cannot perform all combat functions
+
+#### 13.2.2 Type of Maintenance Support Required
+
+The maintenance support type is a two-character alphanumeric code:
+
+- `XX`
+  none
+- `R1`
+  repair
+- `R2`
+  recovery retrieve
+- `R3`
+  recovery free from immobility
+- `R4`
+  contact team
+
+#### 13.2.3 Type of Repair
+
+The repair type is a two-character alphanumeric code. Section 3.6.3
+states this list activates only when the maintenance support type is
+`R1`.
+
+- `M1`
+  modification
+- `S1`
+  servicing preventive maintenance
+- `S2`
+  servicing tune/adjust
+- `C1`
+  calibration
+- `D1`
+  repair defect
+
+#### 13.2.4 Repair Major Defect
+
+The repair major defect is a four-character alphanumeric code. Section
+3.6.3 states this list activates only when the maintenance support type
+is `R1` or `R4`.
+
+- `MD01`
+  engine
+- `MD02`
+  fuel
+- `MD03`
+  exhaust
+- `MD04`
+  cooling
+- `MD05`
+  lubrication
+- `MD06`
+  electrical/fuse
+- `MD07`
+  transmission/power train
+- `MD08`
+  chassis/body/frame/armor
+- `MD09`
+  suspension/axle/differential/shocks
+- `MD10`
+  brakes/tires/wheels/hub/track
+- `MD11`
+  lift/winch/boom/turret
+- `MD12`
+  hydraulics
+- `MD13`
+  receiver/input circuitry
+- `MD14`
+  transmitter/output circuitry
+- `MD15`
+  display/screen/video
+- `MD16`
+  weapon system
+- `NMAJ`
+  routine/no major defect
+
+#### 13.2.5 Attachment Indicator
+
+The attachment indicator is a single digit flag:
+
+- `1`
+  attachment present
+- `0`
+  no attachment present
 
 ## 14. Protocol Design Constraints Derived from Sections 1-3
 
@@ -588,6 +889,42 @@ This example represents:
 - latest departure date: `2027OCT20`
 - departure location: `4QFJ123456`
 - destination location: `4QFJ456789`
+
+### 17.7 Cargo Code Domains
+
+Section 3.4.3.2 defines two closed one-character code domains for cargo
+movement.
+
+#### 17.7.1 HMIC
+
+The hazardous material indicator code is a single alphabetic code:
+
+- `D`
+  no information in HMIRS; the NSN is in a Federal Stock Class where an
+  MSDS should be available
+- `N`
+  no HMIRS data and the NSN is in a class not generally suspected of
+  hazardous materials
+- `P`
+  no HMIRS data; an MSDS may be required depending on hazard
+  determination or end use
+- `Y`
+  information is found in HMIRS
+
+#### 17.7.2 Handling
+
+The cargo handling code is a single alphabetic code:
+
+- `C`
+  crane or hoist
+- `M`
+  material handling equipment
+- `T`
+  tow
+- `R`
+  ramp
+- `X`
+  none
 
 ## 18. Role of the Appendices
 
@@ -854,6 +1191,97 @@ In that model:
 - this document remains the protocol authority
 - protobuf remains the canonical typed schema
 - packed encodings become a constrained representation of the same objects
+
+## 21. Section 4 Implications
+
+Section 4 of Project ADRIAN does not replace the protocol core defined by
+chapters 1 through 3, but it does clarify the intended operational system
+that LXDR is meant to enable.
+
+This section records only the protocol-relevant implications of Section 4.
+
+### 21.1 Requests Are Broader Than Materiel
+
+Section 4 explicitly broadens the meaning of a request into three classes:
+
+- request for information
+- request for service
+- request for materiel
+
+Therefore, LXDR must not be interpreted as a materiel-only requisition
+format. The protocol core should be capable of carrying requests across
+those three classes even when a given function or segment family is more
+heavily associated with one class than the others.
+
+### 21.2 Supply Chain Scope Is Broader Than Materiel
+
+Section 4 defines the supply chain in broader terms than traditional
+material flow. In protocol terms, the exchanged object may represent a
+demand for:
+
+- information
+- service
+- materiel
+
+This reinforces the requirement that LXDR request objects remain function-
+ and demand-oriented rather than hard-coded to inventory issuance alone.
+
+### 21.3 Mobility Is the Intended Function Frame
+
+Section 4 recommends a doctrinal shift from `transportation` to
+`mobility`.
+
+For protocol purposes, this means:
+
+- mobility is the intended top-level function frame for movement-related
+  requests
+- transportation mode selection remains a later processing activity
+- future mobility request families may need to accommodate:
+  - intermodal planning
+  - littoral connectors
+  - unmanned systems
+  - small aerial craft
+
+This draft does not yet add those future mobility segment families, but
+their possibility should be assumed in future schema growth.
+
+### 21.4 Planning and Forecasting Are Protocol Consumers
+
+Section 4 identifies a major gap between operations, logistics, and
+planning tools. The desired end state is a common operational picture and
+planner workbench that integrates logistics digitally.
+
+For LXDR, the immediate implication is not that planning objects become
+wire-format messages now. The implication is:
+
+- planning
+- forecasting
+- readiness
+- execution tracking
+
+are future consumers and producers of LXDR-aligned request data.
+
+Therefore, LXDR should continue to emphasize:
+
+- stable request identity
+- synchronization
+- function-family structure
+- minimum critical data at the point of origin
+
+so that later planning and COP layers can consume the same protocol
+objects without redefining them.
+
+### 21.5 Section 4 Is Guidance for Future Extension
+
+Section 4 should currently be treated as:
+
+- operational design guidance
+- future protocol extension guidance
+- future application and COP guidance
+
+It should not yet be treated as a source of new wire fields unless the
+whitepaper provides explicit exchange structures comparable to those in
+Section 3.
 - baggage weight: `075`
 - hazardous material type: `X`
 

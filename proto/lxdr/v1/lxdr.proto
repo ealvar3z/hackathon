@@ -14,6 +14,9 @@ package lxdr.v1;
 // - mobility cargo request segment
 // - supply request segment
 // - maintenance request segment
+// - engineer reconnaissance road report segment
+// - engineer reconnaissance landing zone report segment
+// - general engineering obstacle removal segment
 //
 // It does not yet model:
 // - general engineering segment families
@@ -27,6 +30,213 @@ enum FunctionFamily {
   FUNCTION_FAMILY_MAINTENANCE = 3;
   FUNCTION_FAMILY_GENERAL_ENGINEERING = 4;
   FUNCTION_FAMILY_HEALTH_SERVICES = 5;
+}
+
+enum RequestPriorityCode {
+  REQUEST_PRIORITY_CODE_UNSPECIFIED = 0;
+  REQUEST_PRIORITY_CODE_01 = 1;
+  REQUEST_PRIORITY_CODE_02 = 2;
+  REQUEST_PRIORITY_CODE_03 = 3;
+  REQUEST_PRIORITY_CODE_04 = 4;
+  REQUEST_PRIORITY_CODE_05 = 5;
+  REQUEST_PRIORITY_CODE_06 = 6;
+  REQUEST_PRIORITY_CODE_07 = 7;
+  REQUEST_PRIORITY_CODE_08 = 8;
+  REQUEST_PRIORITY_CODE_09 = 9;
+  REQUEST_PRIORITY_CODE_10 = 10;
+  REQUEST_PRIORITY_CODE_11 = 11;
+  REQUEST_PRIORITY_CODE_12 = 12;
+  REQUEST_PRIORITY_CODE_13 = 13;
+  REQUEST_PRIORITY_CODE_14 = 14;
+  REQUEST_PRIORITY_CODE_15 = 15;
+}
+
+enum MobilityPaxRequestTypeCode {
+  MOBILITY_PAX_REQUEST_TYPE_CODE_UNSPECIFIED = 0;
+  MOBILITY_PAX_REQUEST_TYPE_CODE_PM = 1;
+}
+
+enum MobilityCargoRequestTypeCode {
+  MOBILITY_CARGO_REQUEST_TYPE_CODE_UNSPECIFIED = 0;
+  MOBILITY_CARGO_REQUEST_TYPE_CODE_CM = 1;
+}
+
+enum CargoHMICCode {
+  CARGO_HMIC_CODE_UNSPECIFIED = 0;
+  CARGO_HMIC_CODE_D = 1;
+  CARGO_HMIC_CODE_N = 2;
+  CARGO_HMIC_CODE_P = 3;
+  CARGO_HMIC_CODE_Y = 4;
+}
+
+enum CargoHandlingCode {
+  CARGO_HANDLING_CODE_UNSPECIFIED = 0;
+  CARGO_HANDLING_CODE_C = 1;
+  CARGO_HANDLING_CODE_M = 2;
+  CARGO_HANDLING_CODE_T = 3;
+  CARGO_HANDLING_CODE_R = 4;
+  CARGO_HANDLING_CODE_X = 5;
+}
+
+enum SupplyRequestTypeCode {
+  SUPPLY_REQUEST_TYPE_CODE_UNSPECIFIED = 0;
+  SUPPLY_REQUEST_TYPE_CODE_SR = 1;
+}
+
+enum MaintenanceRequestTypeCode {
+  MAINTENANCE_REQUEST_TYPE_CODE_UNSPECIFIED = 0;
+  MAINTENANCE_REQUEST_TYPE_CODE_CM = 1;
+}
+
+enum AttachmentIndicatorCode {
+  ATTACHMENT_INDICATOR_CODE_UNSPECIFIED = 0;
+  ATTACHMENT_INDICATOR_CODE_NO = 1;
+  ATTACHMENT_INDICATOR_CODE_YES = 2;
+}
+
+enum MaintenanceOperationalConditionCode {
+  MAINTENANCE_OPERATIONAL_CONDITION_CODE_UNSPECIFIED = 0;
+  MAINTENANCE_OPERATIONAL_CONDITION_CODE_A = 1;
+  MAINTENANCE_OPERATIONAL_CONDITION_CODE_B = 2;
+  MAINTENANCE_OPERATIONAL_CONDITION_CODE_C = 3;
+}
+
+enum MaintenanceSupportTypeCode {
+  MAINTENANCE_SUPPORT_TYPE_CODE_UNSPECIFIED = 0;
+  MAINTENANCE_SUPPORT_TYPE_CODE_XX = 1;
+  MAINTENANCE_SUPPORT_TYPE_CODE_R1 = 2;
+  MAINTENANCE_SUPPORT_TYPE_CODE_R2 = 3;
+  MAINTENANCE_SUPPORT_TYPE_CODE_R3 = 4;
+  MAINTENANCE_SUPPORT_TYPE_CODE_R4 = 5;
+}
+
+enum MaintenanceRepairTypeCode {
+  MAINTENANCE_REPAIR_TYPE_CODE_UNSPECIFIED = 0;
+  MAINTENANCE_REPAIR_TYPE_CODE_M1 = 1;
+  MAINTENANCE_REPAIR_TYPE_CODE_S1 = 2;
+  MAINTENANCE_REPAIR_TYPE_CODE_S2 = 3;
+  MAINTENANCE_REPAIR_TYPE_CODE_C1 = 4;
+  MAINTENANCE_REPAIR_TYPE_CODE_D1 = 5;
+}
+
+enum MaintenanceMajorDefectCode {
+  MAINTENANCE_MAJOR_DEFECT_CODE_UNSPECIFIED = 0;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD01 = 1;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD02 = 2;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD03 = 3;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD04 = 4;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD05 = 5;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD06 = 6;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD07 = 7;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD08 = 8;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD09 = 9;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD10 = 10;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD11 = 11;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD12 = 12;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD13 = 13;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD14 = 14;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD15 = 15;
+  MAINTENANCE_MAJOR_DEFECT_CODE_MD16 = 16;
+  MAINTENANCE_MAJOR_DEFECT_CODE_NMAJ = 17;
+}
+
+enum RoadClassificationCode {
+  ROAD_CLASSIFICATION_CODE_UNSPECIFIED = 0;
+  ROAD_CLASSIFICATION_CODE_A = 1;
+  ROAD_CLASSIFICATION_CODE_B = 2;
+  ROAD_CLASSIFICATION_CODE_C = 3;
+  ROAD_CLASSIFICATION_CODE_D = 4;
+}
+
+enum RoadDrainageCode {
+  ROAD_DRAINAGE_CODE_UNSPECIFIED = 0;
+  ROAD_DRAINAGE_CODE_A = 1;
+  ROAD_DRAINAGE_CODE_B = 2;
+}
+
+enum RoadFoundationCode {
+  ROAD_FOUNDATION_CODE_UNSPECIFIED = 0;
+  ROAD_FOUNDATION_CODE_A = 1;
+  ROAD_FOUNDATION_CODE_B = 2;
+}
+
+enum RoadSurfaceTypeCode {
+  ROAD_SURFACE_TYPE_CODE_UNSPECIFIED = 0;
+  ROAD_SURFACE_TYPE_CODE_A = 1;
+  ROAD_SURFACE_TYPE_CODE_B = 2;
+  ROAD_SURFACE_TYPE_CODE_C = 3;
+  ROAD_SURFACE_TYPE_CODE_D = 4;
+  ROAD_SURFACE_TYPE_CODE_E = 5;
+  ROAD_SURFACE_TYPE_CODE_F = 6;
+  ROAD_SURFACE_TYPE_CODE_G = 7;
+  ROAD_SURFACE_TYPE_CODE_H = 8;
+  ROAD_SURFACE_TYPE_CODE_I = 9;
+  ROAD_SURFACE_TYPE_CODE_J = 10;
+}
+
+enum EstimateCode {
+  ESTIMATE_CODE_UNSPECIFIED = 0;
+  ESTIMATE_CODE_NO = 1;
+  ESTIMATE_CODE_YES = 2;
+}
+
+enum LandingZoneLayoutDesignationCode {
+  LANDING_ZONE_LAYOUT_DESIGNATION_CODE_UNSPECIFIED = 0;
+  LANDING_ZONE_LAYOUT_DESIGNATION_CODE_LZ = 1;
+  LANDING_ZONE_LAYOUT_DESIGNATION_CODE_LS = 2;
+  LANDING_ZONE_LAYOUT_DESIGNATION_CODE_LP = 3;
+}
+
+enum AircraftSupportabilityCode {
+  AIRCRAFT_SUPPORTABILITY_CODE_UNSPECIFIED = 0;
+  AIRCRAFT_SUPPORTABILITY_CODE_A = 1;
+  AIRCRAFT_SUPPORTABILITY_CODE_B = 2;
+  AIRCRAFT_SUPPORTABILITY_CODE_C = 3;
+  AIRCRAFT_SUPPORTABILITY_CODE_D = 4;
+  AIRCRAFT_SUPPORTABILITY_CODE_E = 5;
+  AIRCRAFT_SUPPORTABILITY_CODE_F = 6;
+}
+
+enum CardinalDirectionCode {
+  CARDINAL_DIRECTION_CODE_UNSPECIFIED = 0;
+  CARDINAL_DIRECTION_CODE_S = 1;
+  CARDINAL_DIRECTION_CODE_E = 2;
+  CARDINAL_DIRECTION_CODE_N = 3;
+  CARDINAL_DIRECTION_CODE_W = 4;
+}
+
+enum LandingZoneSurfaceSlopeCode {
+  LANDING_ZONE_SURFACE_SLOPE_CODE_UNSPECIFIED = 0;
+  LANDING_ZONE_SURFACE_SLOPE_CODE_A = 1;
+  LANDING_ZONE_SURFACE_SLOPE_CODE_B = 2;
+}
+
+enum LandingZoneObstacleCode {
+  LANDING_ZONE_OBSTACLE_CODE_UNSPECIFIED = 0;
+  LANDING_ZONE_OBSTACLE_CODE_1 = 1;
+  LANDING_ZONE_OBSTACLE_CODE_2 = 2;
+  LANDING_ZONE_OBSTACLE_CODE_3 = 3;
+}
+
+enum ObstacleActionCode {
+  OBSTACLE_ACTION_CODE_UNSPECIFIED = 0;
+  OBSTACLE_ACTION_CODE_1 = 1;
+  OBSTACLE_ACTION_CODE_2 = 2;
+  OBSTACLE_ACTION_CODE_3 = 3;
+}
+
+enum ObstacleDeterminationCode {
+  OBSTACLE_DETERMINATION_CODE_UNSPECIFIED = 0;
+  OBSTACLE_DETERMINATION_CODE_1 = 1;
+  OBSTACLE_DETERMINATION_CODE_2 = 2;
+  OBSTACLE_DETERMINATION_CODE_3 = 3;
+  OBSTACLE_DETERMINATION_CODE_4 = 4;
+}
+
+enum BypassCode {
+  BYPASS_CODE_UNSPECIFIED = 0;
+  BYPASS_CODE_NO = 1;
+  BYPASS_CODE_YES = 2;
 }
 
 message RequestHeader {
@@ -47,7 +257,7 @@ message RequestHeader {
   // Returned as part of synchronized replacement.
   optional string synchronized_request_id = 7;
 
-  string request_priority = 8;
+  RequestPriorityCode request_priority = 8;
   string element_unit_id_or_callsign = 9;
   uint32 request_segment_count = 10;
 }
@@ -72,14 +282,17 @@ message RequestSegment {
     MobilityCargoRequestSegment mobility_cargo = 3;
     SupplyRequestSegment supply = 4;
     MaintenanceRequestSegment maintenance = 5;
+    EngineerReconRoadReportSegment engineer_recon_road = 6;
+    EngineerReconLandingZoneReportSegment engineer_recon_landing_zone = 7;
+    GeneralEngineeringObstacleRemovalSegment obstacle_removal = 8;
   }
 }
 
 message MobilityPaxRequestSegment {
   // Section 11.1 and canonical example in section 17.6.
   uint32 segment_number = 1;
-  string request_type_code = 2;
-  string request_priority = 3;
+  MobilityPaxRequestTypeCode request_type_code = 2;
+  RequestPriorityCode request_priority = 3;
   string zap_or_edi_pi = 4;
   string earliest_departure_date_local = 5;
   string latest_departure_date_local = 6;
@@ -96,8 +309,8 @@ message MobilityPaxRequestSegment {
 message MobilityCargoRequestSegment {
   // Section 11.2 and canonical example in section 17.7.
   uint32 segment_number = 1;
-  string request_type_code = 2;
-  string request_priority = 3;
+  MobilityCargoRequestTypeCode request_type_code = 2;
+  RequestPriorityCode request_priority = 3;
   string item_by_niin = 4;
   string item_quantity = 5;
   string serial_number = 6;
@@ -105,8 +318,8 @@ message MobilityCargoRequestSegment {
   string actual_height_inches = 8;
   string actual_width_inches = 9;
   string actual_length_inches = 10;
-  string hmic = 11;
-  string handling = 12;
+  CargoHMICCode hmic = 11;
+  CargoHandlingCode handling = 12;
   string earliest_departure_date_local = 13;
   string latest_departure_date_local = 14;
   string departure_location = 15;
@@ -120,8 +333,8 @@ message MobilityCargoRequestSegment {
 message SupplyRequestSegment {
   // Section 12.1.
   uint32 segment_number = 1;
-  string request_type_code = 2;
-  string request_priority = 3;
+  SupplyRequestTypeCode request_type_code = 2;
+  RequestPriorityCode request_priority = 3;
 
   // Optional when unknown. Narrative may be used instead.
   optional string item_by_niin = 4;
@@ -132,27 +345,77 @@ message SupplyRequestSegment {
 
   // The current draft defines attachment only as an optional indicator
   // in the request segment.
-  optional string attachment_indicator = 8;
+  optional AttachmentIndicatorCode attachment_indicator = 8;
   optional string narrative = 9;
 }
 
 message MaintenanceRequestSegment {
   // Section 13.1.
   uint32 segment_number = 1;
-  string request_type_code = 2;
-  string request_priority = 3;
+  MaintenanceRequestTypeCode request_type_code = 2;
+  RequestPriorityCode request_priority = 3;
 
   optional string serial_number = 4;
   string niin = 5;
   optional string model_of_equipment = 6;
   optional string item_nomenclature = 7;
   string number_of_pieces_requiring_support = 8;
-  string equipment_operational_condition = 9;
+  MaintenanceOperationalConditionCode equipment_operational_condition = 9;
   string date_maintenance_support_required_local = 10;
   string location_of_equipment = 11;
-  string type_of_maintenance_support_required = 12;
-  string type_of_repair = 13;
-  string repair_major_defect = 14;
-  string attachment_indicator = 15;
+  MaintenanceSupportTypeCode type_of_maintenance_support_required = 12;
+  MaintenanceRepairTypeCode type_of_repair = 13;
+  MaintenanceMajorDefectCode repair_major_defect = 14;
+  AttachmentIndicatorCode attachment_indicator = 15;
   optional string narrative = 16;
+}
+
+message EngineerReconRoadReportSegment {
+  // Section 3.7.3.4 and Table 22.
+  string date_of_evaluation_local = 1;
+  string start_point_location = 2;
+  string end_point_location = 3;
+  RoadClassificationCode road_classification = 4;
+  RoadDrainageCode drainage = 5;
+  RoadFoundationCode foundation = 6;
+  RoadSurfaceTypeCode surface_type = 7;
+  string obstructions = 8;
+  optional AttachmentIndicatorCode attachment_indicator = 9;
+  optional string narrative = 10;
+}
+
+message EngineerReconLandingZoneReportSegment {
+  // Section 3.7.3.10 and Table 28.
+  string date_of_evaluation_local = 1;
+  string location = 2;
+  EstimateCode estimate = 3;
+  LandingZoneLayoutDesignationCode layout_designation = 4;
+  uint32 landing_point_capacity = 5;
+  uint32 landing_zone_capacity = 6;
+  uint32 landing_site_capacity = 7;
+  string landing_zone_width_feet = 8;
+  string landing_zone_length_feet = 9;
+  AircraftSupportabilityCode aircraft_supportability = 10;
+  CardinalDirectionCode landing_zone_approach = 11;
+  CardinalDirectionCode landing_zone_departure = 12;
+  LandingZoneSurfaceSlopeCode landing_zone_surface_slope = 13;
+  LandingZoneObstacleCode obstacle = 14;
+  optional AttachmentIndicatorCode attachment_indicator = 15;
+  optional string narrative = 16;
+}
+
+message GeneralEngineeringObstacleRemovalSegment {
+  // Section 3.7.3.11 and Table 29.
+  string date_of_evaluation_local = 1;
+  string location = 2;
+  ObstacleActionCode obstacle = 3;
+  string min_max_length_feet = 4;
+  string min_max_width_feet = 5;
+  string min_max_depth_feet = 6;
+  string route_number = 7;
+  ObstacleDeterminationCode determination_of_action = 8;
+  BypassCode bypass = 9;
+  string bypass_grid = 10;
+  optional AttachmentIndicatorCode attachment_indicator = 11;
+  optional string narrative = 12;
 }
