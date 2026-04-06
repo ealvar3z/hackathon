@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"google.golang.org/protobuf/encoding/prototext"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestMarshalUnmarshalRequestContainerBinary(t *testing.T) {
@@ -598,5 +599,179 @@ func TestNewReferencedSynchronizedResponseLinkFrameForRequest(t *testing.T) {
 			frame.GetReferenceLinkMessageId(),
 			requestFrame.LinkMessageId,
 		)
+	}
+}
+
+func TestFramesAreDuplicates(t *testing.T) {
+	frameA, err := NewRequestContainerLinkFrame(testPAXRequestContainer(), LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame A: %v", err)
+	}
+	frameB := proto.Clone(frameA).(*LinkFrame)
+
+	duplicate, err := FramesAreDuplicates(frameA, frameB)
+	if err != nil {
+		t.Fatalf("frames are duplicates: %v", err)
+	}
+	if !duplicate {
+		t.Fatalf("expected frames to be duplicates")
+	}
+}
+
+func TestFramesAreDuplicatesReturnsFalseForDistinctFrames(t *testing.T) {
+	frameA, err := NewRequestContainerLinkFrame(testPAXRequestContainer(), LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame A: %v", err)
+	}
+	frameB, err := NewRequestContainerLinkFrame(testPAXRequestContainer(), LinkDeliveryMethodPropagated)
+	if err != nil {
+		t.Fatalf("new request-container link frame B: %v", err)
+	}
+
+	duplicate, err := FramesAreDuplicates(frameA, frameB)
+	if err != nil {
+		t.Fatalf("frames are duplicates: %v", err)
+	}
+	if duplicate {
+		t.Fatalf("expected frames not to be duplicates")
+	}
+}
+
+func TestFramesAreDuplicatesRejectConflictingFramesWithSameID(t *testing.T) {
+	frameA, err := NewRequestContainerLinkFrame(testPAXRequestContainer(), LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame A: %v", err)
+	}
+	frameB := proto.Clone(frameA).(*LinkFrame)
+	frameB.DeliveryMethod = LinkDeliveryMethodPropagated
+
+	if _, err := FramesAreDuplicates(frameA, frameB); err == nil {
+		t.Fatalf("expected conflicting duplicate error")
+	}
+}
+
+func TestFrameRefersTo(t *testing.T) {
+	container := testPAXRequestContainer()
+	requestFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+	syncFrame, err := NewReferencedSynchronizedResponseLinkFrameForRequest(
+		container,
+		requestFrame,
+		"KL9K15474QFJ",
+		LinkDeliveryMethodPropagated,
+	)
+	if err != nil {
+		t.Fatalf("new referenced synchronized response link frame: %v", err)
+	}
+
+	refers, err := FrameRefersTo(syncFrame, requestFrame)
+	if err != nil {
+		t.Fatalf("frame refers to: %v", err)
+	}
+	if !refers {
+		t.Fatalf("expected frame to refer to request frame")
+	}
+}
+
+func TestFrameRefersToReturnsFalseWithoutReference(t *testing.T) {
+	container := testPAXRequestContainer()
+	requestFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+	syncFrame, err := NewSynchronizedResponseLinkFrameForRequest(
+		container,
+		"KL9K15474QFJ",
+		LinkDeliveryMethodPropagated,
+	)
+	if err != nil {
+		t.Fatalf("new synchronized response link frame: %v", err)
+	}
+
+	refers, err := FrameRefersTo(syncFrame, requestFrame)
+	if err != nil {
+		t.Fatalf("frame refers to: %v", err)
+	}
+	if refers {
+		t.Fatalf("expected frame not to refer to request frame")
+	}
+}
+
+func TestSyncFrameAnswersRequestFrame(t *testing.T) {
+	container := testPAXRequestContainer()
+	requestFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+	syncFrame, err := NewReferencedSynchronizedResponseLinkFrameForRequest(
+		container,
+		requestFrame,
+		"KL9K15474QFJ",
+		LinkDeliveryMethodPropagated,
+	)
+	if err != nil {
+		t.Fatalf("new referenced synchronized response link frame: %v", err)
+	}
+
+	answers, err := SyncFrameAnswersRequestFrame(syncFrame, requestFrame)
+	if err != nil {
+		t.Fatalf("sync frame answers request frame: %v", err)
+	}
+	if !answers {
+		t.Fatalf("expected sync frame to answer request frame")
+	}
+}
+
+func TestSyncFrameAnswersRequestFrameRejectsMismatchedReference(t *testing.T) {
+	container := testPAXRequestContainer()
+	requestFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+	otherRequestFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodPropagated)
+	if err != nil {
+		t.Fatalf("new other request-container link frame: %v", err)
+	}
+	syncFrame, err := NewReferencedSynchronizedResponseLinkFrameForRequest(
+		container,
+		otherRequestFrame,
+		"KL9K15474QFJ",
+		LinkDeliveryMethodPropagated,
+	)
+	if err != nil {
+		t.Fatalf("new referenced synchronized response link frame: %v", err)
+	}
+
+	answers, err := SyncFrameAnswersRequestFrame(syncFrame, requestFrame)
+	if err != nil {
+		t.Fatalf("sync frame answers request frame: %v", err)
+	}
+	if answers {
+		t.Fatalf("expected sync frame not to answer unrelated request frame")
+	}
+}
+
+func TestSyncFrameAnswersRequestFrameRejectsWrongPayloadKinds(t *testing.T) {
+	requestFrame, err := NewRequestContainerLinkFrame(testPAXRequestContainer(), LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+
+	var registry CanonicalRegistry
+	if err := prototext.Unmarshal(
+		readTextProtoFixture(t, "appendix_f_header_registry.textproto"),
+		&registry,
+	); err != nil {
+		t.Fatalf("unmarshal textproto fixture: %v", err)
+	}
+	registryFrame, err := NewCanonicalRegistryLinkFrame(&registry, LinkDeliveryMethodOpportunistic)
+	if err != nil {
+		t.Fatalf("new canonical-registry link frame: %v", err)
+	}
+
+	if _, err := SyncFrameAnswersRequestFrame(registryFrame, requestFrame); err == nil {
+		t.Fatalf("expected wrong payload kind error")
 	}
 }
