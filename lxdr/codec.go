@@ -1055,6 +1055,9 @@ func (f LinkFrame) Validate() error {
 	if f.LinkMessageId == "" {
 		return errors.New("link frame link message ID is required")
 	}
+	if f.ReferenceLinkMessageId != nil && *f.ReferenceLinkMessageId == "" {
+		return errors.New("link frame reference link message ID must not be empty")
+	}
 	if !f.DeliveryMethod.IsValid() {
 		return errors.New("link frame delivery method is required")
 	}

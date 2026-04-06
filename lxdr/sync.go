@@ -81,6 +81,20 @@ func NewSynchronizedResponseLinkFrameForRequest(
 	synchronizedRequestID string,
 	method LinkDeliveryMethod,
 ) (*LinkFrame, error) {
+	return NewReferencedSynchronizedResponseLinkFrameForRequest(
+		container,
+		nil,
+		synchronizedRequestID,
+		method,
+	)
+}
+
+func NewReferencedSynchronizedResponseLinkFrameForRequest(
+	container *RequestContainer,
+	requestFrame *LinkFrame,
+	synchronizedRequestID string,
+	method LinkDeliveryMethod,
+) (*LinkFrame, error) {
 	resp, err := NewSynchronizedResponseForRequest(
 		container,
 		synchronizedRequestID,
@@ -89,5 +103,17 @@ func NewSynchronizedResponseLinkFrameForRequest(
 		return nil, err
 	}
 
-	return NewSynchronizedResponseLinkFrame(resp, method)
+	referenceLinkMessageID := ""
+	if requestFrame != nil {
+		if err := requestFrame.Validate(); err != nil {
+			return nil, err
+		}
+		referenceLinkMessageID = requestFrame.LinkMessageId
+	}
+
+	return NewReferencedSynchronizedResponseLinkFrame(
+		resp,
+		referenceLinkMessageID,
+		method,
+	)
 }

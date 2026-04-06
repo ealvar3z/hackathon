@@ -569,6 +569,7 @@ message LinkFrame {
   string link_message_id = 1;
   LinkDeliveryMethod delivery_method = 2;
   LinkRepresentation representation = 3;
+  optional string reference_link_message_id = 4;
 
   oneof payload {
     RequestContainer request_container = 10;

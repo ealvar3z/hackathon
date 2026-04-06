@@ -3608,10 +3608,11 @@ func (x *RequestHeader) GetRequestSegmentCount() uint32 {
 }
 
 type LinkFrame struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	LinkMessageId  string                 `protobuf:"bytes,1,opt,name=link_message_id,json=linkMessageId,proto3" json:"link_message_id,omitempty"`
-	DeliveryMethod LinkDeliveryMethod     `protobuf:"varint,2,opt,name=delivery_method,json=deliveryMethod,proto3,enum=lxdr.v1.LinkDeliveryMethod" json:"delivery_method,omitempty"`
-	Representation LinkRepresentation     `protobuf:"varint,3,opt,name=representation,proto3,enum=lxdr.v1.LinkRepresentation" json:"representation,omitempty"`
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	LinkMessageId          string                 `protobuf:"bytes,1,opt,name=link_message_id,json=linkMessageId,proto3" json:"link_message_id,omitempty"`
+	DeliveryMethod         LinkDeliveryMethod     `protobuf:"varint,2,opt,name=delivery_method,json=deliveryMethod,proto3,enum=lxdr.v1.LinkDeliveryMethod" json:"delivery_method,omitempty"`
+	Representation         LinkRepresentation     `protobuf:"varint,3,opt,name=representation,proto3,enum=lxdr.v1.LinkRepresentation" json:"representation,omitempty"`
+	ReferenceLinkMessageId *string                `protobuf:"bytes,4,opt,name=reference_link_message_id,json=referenceLinkMessageId,proto3,oneof" json:"reference_link_message_id,omitempty"`
 	// Types that are valid to be assigned to Payload:
 	//
 	//	*LinkFrame_RequestContainer
@@ -3671,6 +3672,13 @@ func (x *LinkFrame) GetRepresentation() LinkRepresentation {
 		return x.Representation
 	}
 	return LinkRepresentation_LINK_REPRESENTATION_UNSPECIFIED
+}
+
+func (x *LinkFrame) GetReferenceLinkMessageId() string {
+	if x != nil && x.ReferenceLinkMessageId != nil {
+		return *x.ReferenceLinkMessageId
+	}
+	return ""
 }
 
 func (x *LinkFrame) GetPayload() isLinkFrame_Payload {
@@ -7490,16 +7498,18 @@ const file_proto_lxdr_v1_lxdr_proto_rawDesc = "" +
 	" \x01(\rR\x13requestSegmentCountB\v\n" +
 	"\t_utc_timeB\x0f\n" +
 	"\r_military_dtgB\x1a\n" +
-	"\x18_synchronized_request_id\"\xb6\x03\n" +
+	"\x18_synchronized_request_id\"\x94\x04\n" +
 	"\tLinkFrame\x12&\n" +
 	"\x0flink_message_id\x18\x01 \x01(\tR\rlinkMessageId\x12D\n" +
 	"\x0fdelivery_method\x18\x02 \x01(\x0e2\x1b.lxdr.v1.LinkDeliveryMethodR\x0edeliveryMethod\x12C\n" +
-	"\x0erepresentation\x18\x03 \x01(\x0e2\x1b.lxdr.v1.LinkRepresentationR\x0erepresentation\x12H\n" +
+	"\x0erepresentation\x18\x03 \x01(\x0e2\x1b.lxdr.v1.LinkRepresentationR\x0erepresentation\x12>\n" +
+	"\x19reference_link_message_id\x18\x04 \x01(\tH\x01R\x16referenceLinkMessageId\x88\x01\x01\x12H\n" +
 	"\x11request_container\x18\n" +
 	" \x01(\v2\x19.lxdr.v1.RequestContainerH\x00R\x10requestContainer\x12T\n" +
 	"\x15synchronized_response\x18\v \x01(\v2\x1d.lxdr.v1.SynchronizedResponseH\x00R\x14synchronizedResponse\x12K\n" +
 	"\x12canonical_registry\x18\f \x01(\v2\x1a.lxdr.v1.CanonicalRegistryH\x00R\x11canonicalRegistryB\t\n" +
-	"\apayload\"x\n" +
+	"\apayloadB\x1c\n" +
+	"\x1a_reference_link_message_id\"x\n" +
 	"\x14SynchronizedResponse\x12(\n" +
 	"\x10local_request_id\x18\x01 \x01(\tR\x0elocalRequestId\x126\n" +
 	"\x17synchronized_request_id\x18\x02 \x01(\tR\x15synchronizedRequestId\"\xf7\x02\n" +

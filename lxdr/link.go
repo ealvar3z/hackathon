@@ -81,6 +81,14 @@ func NewSynchronizedResponseLinkFrame(
 	resp *SynchronizedResponse,
 	method LinkDeliveryMethod,
 ) (*LinkFrame, error) {
+	return NewReferencedSynchronizedResponseLinkFrame(resp, "", method)
+}
+
+func NewReferencedSynchronizedResponseLinkFrame(
+	resp *SynchronizedResponse,
+	referenceLinkMessageID string,
+	method LinkDeliveryMethod,
+) (*LinkFrame, error) {
 	if resp == nil {
 		return nil, fmt.Errorf("synchronized response must not be nil")
 	}
@@ -93,8 +101,13 @@ func NewSynchronizedResponseLinkFrame(
 		LinkPayloadKindSynchronizedResponse,
 		resp,
 		func(messageID string) *LinkFrame {
+			var reference *string
+			if referenceLinkMessageID != "" {
+				reference = &referenceLinkMessageID
+			}
 			return &LinkFrame{
-				LinkMessageId: messageID,
+				LinkMessageId:          messageID,
+				ReferenceLinkMessageId: reference,
 				Payload: &LinkFrame_SynchronizedResponse{
 					SynchronizedResponse: resp,
 				},

@@ -1984,6 +1984,12 @@ In addition, the initial frame carries three link-level metadata fields:
 - `representation`
   the carried representation of the core payload
 
+The frame may also carry one optional reference field:
+
+- `reference_link_message_id`
+  the `link_message_id` of an earlier frame to which the current frame is
+  responding or referring
+
 In the current implementation, `representation` is constrained to:
 
 - `BINARY_PROTO`
@@ -1995,7 +2001,6 @@ not yet define:
 - acknowledgements
 - fragmentation fields
 - integrity fields
-- correlation or reply-reference fields
 - transport hints
 
 Those remain later concerns.
@@ -2010,6 +2015,10 @@ An `LXDR-Link` frame is valid only when:
 - exactly one payload is present
 - the carried payload is itself valid under the corresponding `LXDR-Core`
   rules
+
+When `reference_link_message_id` is present, it is treated as an
+optional correlation handle for an earlier link frame. The v1
+implementation validates only that it is non-empty when supplied.
 
 The link layer therefore does not weaken core validation. It only adds a
 typed carried-message boundary.
@@ -2038,6 +2047,8 @@ The formal exchange is:
    carrying:
    - the original local request ID
    - the synchronized enterprise request ID
+   - optionally the original request frame `link_message_id` as
+     `reference_link_message_id`
 4. the originating request header is updated by matching the local
    request ID and storing the synchronized request ID in header state
 
@@ -2046,10 +2057,43 @@ For v1, this implies:
 - the synchronized response is a first-class carried object
 - synchronization is applied to an existing request by local request ID
   match
+- a synchronized response frame MAY reference the carried request frame it
+  answers by `reference_link_message_id`
 - synchronization failure occurs when the local request ID in the
   response does not match the request header being updated
 - synchronization updates request-header state but does not change the
   request segments themselves
+
+### 22.4 Request Lifecycle Semantics
+
+For v1, LXDR defines three protocol lifecycle states for a request:
+
+- `local_only`
+- `carried`
+- `synchronized`
+
+These are not serialized as new header fields. They are derived from the
+existing protocol objects and exchange events.
+
+The v1 interpretation is:
+
+- `local_only`
+  a valid `RequestContainer` with no synchronized request ID and no
+  current carried-frame context
+- `carried`
+  a valid `RequestContainer` that is being evaluated in the context of a
+  valid `LXDR-Link` frame carrying that same request
+- `synchronized`
+  a valid `RequestContainer` whose header contains a synchronized
+  request ID
+
+This means:
+
+- `local_only` and `synchronized` are derivable from request-header state
+- `carried` is not a header field and cannot be inferred from the request
+  container alone
+- `carried` must be derived from protocol helper/state-machine context,
+  not encoded back into the request
 
 ## 23. Conformance Matrix
 
@@ -2072,6 +2116,78 @@ The columns are:
   canonical text parse/render implemented
 - `Fixture`
   canonical example fixture present
+
+### 23.1 Canonical Text Scope for v1
+
+For v1, canonical text parse/render is implemented only where
+`Project ADRIAN` provides an explicit canonical serialized wire form or
+example in the extracted draft.
+
+That currently includes:
+
+- request header
+- synchronized response
+- mobility PAX
+- mobility cargo
+
+For all other currently modeled segment families, the source provides:
+
+- field tables
+- code domains
+- schema descriptions
+
+but not an equally explicit canonical serialized wire example in the
+current draft. Those families are therefore intentionally bounded to:
+
+- protobuf schema
+- validation
+- typed code domains where explicitly defined
+
+They are not considered incomplete merely because canonical text is not
+implemented for them in v1.
+
+### 23.2 LXDR v1 Completion Criteria
+
+For the purposes of this draft and repository, `LXDR v1` is considered
+complete enough when all of the following are true:
+
+- all currently implemented segment families have:
+  - protobuf schema
+  - Go validation
+- request header, synchronized response, and `LXDR-Link` frame semantics
+  are implemented and validated
+- formal synchronization exchange behavior is implemented
+- request lifecycle semantics are defined as protocol helper/state logic
+  without inventing new wire/header fields
+- canonical text parse/render exists only for source-backed examples in
+  the current draft:
+  - request header
+  - synchronized response
+  - mobility PAX
+  - mobility cargo
+- deferred engineer reconnaissance reports remain explicitly out of v1:
+  - tunnel
+  - bridge
+  - ford
+  - ferry
+  - river
+- Appendix F registry support exists as:
+  - schema
+  - validation
+  - initial fixture and loader coverage
+
+For v1, the following are explicitly not required for completion:
+
+- transport or bearer behavior
+- routing policy
+- receipts or acknowledgements
+- fragmentation
+- integrity or cryptographic protections
+- full Appendix F population
+- canonical text codecs for table-only segment families
+
+Any expansion beyond these criteria should be treated as a v1.x or later
+increment, not as unfinished v1 baseline work.
 
 | Object / Segment | Spec | Proto | Validate | Canon | Fixture |
 | --- | --- | --- | --- | --- | --- |

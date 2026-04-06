@@ -200,6 +200,25 @@ func TestMarshalLinkFrameBinaryRejectsMissingLinkMetadata(t *testing.T) {
 	}
 }
 
+func TestMarshalLinkFrameBinaryRejectsEmptyReferenceLinkMessageID(t *testing.T) {
+	frame := &LinkFrame{
+		LinkMessageId:          "LF-0001",
+		ReferenceLinkMessageId: stringPtr(""),
+		DeliveryMethod:         LinkDeliveryMethodDirect,
+		Representation:         LinkRepresentationBinaryProto,
+		Payload: &LinkFrame_SynchronizedResponse{
+			SynchronizedResponse: &SynchronizedResponse{
+				LocalRequestId:        "3838JBNM5",
+				SynchronizedRequestId: "KL9K15474QFJ",
+			},
+		},
+	}
+
+	if _, err := MarshalLinkFrameBinary(frame); err == nil {
+		t.Fatalf("expected invalid empty reference link message id error")
+	}
+}
+
 func TestNewRequestContainerLinkFrame(t *testing.T) {
 	container := &RequestContainer{
 		Header: testHeader(),
@@ -320,6 +339,9 @@ func TestNewSynchronizedResponseLinkFrame(t *testing.T) {
 	}
 	if frame.DeliveryMethod != LinkDeliveryMethodPropagated {
 		t.Fatalf("delivery method = %v, want %v", frame.DeliveryMethod, LinkDeliveryMethodPropagated)
+	}
+	if frame.GetReferenceLinkMessageId() != "" {
+		t.Fatalf("unexpected reference link message id: %q", frame.GetReferenceLinkMessageId())
 	}
 }
 
@@ -549,6 +571,32 @@ func TestNewSynchronizedResponseLinkFrameForRequest(t *testing.T) {
 			"local request id = %q, want %q",
 			frame.GetSynchronizedResponse().LocalRequestId,
 			"3838JBNM5",
+		)
+	}
+}
+
+func TestNewReferencedSynchronizedResponseLinkFrameForRequest(t *testing.T) {
+	container := testPAXRequestContainer()
+	requestFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+
+	frame, err := NewReferencedSynchronizedResponseLinkFrameForRequest(
+		container,
+		requestFrame,
+		"KL9K15474QFJ",
+		LinkDeliveryMethodDirect,
+	)
+	if err != nil {
+		t.Fatalf("new referenced synchronized response link frame for request: %v", err)
+	}
+
+	if frame.GetReferenceLinkMessageId() != requestFrame.LinkMessageId {
+		t.Fatalf(
+			"reference link message id = %q, want %q",
+			frame.GetReferenceLinkMessageId(),
+			requestFrame.LinkMessageId,
 		)
 	}
 }
