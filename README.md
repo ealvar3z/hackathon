@@ -15,6 +15,8 @@ The current project direction is deliberately narrow:
 - build an `lxmfcot` bridge, in the style of `aiscot`, `djicot`,
   `adsbcot`, and related TAK adapters
 - use `PyTAK` to move `LXDR`-derived exchange data over CoT
+- run a small local `Adrian` model specialized for the contested
+  logistics use case
 
 ## What This Repo Is
 
@@ -57,12 +59,24 @@ The working architecture is:
         - `adsbcot`
 
 3. `PyTAK`
-    - the transport/client library used to publish and receive CoT over
-      the TAK ecosystem
+   - the transport/client library used to publish and receive CoT over
+     the TAK ecosystem
 
-4. `TAK`
-    - the operational transport and network substrate for demo and
-      integration use
+4. `Adrian`
+   - a planned local logistics reasoning model
+   - grounded on:
+     - `project-adrian.txt`
+     - `lxdr-protocol.md`
+     - tactical and operational logistics doctrine
+   - used for:
+     - request interpretation
+     - protocol-aware normalization
+     - recommendation support
+     - explanation of logistics decisions
+
+5. `TAK`
+   - the operational transport and network substrate for demo and
+     integration use
 
 The key decision is that `TAK` is the network and transport environment.
 `section4` will not spend time building a new bearer or routing stack
@@ -92,6 +106,7 @@ So the project strategy is:
 
 - finish `LXDR`
 - bridge it into the TAK ecosystem
+- run a local doctrinally grounded logistics model alongside it
 - demonstrate contested-logistics workflows there
 
 ## Planned Demo Direction
@@ -102,13 +117,15 @@ The intended demo path is:
 2. `lxmfcot` receives CoT via `PyTAK`
 3. `lxmfcot` converts that information into valid `LXDR`
 4. `LXDR` request and synchronization logic runs locally
-5. resulting state or synchronized outputs are emitted back into TAK
+5. `Adrian` reasons over the `LXDR` request and local context
+6. resulting state or synchronized outputs are emitted back into TAK
 
 This keeps the main thing the main thing:
 
 - the protocol is `LXDR`
 - TAK is the transport and operator ecosystem
 - `lxmfcot` is the bridge
+- `Adrian` is the local reasoning layer
 
 ## Current Protocol Status
 
@@ -125,6 +142,67 @@ The repository currently has a working `LXDR v1` baseline, including:
 - minimal `LXDR-Link` frame semantics
 - formal synchronization exchange helpers
 - local `LXDR-Router v1` state and workflow semantics
+
+## Local AI Direction
+
+One of the defining hackathon features will be a small local model for
+the specific logistics use case, not a generic cloud-only assistant.
+
+The current target is:
+
+- `Gemma 3 12B Instruct`
+- quantized to 4-bit for local inference on:
+  - MacBook Air M4
+  - 10-core CPU
+  - 32 GB RAM
+
+This is the current recommended balance point for the development
+machine:
+
+- `Gemma 3 4B` would be easier to run, but likely gives up too much
+  reasoning headroom for a protocol-aware logistics assistant
+- `Gemma 3 27B` can fit only with aggressive quantization and is a poor
+  match for a fanless Air in terms of speed and thermals
+- `Gemma 3 12B` in 4-bit form is the more credible local target
+
+Model adaptation may be done in the cloud, including on:
+
+- AWS
+- GCP
+- Google Colab
+
+But the hard constraint for this project is that the resulting model must
+run locally on the target development/demo machine. Cloud training is
+acceptable; cloud dependence at runtime is not.
+
+The model is intended to be specialized for this project by grounding it
+on:
+
+- `project-adrian.txt`
+- `lxdr-protocol.md`
+- tactical and operational logistics references
+- synthetic scenario data used for the demo
+
+The dataset strategy is specialist, not generalist. `project-adrian.txt`
+is necessary, but not sufficient on its own. The training and grounding
+corpus is expected to include:
+
+- ADRIAN source material
+- `LXDR` schema and protocol artifacts
+- TAK/CoT reference material
+- tactical and operational logistics doctrine
+- synthetic logistics request/response scenarios
+
+The goal is to force a narrow, protocol-aware logistics expert, not a
+generic assistant with shallow contested-logistics vocabulary.
+
+The intended role of this model is not to replace the protocol. Its role
+is to operate on top of `LXDR` by helping with:
+
+- interpreting logistics requests
+- mapping operator inputs into `LXDR` concepts
+- recommending courses of action
+- explaining synchronization and support decisions
 
 See:
 
@@ -183,6 +261,7 @@ Near-term work is expected to focus on:
 - documenting and testing v1 protocol behavior
 - building `lxmfcot`
 - integrating with TAK through `PyTAK`
+- standing up a local `Adrian` model using `Gemma 3 12B Instruct`
 
 ## Non-Goals Right Now
 
