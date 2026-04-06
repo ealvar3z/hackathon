@@ -23,8 +23,7 @@ option go_package = "lxdr/lxdr;lxdr";
 // - health services collection segment
 //
 // It does not yet model:
-// - general engineering segment families
-// - health services segment families
+// - deferred engineer reconnaissance segment families
 // - transport, fragmentation, crypto, or bearer behavior
 
 enum FunctionFamily {
@@ -551,6 +550,14 @@ message RequestHeader {
   RequestPriorityCode request_priority = 8;
   string element_unit_id_or_callsign = 9;
   uint32 request_segment_count = 10;
+}
+
+message LinkFrame {
+  oneof payload {
+    RequestContainer request_container = 1;
+    SynchronizedResponse synchronized_response = 2;
+    CanonicalRegistry canonical_registry = 3;
+  }
 }
 
 message SynchronizedResponse {

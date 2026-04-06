@@ -17,6 +17,30 @@ func isOneOf[T comparable](value T, allowed ...T) bool {
 	return false
 }
 
+type validationBranch struct {
+	present  bool
+	validate func() error
+}
+
+func validateExactlyOneBranch(name string, branches ...validationBranch) error {
+	count := 0
+	for _, branch := range branches {
+		if !branch.present {
+			continue
+		}
+		count++
+		if branch.validate != nil {
+			if err := branch.validate(); err != nil {
+				return err
+			}
+		}
+	}
+	if count != 1 {
+		return fmt.Errorf("%s must set exactly one payload", name)
+	}
+	return nil
+}
+
 func ParseRequestPriorityCode(input string) (RequestPriorityCode, error) {
 	switch input {
 	case "01":
@@ -952,7 +976,23 @@ func (h RequestHeader) Validate() error {
 	return nil
 }
 
+func (r SynchronizedResponse) Validate() error {
+	if r.LocalRequestId == "" {
+		return errors.New("synchronized response local request ID is required")
+	}
+	if r.SynchronizedRequestId == "" {
+		return errors.New("synchronized response synchronized request ID is required")
+	}
+	if _, err := r.RenderCanonical(); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c RequestContainer) Validate() error {
+	if c.Header == nil {
+		return errors.New("request container header is required")
+	}
 	if err := c.Header.Validate(); err != nil {
 		return err
 	}
@@ -975,119 +1015,45 @@ func (c RequestContainer) Validate() error {
 }
 
 func (s RequestSegment) Validate() error {
-	count := 0
-	if s.GetMobilityPax() != nil {
-		count++
-		if err := s.GetMobilityPax().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetMobilityCargo() != nil {
-		count++
-		if err := s.GetMobilityCargo().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetSupply() != nil {
-		count++
-		if err := s.GetSupply().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetMaintenance() != nil {
-		count++
-		if err := s.GetMaintenance().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetEngineerReconArea() != nil {
-		count++
-		if err := s.GetEngineerReconArea().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetEngineerReconZone() != nil {
-		count++
-		if err := s.GetEngineerReconZone().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetEngineerReconRoute() != nil {
-		count++
-		if err := s.GetEngineerReconRoute().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetEngineerReconRoad() != nil {
-		count++
-		if err := s.GetEngineerReconRoad().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetEngineerReconLandingZone() != nil {
-		count++
-		if err := s.GetEngineerReconLandingZone().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetObstacleRemoval() != nil {
-		count++
-		if err := s.GetObstacleRemoval().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetEod() != nil {
-		count++
-		if err := s.GetEod().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetBulkLiquidSupport() != nil {
-		count++
-		if err := s.GetBulkLiquidSupport().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetDemolition() != nil {
-		count++
-		if err := s.GetDemolition().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetHealthCollection() != nil {
-		count++
-		if err := s.GetHealthCollection().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetHealthTriage() != nil {
-		count++
-		if err := s.GetHealthTriage().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetHealthIntervention() != nil {
-		count++
-		if err := s.GetHealthIntervention().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetHealthHold() != nil {
-		count++
-		if err := s.GetHealthHold().Validate(); err != nil {
-			return err
-		}
-	}
-	if s.GetHealthEvacuation() != nil {
-		count++
-		if err := s.GetHealthEvacuation().Validate(); err != nil {
-			return err
-		}
-	}
-	if count != 1 {
-		return errors.New("request segment must set exactly one segment body")
-	}
-	return nil
+	return validateExactlyOneBranch(
+		"request segment",
+		validationBranch{present: s.GetMobilityPax() != nil, validate: func() error { return s.GetMobilityPax().Validate() }},
+		validationBranch{present: s.GetMobilityCargo() != nil, validate: func() error { return s.GetMobilityCargo().Validate() }},
+		validationBranch{present: s.GetSupply() != nil, validate: func() error { return s.GetSupply().Validate() }},
+		validationBranch{present: s.GetMaintenance() != nil, validate: func() error { return s.GetMaintenance().Validate() }},
+		validationBranch{present: s.GetEngineerReconArea() != nil, validate: func() error { return s.GetEngineerReconArea().Validate() }},
+		validationBranch{present: s.GetEngineerReconZone() != nil, validate: func() error { return s.GetEngineerReconZone().Validate() }},
+		validationBranch{present: s.GetEngineerReconRoute() != nil, validate: func() error { return s.GetEngineerReconRoute().Validate() }},
+		validationBranch{present: s.GetEngineerReconRoad() != nil, validate: func() error { return s.GetEngineerReconRoad().Validate() }},
+		validationBranch{present: s.GetEngineerReconLandingZone() != nil, validate: func() error { return s.GetEngineerReconLandingZone().Validate() }},
+		validationBranch{present: s.GetObstacleRemoval() != nil, validate: func() error { return s.GetObstacleRemoval().Validate() }},
+		validationBranch{present: s.GetEod() != nil, validate: func() error { return s.GetEod().Validate() }},
+		validationBranch{present: s.GetBulkLiquidSupport() != nil, validate: func() error { return s.GetBulkLiquidSupport().Validate() }},
+		validationBranch{present: s.GetDemolition() != nil, validate: func() error { return s.GetDemolition().Validate() }},
+		validationBranch{present: s.GetHealthCollection() != nil, validate: func() error { return s.GetHealthCollection().Validate() }},
+		validationBranch{present: s.GetHealthTriage() != nil, validate: func() error { return s.GetHealthTriage().Validate() }},
+		validationBranch{present: s.GetHealthIntervention() != nil, validate: func() error { return s.GetHealthIntervention().Validate() }},
+		validationBranch{present: s.GetHealthHold() != nil, validate: func() error { return s.GetHealthHold().Validate() }},
+		validationBranch{present: s.GetHealthEvacuation() != nil, validate: func() error { return s.GetHealthEvacuation().Validate() }},
+	)
+}
+
+func (f LinkFrame) Validate() error {
+	return validateExactlyOneBranch(
+		"link frame",
+		validationBranch{
+			present:  f.GetRequestContainer() != nil,
+			validate: func() error { return f.GetRequestContainer().Validate() },
+		},
+		validationBranch{
+			present:  f.GetSynchronizedResponse() != nil,
+			validate: func() error { return f.GetSynchronizedResponse().Validate() },
+		},
+		validationBranch{
+			present:  f.GetCanonicalRegistry() != nil,
+			validate: func() error { return f.GetCanonicalRegistry().Validate() },
+		},
+	)
 }
 
 func (s MobilityPaxRequestSegment) Validate() error {

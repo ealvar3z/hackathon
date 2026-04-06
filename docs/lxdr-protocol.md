@@ -1899,7 +1899,55 @@ It should not yet be treated as a source of new wire fields unless the
 whitepaper provides explicit exchange structures comparable to those in
 Section 3.
 
-## 22. Conformance Matrix
+## 22. Initial LXDR-Link Frame
+
+LXDR v1 now distinguishes between:
+
+- `LXDR-Core`
+  the ADRIAN-derived typed objects such as:
+  - request container
+  - synchronized response
+  - canonical registry
+- `LXDR-Link`
+  the carried wire object that transports exactly one core payload
+
+The initial `LXDR-Link` frame is intentionally minimal. It exists only to
+distinguish what kind of LXDR core object is being exchanged, without yet
+introducing transport, routing, fragmentation, or bearer-specific
+metadata.
+
+### 22.1 Link Frame Scope
+
+The initial frame supports exactly one payload of:
+
+- `RequestContainer`
+- `SynchronizedResponse`
+- `CanonicalRegistry`
+
+This means the frame is a typed wrapper around one core object. It does
+not yet define:
+
+- message identifiers
+- routing metadata
+- acknowledgements
+- fragmentation fields
+- integrity fields
+- transport hints
+
+Those remain later concerns.
+
+### 22.2 Validation Rules
+
+An `LXDR-Link` frame is valid only when:
+
+- exactly one payload is present
+- the carried payload is itself valid under the corresponding `LXDR-Core`
+  rules
+
+The link layer therefore does not weaken core validation. It only adds a
+typed carried-message boundary.
+
+## 23. Conformance Matrix
 
 Status markers in this table mean:
 
@@ -1923,6 +1971,7 @@ The columns are:
 
 | Object / Segment | Spec | Proto | Validate | Canon | Fixture |
 | --- | --- | --- | --- | --- | --- |
+| LXDR-Link frame | [x] | [x] | [x] | [ ] | [ ] |
 | Request header | [x] | [x] | [x] | [x] | [x] |
 | Synchronized response | [x] | [x] | [x] | [x] | [x] |
 | Mobility PAX | [x] | [x] | [x] | [x] | [x] |
