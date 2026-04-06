@@ -29,14 +29,13 @@ It currently contains:
 - a protobuf schema for `LXDR` core and link objects in
   [`proto/lxdr/v1/lxdr.proto`](./proto/lxdr/v1/lxdr.proto)
 - a Go implementation of:
-  - `LXDR-Core`
-  - `LXDR-Link`
-  - `LXDR-Router v1`
+    - `LXDR-Core`
+    - `LXDR-Link`
+    - `LXDR-Router v1`
 
 This repository is not currently trying to be:
 
 - a bespoke transport stack
-- a Reticulum replacement
 - a TAK server
 - a dashboard-first application
 
@@ -45,25 +44,25 @@ This repository is not currently trying to be:
 The working architecture is:
 
 1. `LXDR`
-   - the ADRIAN protocol implementation
-   - request/header/segment/schema/sync/router semantics
+    - the ADRIAN protocol implementation
+    - request/header/segment/schema/sync/router semantics
 
 2. `lxmfcot`
-   - a planned bridge process that converts between:
-     - `LXDR`
-     - `Cursor on Target`
-   - built in the spirit of TAK adapter tools such as:
-     - `aiscot`
-     - `djicot`
-     - `adsbcot`
+    - a planned bridge process that converts between:
+        - `LXDR`
+        - `Cursor on Target`
+    - built in the spirit of TAK adapter tools such as:
+        - `aiscot`
+        - `djicot`
+        - `adsbcot`
 
 3. `PyTAK`
-   - the transport/client library used to publish and receive CoT over
-     the TAK ecosystem
+    - the transport/client library used to publish and receive CoT over
+      the TAK ecosystem
 
 4. `TAK`
-   - the operational transport and network substrate for demo and
-     integration use
+    - the operational transport and network substrate for demo and
+      integration use
 
 The key decision is that `TAK` is the network and transport environment.
 `section4` will not spend time building a new bearer or routing stack
@@ -118,10 +117,10 @@ The repository currently has a working `LXDR v1` baseline, including:
 - protobuf-backed core schema
 - generated Go types
 - canonical text support where ADRIAN gives explicit examples:
-  - request header
-  - synchronized response
-  - mobility PAX
-  - mobility cargo
+    - request header
+    - synchronized response
+    - mobility PAX
+    - mobility cargo
 - validated Chapter 3 segment coverage for the implemented v1 families
 - minimal `LXDR-Link` frame semantics
 - formal synchronization exchange helpers
