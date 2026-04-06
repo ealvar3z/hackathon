@@ -221,6 +221,10 @@ func (r LinkRepresentation) IsValid() bool {
 	return isOneOf(r, LinkRepresentationBinaryProto)
 }
 
+func (r LinkRepresentation) IsV1Supported() bool {
+	return r == LinkRepresentationBinaryProto
+}
+
 func (c CargoHMICCode) IsValid() bool {
 	return isOneOf(
 		c,
@@ -1063,6 +1067,9 @@ func (f LinkFrame) Validate() error {
 	}
 	if !f.Representation.IsValid() {
 		return errors.New("link frame representation is required")
+	}
+	if !f.Representation.IsV1Supported() {
+		return errors.New("v1 link frame representation must be BINARY_PROTO")
 	}
 	return validateExactlyOneBranch(
 		"link frame",

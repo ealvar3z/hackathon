@@ -2027,6 +2027,7 @@ The current implementation also constrains the frame/payload combination:
 
 - when a payload is carried directly as a protobuf-typed object inside the
   frame, `representation` must be `BINARY_PROTO`
+- v1 link frames that do not use `BINARY_PROTO` are invalid
 
 Future canonical-text or packed link representations may require
 different payload carriers, but those are not part of this draft yet.
@@ -2063,6 +2064,15 @@ For v1, this implies:
   response does not match the request header being updated
 - synchronization updates request-header state but does not change the
   request segments themselves
+
+The current implementation also supports a complete local sync-exchange
+helper loop:
+
+1. validate and carry a request in a `RequestContainer` link frame
+2. construct a referenced `SynchronizedResponse` link frame from that
+   request frame
+3. validate that the sync frame answers the original request frame
+4. apply the sync response frame back onto the original request container
 
 ### 22.4 Request Lifecycle Semantics
 
