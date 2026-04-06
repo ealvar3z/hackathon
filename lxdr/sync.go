@@ -60,6 +60,17 @@ func ApplySynchronizedResponse(
 			resp.LocalRequestId,
 		)
 	}
+	if container.Header.IsSynchronized() {
+		current := container.Header.GetSynchronizedRequestId()
+		if current == resp.SynchronizedRequestId {
+			return nil
+		}
+		return fmt.Errorf(
+			"conflicting synchronized request ID: header=%q response=%q",
+			current,
+			resp.SynchronizedRequestId,
+		)
+	}
 
 	container.Header.SynchronizedRequestId = &resp.SynchronizedRequestId
 	return nil

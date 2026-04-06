@@ -17,7 +17,7 @@ const (
 )
 
 func canonicalLinkMessageID(kind LinkPayloadKind, payload []byte) string {
-	sum := sha256.Sum256(append([]byte(kind+":"), payload...))
+	sum := sha256.Sum256(payload)
 	return "lf1-" + hex.EncodeToString(sum[:])
 }
 
@@ -36,9 +36,14 @@ func newBinaryProtoLinkFrame(
 		return nil, err
 	}
 
-	frame := wrap(canonicalLinkMessageID(kind, data))
+	frame := wrap("")
 	frame.DeliveryMethod = method
 	frame.Representation = LinkRepresentationBinaryProto
+	idMaterial := append(
+		[]byte(fmt.Sprintf("%s:%d:%d:", kind, method, frame.Representation)),
+		data...,
+	)
+	frame.LinkMessageId = canonicalLinkMessageID(kind, idMaterial)
 	if err := frame.Validate(); err != nil {
 		return nil, err
 	}

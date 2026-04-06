@@ -271,6 +271,39 @@ func TestNewRequestContainerLinkFrameIsDeterministic(t *testing.T) {
 	}
 }
 
+func TestNewRequestContainerLinkFrameIDDependsOnDeliveryMethod(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+
+	directFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new direct request-container link frame: %v", err)
+	}
+	propagatedFrame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodPropagated)
+	if err != nil {
+		t.Fatalf("new propagated request-container link frame: %v", err)
+	}
+
+	if directFrame.LinkMessageId == propagatedFrame.LinkMessageId {
+		t.Fatalf("expected distinct link message ids for different delivery methods")
+	}
+}
+
 func TestNewSynchronizedResponseLinkFrame(t *testing.T) {
 	resp := &SynchronizedResponse{
 		LocalRequestId:        "3838JBNM5",
@@ -386,6 +419,37 @@ func TestApplySynchronizedResponse(t *testing.T) {
 	}
 }
 
+func TestApplySynchronizedResponseIsIdempotentForExactRepeat(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+	resp := &SynchronizedResponse{
+		LocalRequestId:        "3838JBNM5",
+		SynchronizedRequestId: "KL9K15474QFJ",
+	}
+
+	if err := ApplySynchronizedResponse(container, resp); err != nil {
+		t.Fatalf("initial apply synchronized response: %v", err)
+	}
+	if err := ApplySynchronizedResponse(container, resp); err != nil {
+		t.Fatalf("repeat apply synchronized response: %v", err)
+	}
+}
+
 func TestApplySynchronizedResponseRejectsMismatchedLocalRequestID(t *testing.T) {
 	container := &RequestContainer{
 		Header: testHeader(),
@@ -411,6 +475,41 @@ func TestApplySynchronizedResponseRejectsMismatchedLocalRequestID(t *testing.T) 
 
 	if err := ApplySynchronizedResponse(container, resp); err == nil {
 		t.Fatalf("expected mismatched synchronized response error")
+	}
+}
+
+func TestApplySynchronizedResponseRejectsConflictingSynchronizedID(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+	first := &SynchronizedResponse{
+		LocalRequestId:        "3838JBNM5",
+		SynchronizedRequestId: "KL9K15474QFJ",
+	}
+	second := &SynchronizedResponse{
+		LocalRequestId:        "3838JBNM5",
+		SynchronizedRequestId: "OTHER0000000",
+	}
+
+	if err := ApplySynchronizedResponse(container, first); err != nil {
+		t.Fatalf("initial apply synchronized response: %v", err)
+	}
+	if err := ApplySynchronizedResponse(container, second); err == nil {
+		t.Fatalf("expected conflicting synchronized response error")
 	}
 }
 
