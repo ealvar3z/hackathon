@@ -27,6 +27,18 @@ const (
 )
 
 const (
+	LinkDeliveryMethodUnspecified   = LinkDeliveryMethod_LINK_DELIVERY_METHOD_UNSPECIFIED
+	LinkDeliveryMethodDirect        = LinkDeliveryMethod_LINK_DELIVERY_METHOD_DIRECT
+	LinkDeliveryMethodPropagated    = LinkDeliveryMethod_LINK_DELIVERY_METHOD_PROPAGATED
+	LinkDeliveryMethodOpportunistic = LinkDeliveryMethod_LINK_DELIVERY_METHOD_OPPORTUNISTIC
+)
+
+const (
+	LinkRepresentationUnspecified = LinkRepresentation_LINK_REPRESENTATION_UNSPECIFIED
+	LinkRepresentationBinaryProto = LinkRepresentation_LINK_REPRESENTATION_BINARY_PROTO
+)
+
+const (
 	RequestPriorityCodeUnspecified = RequestPriorityCode_REQUEST_PRIORITY_CODE_UNSPECIFIED
 	RequestPriorityCode01          = RequestPriorityCode_REQUEST_PRIORITY_CODE_01
 	RequestPriorityCode02          = RequestPriorityCode_REQUEST_PRIORITY_CODE_02

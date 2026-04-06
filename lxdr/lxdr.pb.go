@@ -192,6 +192,104 @@ func (ExchangeRole) EnumDescriptor() ([]byte, []int) {
 	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{2}
 }
 
+type LinkDeliveryMethod int32
+
+const (
+	LinkDeliveryMethod_LINK_DELIVERY_METHOD_UNSPECIFIED   LinkDeliveryMethod = 0
+	LinkDeliveryMethod_LINK_DELIVERY_METHOD_DIRECT        LinkDeliveryMethod = 1
+	LinkDeliveryMethod_LINK_DELIVERY_METHOD_PROPAGATED    LinkDeliveryMethod = 2
+	LinkDeliveryMethod_LINK_DELIVERY_METHOD_OPPORTUNISTIC LinkDeliveryMethod = 3
+)
+
+// Enum value maps for LinkDeliveryMethod.
+var (
+	LinkDeliveryMethod_name = map[int32]string{
+		0: "LINK_DELIVERY_METHOD_UNSPECIFIED",
+		1: "LINK_DELIVERY_METHOD_DIRECT",
+		2: "LINK_DELIVERY_METHOD_PROPAGATED",
+		3: "LINK_DELIVERY_METHOD_OPPORTUNISTIC",
+	}
+	LinkDeliveryMethod_value = map[string]int32{
+		"LINK_DELIVERY_METHOD_UNSPECIFIED":   0,
+		"LINK_DELIVERY_METHOD_DIRECT":        1,
+		"LINK_DELIVERY_METHOD_PROPAGATED":    2,
+		"LINK_DELIVERY_METHOD_OPPORTUNISTIC": 3,
+	}
+)
+
+func (x LinkDeliveryMethod) Enum() *LinkDeliveryMethod {
+	p := new(LinkDeliveryMethod)
+	*p = x
+	return p
+}
+
+func (x LinkDeliveryMethod) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LinkDeliveryMethod) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[3].Descriptor()
+}
+
+func (LinkDeliveryMethod) Type() protoreflect.EnumType {
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[3]
+}
+
+func (x LinkDeliveryMethod) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LinkDeliveryMethod.Descriptor instead.
+func (LinkDeliveryMethod) EnumDescriptor() ([]byte, []int) {
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{3}
+}
+
+type LinkRepresentation int32
+
+const (
+	LinkRepresentation_LINK_REPRESENTATION_UNSPECIFIED  LinkRepresentation = 0
+	LinkRepresentation_LINK_REPRESENTATION_BINARY_PROTO LinkRepresentation = 1
+)
+
+// Enum value maps for LinkRepresentation.
+var (
+	LinkRepresentation_name = map[int32]string{
+		0: "LINK_REPRESENTATION_UNSPECIFIED",
+		1: "LINK_REPRESENTATION_BINARY_PROTO",
+	}
+	LinkRepresentation_value = map[string]int32{
+		"LINK_REPRESENTATION_UNSPECIFIED":  0,
+		"LINK_REPRESENTATION_BINARY_PROTO": 1,
+	}
+)
+
+func (x LinkRepresentation) Enum() *LinkRepresentation {
+	p := new(LinkRepresentation)
+	*p = x
+	return p
+}
+
+func (x LinkRepresentation) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LinkRepresentation) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[4].Descriptor()
+}
+
+func (LinkRepresentation) Type() protoreflect.EnumType {
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[4]
+}
+
+func (x LinkRepresentation) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LinkRepresentation.Descriptor instead.
+func (LinkRepresentation) EnumDescriptor() ([]byte, []int) {
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{4}
+}
+
 type RequestPriorityCode int32
 
 const (
@@ -264,11 +362,11 @@ func (x RequestPriorityCode) String() string {
 }
 
 func (RequestPriorityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[3].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[5].Descriptor()
 }
 
 func (RequestPriorityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[3]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[5]
 }
 
 func (x RequestPriorityCode) Number() protoreflect.EnumNumber {
@@ -277,7 +375,7 @@ func (x RequestPriorityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RequestPriorityCode.Descriptor instead.
 func (RequestPriorityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{3}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{5}
 }
 
 type MobilityPaxRequestTypeCode int32
@@ -310,11 +408,11 @@ func (x MobilityPaxRequestTypeCode) String() string {
 }
 
 func (MobilityPaxRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[4].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[6].Descriptor()
 }
 
 func (MobilityPaxRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[4]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[6]
 }
 
 func (x MobilityPaxRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -323,7 +421,7 @@ func (x MobilityPaxRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MobilityPaxRequestTypeCode.Descriptor instead.
 func (MobilityPaxRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{4}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{6}
 }
 
 type MobilityCargoRequestTypeCode int32
@@ -356,11 +454,11 @@ func (x MobilityCargoRequestTypeCode) String() string {
 }
 
 func (MobilityCargoRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[5].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[7].Descriptor()
 }
 
 func (MobilityCargoRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[5]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[7]
 }
 
 func (x MobilityCargoRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -369,7 +467,7 @@ func (x MobilityCargoRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MobilityCargoRequestTypeCode.Descriptor instead.
 func (MobilityCargoRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{5}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{7}
 }
 
 type CargoHMICCode int32
@@ -411,11 +509,11 @@ func (x CargoHMICCode) String() string {
 }
 
 func (CargoHMICCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[6].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[8].Descriptor()
 }
 
 func (CargoHMICCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[6]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[8]
 }
 
 func (x CargoHMICCode) Number() protoreflect.EnumNumber {
@@ -424,7 +522,7 @@ func (x CargoHMICCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CargoHMICCode.Descriptor instead.
 func (CargoHMICCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{6}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{8}
 }
 
 type CargoHandlingCode int32
@@ -469,11 +567,11 @@ func (x CargoHandlingCode) String() string {
 }
 
 func (CargoHandlingCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[7].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[9].Descriptor()
 }
 
 func (CargoHandlingCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[7]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[9]
 }
 
 func (x CargoHandlingCode) Number() protoreflect.EnumNumber {
@@ -482,7 +580,7 @@ func (x CargoHandlingCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CargoHandlingCode.Descriptor instead.
 func (CargoHandlingCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{7}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{9}
 }
 
 type SupplyRequestTypeCode int32
@@ -515,11 +613,11 @@ func (x SupplyRequestTypeCode) String() string {
 }
 
 func (SupplyRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[8].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[10].Descriptor()
 }
 
 func (SupplyRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[8]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[10]
 }
 
 func (x SupplyRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -528,7 +626,7 @@ func (x SupplyRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SupplyRequestTypeCode.Descriptor instead.
 func (SupplyRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{8}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{10}
 }
 
 type MaintenanceRequestTypeCode int32
@@ -561,11 +659,11 @@ func (x MaintenanceRequestTypeCode) String() string {
 }
 
 func (MaintenanceRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[9].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[11].Descriptor()
 }
 
 func (MaintenanceRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[9]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[11]
 }
 
 func (x MaintenanceRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -574,7 +672,7 @@ func (x MaintenanceRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceRequestTypeCode.Descriptor instead.
 func (MaintenanceRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{9}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{11}
 }
 
 type AttachmentIndicatorCode int32
@@ -610,11 +708,11 @@ func (x AttachmentIndicatorCode) String() string {
 }
 
 func (AttachmentIndicatorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[10].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[12].Descriptor()
 }
 
 func (AttachmentIndicatorCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[10]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[12]
 }
 
 func (x AttachmentIndicatorCode) Number() protoreflect.EnumNumber {
@@ -623,7 +721,7 @@ func (x AttachmentIndicatorCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AttachmentIndicatorCode.Descriptor instead.
 func (AttachmentIndicatorCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{10}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{12}
 }
 
 type MaintenanceOperationalConditionCode int32
@@ -662,11 +760,11 @@ func (x MaintenanceOperationalConditionCode) String() string {
 }
 
 func (MaintenanceOperationalConditionCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[11].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[13].Descriptor()
 }
 
 func (MaintenanceOperationalConditionCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[11]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[13]
 }
 
 func (x MaintenanceOperationalConditionCode) Number() protoreflect.EnumNumber {
@@ -675,7 +773,7 @@ func (x MaintenanceOperationalConditionCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceOperationalConditionCode.Descriptor instead.
 func (MaintenanceOperationalConditionCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{11}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{13}
 }
 
 type MaintenanceSupportTypeCode int32
@@ -720,11 +818,11 @@ func (x MaintenanceSupportTypeCode) String() string {
 }
 
 func (MaintenanceSupportTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[12].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[14].Descriptor()
 }
 
 func (MaintenanceSupportTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[12]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[14]
 }
 
 func (x MaintenanceSupportTypeCode) Number() protoreflect.EnumNumber {
@@ -733,7 +831,7 @@ func (x MaintenanceSupportTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceSupportTypeCode.Descriptor instead.
 func (MaintenanceSupportTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{12}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{14}
 }
 
 type MaintenanceRepairTypeCode int32
@@ -778,11 +876,11 @@ func (x MaintenanceRepairTypeCode) String() string {
 }
 
 func (MaintenanceRepairTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[13].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[15].Descriptor()
 }
 
 func (MaintenanceRepairTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[13]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[15]
 }
 
 func (x MaintenanceRepairTypeCode) Number() protoreflect.EnumNumber {
@@ -791,7 +889,7 @@ func (x MaintenanceRepairTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceRepairTypeCode.Descriptor instead.
 func (MaintenanceRepairTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{13}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{15}
 }
 
 type MaintenanceMajorDefectCode int32
@@ -872,11 +970,11 @@ func (x MaintenanceMajorDefectCode) String() string {
 }
 
 func (MaintenanceMajorDefectCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[14].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[16].Descriptor()
 }
 
 func (MaintenanceMajorDefectCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[14]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[16]
 }
 
 func (x MaintenanceMajorDefectCode) Number() protoreflect.EnumNumber {
@@ -885,7 +983,7 @@ func (x MaintenanceMajorDefectCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceMajorDefectCode.Descriptor instead.
 func (MaintenanceMajorDefectCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{14}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{16}
 }
 
 type RoadClassificationCode int32
@@ -927,11 +1025,11 @@ func (x RoadClassificationCode) String() string {
 }
 
 func (RoadClassificationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[15].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[17].Descriptor()
 }
 
 func (RoadClassificationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[15]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[17]
 }
 
 func (x RoadClassificationCode) Number() protoreflect.EnumNumber {
@@ -940,7 +1038,7 @@ func (x RoadClassificationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadClassificationCode.Descriptor instead.
 func (RoadClassificationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{15}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{17}
 }
 
 type RoadDrainageCode int32
@@ -976,11 +1074,11 @@ func (x RoadDrainageCode) String() string {
 }
 
 func (RoadDrainageCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[16].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[18].Descriptor()
 }
 
 func (RoadDrainageCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[16]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[18]
 }
 
 func (x RoadDrainageCode) Number() protoreflect.EnumNumber {
@@ -989,7 +1087,7 @@ func (x RoadDrainageCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadDrainageCode.Descriptor instead.
 func (RoadDrainageCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{16}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{18}
 }
 
 type RoadFoundationCode int32
@@ -1025,11 +1123,11 @@ func (x RoadFoundationCode) String() string {
 }
 
 func (RoadFoundationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[17].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[19].Descriptor()
 }
 
 func (RoadFoundationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[17]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[19]
 }
 
 func (x RoadFoundationCode) Number() protoreflect.EnumNumber {
@@ -1038,7 +1136,7 @@ func (x RoadFoundationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadFoundationCode.Descriptor instead.
 func (RoadFoundationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{17}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{19}
 }
 
 type RoadSurfaceTypeCode int32
@@ -1098,11 +1196,11 @@ func (x RoadSurfaceTypeCode) String() string {
 }
 
 func (RoadSurfaceTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[18].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[20].Descriptor()
 }
 
 func (RoadSurfaceTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[18]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[20]
 }
 
 func (x RoadSurfaceTypeCode) Number() protoreflect.EnumNumber {
@@ -1111,7 +1209,7 @@ func (x RoadSurfaceTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadSurfaceTypeCode.Descriptor instead.
 func (RoadSurfaceTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{18}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{20}
 }
 
 type EstimateCode int32
@@ -1147,11 +1245,11 @@ func (x EstimateCode) String() string {
 }
 
 func (EstimateCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[19].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[21].Descriptor()
 }
 
 func (EstimateCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[19]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[21]
 }
 
 func (x EstimateCode) Number() protoreflect.EnumNumber {
@@ -1160,7 +1258,7 @@ func (x EstimateCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use EstimateCode.Descriptor instead.
 func (EstimateCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{19}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{21}
 }
 
 type LandingZoneLayoutDesignationCode int32
@@ -1199,11 +1297,11 @@ func (x LandingZoneLayoutDesignationCode) String() string {
 }
 
 func (LandingZoneLayoutDesignationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[20].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[22].Descriptor()
 }
 
 func (LandingZoneLayoutDesignationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[20]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[22]
 }
 
 func (x LandingZoneLayoutDesignationCode) Number() protoreflect.EnumNumber {
@@ -1212,7 +1310,7 @@ func (x LandingZoneLayoutDesignationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LandingZoneLayoutDesignationCode.Descriptor instead.
 func (LandingZoneLayoutDesignationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{20}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{22}
 }
 
 type AircraftSupportabilityCode int32
@@ -1260,11 +1358,11 @@ func (x AircraftSupportabilityCode) String() string {
 }
 
 func (AircraftSupportabilityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[21].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[23].Descriptor()
 }
 
 func (AircraftSupportabilityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[21]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[23]
 }
 
 func (x AircraftSupportabilityCode) Number() protoreflect.EnumNumber {
@@ -1273,7 +1371,7 @@ func (x AircraftSupportabilityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AircraftSupportabilityCode.Descriptor instead.
 func (AircraftSupportabilityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{21}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{23}
 }
 
 type CardinalDirectionCode int32
@@ -1315,11 +1413,11 @@ func (x CardinalDirectionCode) String() string {
 }
 
 func (CardinalDirectionCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[22].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[24].Descriptor()
 }
 
 func (CardinalDirectionCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[22]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[24]
 }
 
 func (x CardinalDirectionCode) Number() protoreflect.EnumNumber {
@@ -1328,7 +1426,7 @@ func (x CardinalDirectionCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardinalDirectionCode.Descriptor instead.
 func (CardinalDirectionCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{22}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{24}
 }
 
 type LandingZoneSurfaceSlopeCode int32
@@ -1364,11 +1462,11 @@ func (x LandingZoneSurfaceSlopeCode) String() string {
 }
 
 func (LandingZoneSurfaceSlopeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[23].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[25].Descriptor()
 }
 
 func (LandingZoneSurfaceSlopeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[23]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[25]
 }
 
 func (x LandingZoneSurfaceSlopeCode) Number() protoreflect.EnumNumber {
@@ -1377,7 +1475,7 @@ func (x LandingZoneSurfaceSlopeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LandingZoneSurfaceSlopeCode.Descriptor instead.
 func (LandingZoneSurfaceSlopeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{23}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{25}
 }
 
 type LandingZoneObstacleCode int32
@@ -1416,11 +1514,11 @@ func (x LandingZoneObstacleCode) String() string {
 }
 
 func (LandingZoneObstacleCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[24].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[26].Descriptor()
 }
 
 func (LandingZoneObstacleCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[24]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[26]
 }
 
 func (x LandingZoneObstacleCode) Number() protoreflect.EnumNumber {
@@ -1429,7 +1527,7 @@ func (x LandingZoneObstacleCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LandingZoneObstacleCode.Descriptor instead.
 func (LandingZoneObstacleCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{24}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{26}
 }
 
 type ObstacleActionCode int32
@@ -1468,11 +1566,11 @@ func (x ObstacleActionCode) String() string {
 }
 
 func (ObstacleActionCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[25].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[27].Descriptor()
 }
 
 func (ObstacleActionCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[25]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[27]
 }
 
 func (x ObstacleActionCode) Number() protoreflect.EnumNumber {
@@ -1481,7 +1579,7 @@ func (x ObstacleActionCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ObstacleActionCode.Descriptor instead.
 func (ObstacleActionCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{25}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{27}
 }
 
 type ObstacleDeterminationCode int32
@@ -1523,11 +1621,11 @@ func (x ObstacleDeterminationCode) String() string {
 }
 
 func (ObstacleDeterminationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[26].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[28].Descriptor()
 }
 
 func (ObstacleDeterminationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[26]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[28]
 }
 
 func (x ObstacleDeterminationCode) Number() protoreflect.EnumNumber {
@@ -1536,7 +1634,7 @@ func (x ObstacleDeterminationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ObstacleDeterminationCode.Descriptor instead.
 func (ObstacleDeterminationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{26}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{28}
 }
 
 type BypassCode int32
@@ -1572,11 +1670,11 @@ func (x BypassCode) String() string {
 }
 
 func (BypassCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[27].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[29].Descriptor()
 }
 
 func (BypassCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[27]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[29]
 }
 
 func (x BypassCode) Number() protoreflect.EnumNumber {
@@ -1585,7 +1683,7 @@ func (x BypassCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BypassCode.Descriptor instead.
 func (BypassCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{27}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{29}
 }
 
 type CBRNAgentTypeCode int32
@@ -1630,11 +1728,11 @@ func (x CBRNAgentTypeCode) String() string {
 }
 
 func (CBRNAgentTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[28].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[30].Descriptor()
 }
 
 func (CBRNAgentTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[28]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[30]
 }
 
 func (x CBRNAgentTypeCode) Number() protoreflect.EnumNumber {
@@ -1643,7 +1741,7 @@ func (x CBRNAgentTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CBRNAgentTypeCode.Descriptor instead.
 func (CBRNAgentTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{28}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{30}
 }
 
 type CBRNPhysicalPropertyCode int32
@@ -1685,11 +1783,11 @@ func (x CBRNPhysicalPropertyCode) String() string {
 }
 
 func (CBRNPhysicalPropertyCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[29].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[31].Descriptor()
 }
 
 func (CBRNPhysicalPropertyCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[29]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[31]
 }
 
 func (x CBRNPhysicalPropertyCode) Number() protoreflect.EnumNumber {
@@ -1698,7 +1796,7 @@ func (x CBRNPhysicalPropertyCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CBRNPhysicalPropertyCode.Descriptor instead.
 func (CBRNPhysicalPropertyCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{29}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{31}
 }
 
 type CBRNContaminationValueCode int32
@@ -1740,11 +1838,11 @@ func (x CBRNContaminationValueCode) String() string {
 }
 
 func (CBRNContaminationValueCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[30].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[32].Descriptor()
 }
 
 func (CBRNContaminationValueCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[30]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[32]
 }
 
 func (x CBRNContaminationValueCode) Number() protoreflect.EnumNumber {
@@ -1753,7 +1851,7 @@ func (x CBRNContaminationValueCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CBRNContaminationValueCode.Descriptor instead.
 func (CBRNContaminationValueCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{30}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{32}
 }
 
 type MunitionPurposeCode int32
@@ -1798,11 +1896,11 @@ func (x MunitionPurposeCode) String() string {
 }
 
 func (MunitionPurposeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[31].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[33].Descriptor()
 }
 
 func (MunitionPurposeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[31]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[33]
 }
 
 func (x MunitionPurposeCode) Number() protoreflect.EnumNumber {
@@ -1811,7 +1909,7 @@ func (x MunitionPurposeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MunitionPurposeCode.Descriptor instead.
 func (MunitionPurposeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{31}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{33}
 }
 
 type MunitionTypeCode int32
@@ -1853,11 +1951,11 @@ func (x MunitionTypeCode) String() string {
 }
 
 func (MunitionTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[32].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[34].Descriptor()
 }
 
 func (MunitionTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[32]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[34]
 }
 
 func (x MunitionTypeCode) Number() protoreflect.EnumNumber {
@@ -1866,7 +1964,7 @@ func (x MunitionTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MunitionTypeCode.Descriptor instead.
 func (MunitionTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{32}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{34}
 }
 
 type HealthCollectionRequestTypeCode int32
@@ -1899,11 +1997,11 @@ func (x HealthCollectionRequestTypeCode) String() string {
 }
 
 func (HealthCollectionRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[33].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[35].Descriptor()
 }
 
 func (HealthCollectionRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[33]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[35]
 }
 
 func (x HealthCollectionRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -1912,7 +2010,7 @@ func (x HealthCollectionRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthCollectionRequestTypeCode.Descriptor instead.
 func (HealthCollectionRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{33}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{35}
 }
 
 type ServiceCode int32
@@ -1969,11 +2067,11 @@ func (x ServiceCode) String() string {
 }
 
 func (ServiceCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[34].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[36].Descriptor()
 }
 
 func (ServiceCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[34]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[36]
 }
 
 func (x ServiceCode) Number() protoreflect.EnumNumber {
@@ -1982,7 +2080,7 @@ func (x ServiceCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ServiceCode.Descriptor instead.
 func (ServiceCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{34}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{36}
 }
 
 type HealthPrimaryMechanismCode int32
@@ -2054,11 +2152,11 @@ func (x HealthPrimaryMechanismCode) String() string {
 }
 
 func (HealthPrimaryMechanismCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[35].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[37].Descriptor()
 }
 
 func (HealthPrimaryMechanismCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[35]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[37]
 }
 
 func (x HealthPrimaryMechanismCode) Number() protoreflect.EnumNumber {
@@ -2067,7 +2165,7 @@ func (x HealthPrimaryMechanismCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthPrimaryMechanismCode.Descriptor instead.
 func (HealthPrimaryMechanismCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{35}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{37}
 }
 
 type HealthCBRNExposureCode int32
@@ -2112,11 +2210,11 @@ func (x HealthCBRNExposureCode) String() string {
 }
 
 func (HealthCBRNExposureCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[36].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[38].Descriptor()
 }
 
 func (HealthCBRNExposureCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[36]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[38]
 }
 
 func (x HealthCBRNExposureCode) Number() protoreflect.EnumNumber {
@@ -2125,7 +2223,7 @@ func (x HealthCBRNExposureCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthCBRNExposureCode.Descriptor instead.
 func (HealthCBRNExposureCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{36}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{38}
 }
 
 type HealthMajorSignsSymptomsCode int32
@@ -2167,11 +2265,11 @@ func (x HealthMajorSignsSymptomsCode) String() string {
 }
 
 func (HealthMajorSignsSymptomsCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[37].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[39].Descriptor()
 }
 
 func (HealthMajorSignsSymptomsCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[37]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[39]
 }
 
 func (x HealthMajorSignsSymptomsCode) Number() protoreflect.EnumNumber {
@@ -2180,7 +2278,7 @@ func (x HealthMajorSignsSymptomsCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthMajorSignsSymptomsCode.Descriptor instead.
 func (HealthMajorSignsSymptomsCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{37}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{39}
 }
 
 type HealthPulseLocationCode int32
@@ -2216,11 +2314,11 @@ func (x HealthPulseLocationCode) String() string {
 }
 
 func (HealthPulseLocationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[38].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[40].Descriptor()
 }
 
 func (HealthPulseLocationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[38]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[40]
 }
 
 func (x HealthPulseLocationCode) Number() protoreflect.EnumNumber {
@@ -2229,7 +2327,7 @@ func (x HealthPulseLocationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthPulseLocationCode.Descriptor instead.
 func (HealthPulseLocationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{38}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{40}
 }
 
 type HealthResponsivenessCode int32
@@ -2271,11 +2369,11 @@ func (x HealthResponsivenessCode) String() string {
 }
 
 func (HealthResponsivenessCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[39].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[41].Descriptor()
 }
 
 func (HealthResponsivenessCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[39]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[41]
 }
 
 func (x HealthResponsivenessCode) Number() protoreflect.EnumNumber {
@@ -2284,7 +2382,7 @@ func (x HealthResponsivenessCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthResponsivenessCode.Descriptor instead.
 func (HealthResponsivenessCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{39}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{41}
 }
 
 type HealthTriagePrecedenceCode int32
@@ -2329,11 +2427,11 @@ func (x HealthTriagePrecedenceCode) String() string {
 }
 
 func (HealthTriagePrecedenceCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[40].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[42].Descriptor()
 }
 
 func (HealthTriagePrecedenceCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[40]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[42]
 }
 
 func (x HealthTriagePrecedenceCode) Number() protoreflect.EnumNumber {
@@ -2342,7 +2440,7 @@ func (x HealthTriagePrecedenceCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthTriagePrecedenceCode.Descriptor instead.
 func (HealthTriagePrecedenceCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{40}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{42}
 }
 
 type TourniquetPlacementCode int32
@@ -2387,11 +2485,11 @@ func (x TourniquetPlacementCode) String() string {
 }
 
 func (TourniquetPlacementCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[41].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[43].Descriptor()
 }
 
 func (TourniquetPlacementCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[41]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[43]
 }
 
 func (x TourniquetPlacementCode) Number() protoreflect.EnumNumber {
@@ -2400,7 +2498,7 @@ func (x TourniquetPlacementCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TourniquetPlacementCode.Descriptor instead.
 func (TourniquetPlacementCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{41}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{43}
 }
 
 type TourniquetTypeCode int32
@@ -2439,11 +2537,11 @@ func (x TourniquetTypeCode) String() string {
 }
 
 func (TourniquetTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[42].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[44].Descriptor()
 }
 
 func (TourniquetTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[42]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[44]
 }
 
 func (x TourniquetTypeCode) Number() protoreflect.EnumNumber {
@@ -2452,7 +2550,7 @@ func (x TourniquetTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TourniquetTypeCode.Descriptor instead.
 func (TourniquetTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{42}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{44}
 }
 
 type WoundTreatmentCode int32
@@ -2503,11 +2601,11 @@ func (x WoundTreatmentCode) String() string {
 }
 
 func (WoundTreatmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[43].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[45].Descriptor()
 }
 
 func (WoundTreatmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[43]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[45]
 }
 
 func (x WoundTreatmentCode) Number() protoreflect.EnumNumber {
@@ -2516,7 +2614,7 @@ func (x WoundTreatmentCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WoundTreatmentCode.Descriptor instead.
 func (WoundTreatmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{43}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{45}
 }
 
 type AirwayTreatmentCode int32
@@ -2561,11 +2659,11 @@ func (x AirwayTreatmentCode) String() string {
 }
 
 func (AirwayTreatmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[44].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[46].Descriptor()
 }
 
 func (AirwayTreatmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[44]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[46]
 }
 
 func (x AirwayTreatmentCode) Number() protoreflect.EnumNumber {
@@ -2574,7 +2672,7 @@ func (x AirwayTreatmentCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AirwayTreatmentCode.Descriptor instead.
 func (AirwayTreatmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{44}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{46}
 }
 
 type BreathingTreatmentCode int32
@@ -2619,11 +2717,11 @@ func (x BreathingTreatmentCode) String() string {
 }
 
 func (BreathingTreatmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[45].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[47].Descriptor()
 }
 
 func (BreathingTreatmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[45]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[47]
 }
 
 func (x BreathingTreatmentCode) Number() protoreflect.EnumNumber {
@@ -2632,7 +2730,7 @@ func (x BreathingTreatmentCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BreathingTreatmentCode.Descriptor instead.
 func (BreathingTreatmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{45}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{47}
 }
 
 type FluidNameCode int32
@@ -2671,11 +2769,11 @@ func (x FluidNameCode) String() string {
 }
 
 func (FluidNameCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[46].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[48].Descriptor()
 }
 
 func (FluidNameCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[46]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[48]
 }
 
 func (x FluidNameCode) Number() protoreflect.EnumNumber {
@@ -2684,7 +2782,7 @@ func (x FluidNameCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FluidNameCode.Descriptor instead.
 func (FluidNameCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{46}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{48}
 }
 
 type FluidRouteCode int32
@@ -2720,11 +2818,11 @@ func (x FluidRouteCode) String() string {
 }
 
 func (FluidRouteCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[47].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[49].Descriptor()
 }
 
 func (FluidRouteCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[47]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[49]
 }
 
 func (x FluidRouteCode) Number() protoreflect.EnumNumber {
@@ -2733,7 +2831,7 @@ func (x FluidRouteCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FluidRouteCode.Descriptor instead.
 func (FluidRouteCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{47}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{49}
 }
 
 type BloodProductCode int32
@@ -2775,11 +2873,11 @@ func (x BloodProductCode) String() string {
 }
 
 func (BloodProductCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[48].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[50].Descriptor()
 }
 
 func (BloodProductCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[48]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[50]
 }
 
 func (x BloodProductCode) Number() protoreflect.EnumNumber {
@@ -2788,7 +2886,7 @@ func (x BloodProductCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BloodProductCode.Descriptor instead.
 func (BloodProductCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{48}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{50}
 }
 
 type MedicationRouteCode int32
@@ -2839,11 +2937,11 @@ func (x MedicationRouteCode) String() string {
 }
 
 func (MedicationRouteCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[49].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[51].Descriptor()
 }
 
 func (MedicationRouteCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[49]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[51]
 }
 
 func (x MedicationRouteCode) Number() protoreflect.EnumNumber {
@@ -2852,7 +2950,7 @@ func (x MedicationRouteCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MedicationRouteCode.Descriptor instead.
 func (MedicationRouteCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{49}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{51}
 }
 
 type AnalgesicMedicationCode int32
@@ -2891,11 +2989,11 @@ func (x AnalgesicMedicationCode) String() string {
 }
 
 func (AnalgesicMedicationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[50].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[52].Descriptor()
 }
 
 func (AnalgesicMedicationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[50]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[52]
 }
 
 func (x AnalgesicMedicationCode) Number() protoreflect.EnumNumber {
@@ -2904,7 +3002,7 @@ func (x AnalgesicMedicationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AnalgesicMedicationCode.Descriptor instead.
 func (AnalgesicMedicationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{50}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{52}
 }
 
 type AntibioticMedicationCode int32
@@ -2946,11 +3044,11 @@ func (x AntibioticMedicationCode) String() string {
 }
 
 func (AntibioticMedicationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[51].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[53].Descriptor()
 }
 
 func (AntibioticMedicationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[51]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[53]
 }
 
 func (x AntibioticMedicationCode) Number() protoreflect.EnumNumber {
@@ -2959,7 +3057,7 @@ func (x AntibioticMedicationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AntibioticMedicationCode.Descriptor instead.
 func (AntibioticMedicationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{51}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{53}
 }
 
 type OtherMedicationCode int32
@@ -2995,11 +3093,11 @@ func (x OtherMedicationCode) String() string {
 }
 
 func (OtherMedicationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[52].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[54].Descriptor()
 }
 
 func (OtherMedicationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[52]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[54]
 }
 
 func (x OtherMedicationCode) Number() protoreflect.EnumNumber {
@@ -3008,7 +3106,7 @@ func (x OtherMedicationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OtherMedicationCode.Descriptor instead.
 func (OtherMedicationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{52}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{54}
 }
 
 type CasualtyTypeCode int32
@@ -3044,11 +3142,11 @@ func (x CasualtyTypeCode) String() string {
 }
 
 func (CasualtyTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[53].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[55].Descriptor()
 }
 
 func (CasualtyTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[53]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[55]
 }
 
 func (x CasualtyTypeCode) Number() protoreflect.EnumNumber {
@@ -3057,7 +3155,7 @@ func (x CasualtyTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CasualtyTypeCode.Descriptor instead.
 func (CasualtyTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{53}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{55}
 }
 
 type HealthEvacuationRequestPriorityCode int32
@@ -3102,11 +3200,11 @@ func (x HealthEvacuationRequestPriorityCode) String() string {
 }
 
 func (HealthEvacuationRequestPriorityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[54].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[56].Descriptor()
 }
 
 func (HealthEvacuationRequestPriorityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[54]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[56]
 }
 
 func (x HealthEvacuationRequestPriorityCode) Number() protoreflect.EnumNumber {
@@ -3115,7 +3213,7 @@ func (x HealthEvacuationRequestPriorityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationRequestPriorityCode.Descriptor instead.
 func (HealthEvacuationRequestPriorityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{54}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{56}
 }
 
 type HealthEvacuationLocationMarkingCode int32
@@ -3160,11 +3258,11 @@ func (x HealthEvacuationLocationMarkingCode) String() string {
 }
 
 func (HealthEvacuationLocationMarkingCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[55].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[57].Descriptor()
 }
 
 func (HealthEvacuationLocationMarkingCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[55]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[57]
 }
 
 func (x HealthEvacuationLocationMarkingCode) Number() protoreflect.EnumNumber {
@@ -3173,7 +3271,7 @@ func (x HealthEvacuationLocationMarkingCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationLocationMarkingCode.Descriptor instead.
 func (HealthEvacuationLocationMarkingCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{55}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{57}
 }
 
 type HealthEvacuationContaminationCode int32
@@ -3215,11 +3313,11 @@ func (x HealthEvacuationContaminationCode) String() string {
 }
 
 func (HealthEvacuationContaminationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[56].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[58].Descriptor()
 }
 
 func (HealthEvacuationContaminationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[56]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[58]
 }
 
 func (x HealthEvacuationContaminationCode) Number() protoreflect.EnumNumber {
@@ -3228,7 +3326,7 @@ func (x HealthEvacuationContaminationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationContaminationCode.Descriptor instead.
 func (HealthEvacuationContaminationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{56}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{58}
 }
 
 type HealthEvacuationCasualtyTypeCode int32
@@ -3264,11 +3362,11 @@ func (x HealthEvacuationCasualtyTypeCode) String() string {
 }
 
 func (HealthEvacuationCasualtyTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[57].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[59].Descriptor()
 }
 
 func (HealthEvacuationCasualtyTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[57]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[59]
 }
 
 func (x HealthEvacuationCasualtyTypeCode) Number() protoreflect.EnumNumber {
@@ -3277,7 +3375,7 @@ func (x HealthEvacuationCasualtyTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationCasualtyTypeCode.Descriptor instead.
 func (HealthEvacuationCasualtyTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{57}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{59}
 }
 
 type HealthEvacuationRequestedEquipmentCode int32
@@ -3319,11 +3417,11 @@ func (x HealthEvacuationRequestedEquipmentCode) String() string {
 }
 
 func (HealthEvacuationRequestedEquipmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[58].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[60].Descriptor()
 }
 
 func (HealthEvacuationRequestedEquipmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[58]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[60]
 }
 
 func (x HealthEvacuationRequestedEquipmentCode) Number() protoreflect.EnumNumber {
@@ -3332,7 +3430,7 @@ func (x HealthEvacuationRequestedEquipmentCode) Number() protoreflect.EnumNumber
 
 // Deprecated: Use HealthEvacuationRequestedEquipmentCode.Descriptor instead.
 func (HealthEvacuationRequestedEquipmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{58}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{60}
 }
 
 type HealthEvacuationSecurityCode int32
@@ -3374,11 +3472,11 @@ func (x HealthEvacuationSecurityCode) String() string {
 }
 
 func (HealthEvacuationSecurityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[59].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[61].Descriptor()
 }
 
 func (HealthEvacuationSecurityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[59]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[61]
 }
 
 func (x HealthEvacuationSecurityCode) Number() protoreflect.EnumNumber {
@@ -3387,7 +3485,7 @@ func (x HealthEvacuationSecurityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationSecurityCode.Descriptor instead.
 func (HealthEvacuationSecurityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{59}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{61}
 }
 
 type RequestHeader struct {
@@ -3510,7 +3608,10 @@ func (x *RequestHeader) GetRequestSegmentCount() uint32 {
 }
 
 type LinkFrame struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	LinkMessageId  string                 `protobuf:"bytes,1,opt,name=link_message_id,json=linkMessageId,proto3" json:"link_message_id,omitempty"`
+	DeliveryMethod LinkDeliveryMethod     `protobuf:"varint,2,opt,name=delivery_method,json=deliveryMethod,proto3,enum=lxdr.v1.LinkDeliveryMethod" json:"delivery_method,omitempty"`
+	Representation LinkRepresentation     `protobuf:"varint,3,opt,name=representation,proto3,enum=lxdr.v1.LinkRepresentation" json:"representation,omitempty"`
 	// Types that are valid to be assigned to Payload:
 	//
 	//	*LinkFrame_RequestContainer
@@ -3549,6 +3650,27 @@ func (x *LinkFrame) ProtoReflect() protoreflect.Message {
 // Deprecated: Use LinkFrame.ProtoReflect.Descriptor instead.
 func (*LinkFrame) Descriptor() ([]byte, []int) {
 	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LinkFrame) GetLinkMessageId() string {
+	if x != nil {
+		return x.LinkMessageId
+	}
+	return ""
+}
+
+func (x *LinkFrame) GetDeliveryMethod() LinkDeliveryMethod {
+	if x != nil {
+		return x.DeliveryMethod
+	}
+	return LinkDeliveryMethod_LINK_DELIVERY_METHOD_UNSPECIFIED
+}
+
+func (x *LinkFrame) GetRepresentation() LinkRepresentation {
+	if x != nil {
+		return x.Representation
+	}
+	return LinkRepresentation_LINK_REPRESENTATION_UNSPECIFIED
 }
 
 func (x *LinkFrame) GetPayload() isLinkFrame_Payload {
@@ -3590,15 +3712,15 @@ type isLinkFrame_Payload interface {
 }
 
 type LinkFrame_RequestContainer struct {
-	RequestContainer *RequestContainer `protobuf:"bytes,1,opt,name=request_container,json=requestContainer,proto3,oneof"`
+	RequestContainer *RequestContainer `protobuf:"bytes,10,opt,name=request_container,json=requestContainer,proto3,oneof"`
 }
 
 type LinkFrame_SynchronizedResponse struct {
-	SynchronizedResponse *SynchronizedResponse `protobuf:"bytes,2,opt,name=synchronized_response,json=synchronizedResponse,proto3,oneof"`
+	SynchronizedResponse *SynchronizedResponse `protobuf:"bytes,11,opt,name=synchronized_response,json=synchronizedResponse,proto3,oneof"`
 }
 
 type LinkFrame_CanonicalRegistry struct {
-	CanonicalRegistry *CanonicalRegistry `protobuf:"bytes,3,opt,name=canonical_registry,json=canonicalRegistry,proto3,oneof"`
+	CanonicalRegistry *CanonicalRegistry `protobuf:"bytes,12,opt,name=canonical_registry,json=canonicalRegistry,proto3,oneof"`
 }
 
 func (*LinkFrame_RequestContainer) isLinkFrame_Payload() {}
@@ -7368,11 +7490,15 @@ const file_proto_lxdr_v1_lxdr_proto_rawDesc = "" +
 	" \x01(\rR\x13requestSegmentCountB\v\n" +
 	"\t_utc_timeB\x0f\n" +
 	"\r_military_dtgB\x1a\n" +
-	"\x18_synchronized_request_id\"\x83\x02\n" +
-	"\tLinkFrame\x12H\n" +
-	"\x11request_container\x18\x01 \x01(\v2\x19.lxdr.v1.RequestContainerH\x00R\x10requestContainer\x12T\n" +
-	"\x15synchronized_response\x18\x02 \x01(\v2\x1d.lxdr.v1.SynchronizedResponseH\x00R\x14synchronizedResponse\x12K\n" +
-	"\x12canonical_registry\x18\x03 \x01(\v2\x1a.lxdr.v1.CanonicalRegistryH\x00R\x11canonicalRegistryB\t\n" +
+	"\x18_synchronized_request_id\"\xb6\x03\n" +
+	"\tLinkFrame\x12&\n" +
+	"\x0flink_message_id\x18\x01 \x01(\tR\rlinkMessageId\x12D\n" +
+	"\x0fdelivery_method\x18\x02 \x01(\x0e2\x1b.lxdr.v1.LinkDeliveryMethodR\x0edeliveryMethod\x12C\n" +
+	"\x0erepresentation\x18\x03 \x01(\x0e2\x1b.lxdr.v1.LinkRepresentationR\x0erepresentation\x12H\n" +
+	"\x11request_container\x18\n" +
+	" \x01(\v2\x19.lxdr.v1.RequestContainerH\x00R\x10requestContainer\x12T\n" +
+	"\x15synchronized_response\x18\v \x01(\v2\x1d.lxdr.v1.SynchronizedResponseH\x00R\x14synchronizedResponse\x12K\n" +
+	"\x12canonical_registry\x18\f \x01(\v2\x1a.lxdr.v1.CanonicalRegistryH\x00R\x11canonicalRegistryB\t\n" +
 	"\apayload\"x\n" +
 	"\x14SynchronizedResponse\x12(\n" +
 	"\x10local_request_id\x18\x01 \x01(\tR\x0elocalRequestId\x126\n" +
@@ -7857,7 +7983,15 @@ const file_proto_lxdr_v1_lxdr_proto_rawDesc = "" +
 	"\x19EXCHANGE_ROLE_TRANSMITTED\x10\x01\x12\x1c\n" +
 	"\x18EXCHANGE_ROLE_CALCULATED\x10\x02\x12\x1e\n" +
 	"\x1aEXCHANGE_ROLE_SYNCHRONIZED\x10\x03\x12\x1c\n" +
-	"\x18EXCHANGE_ROLE_LOCAL_ONLY\x10\x04*\xfe\x03\n" +
+	"\x18EXCHANGE_ROLE_LOCAL_ONLY\x10\x04*\xa8\x01\n" +
+	"\x12LinkDeliveryMethod\x12$\n" +
+	" LINK_DELIVERY_METHOD_UNSPECIFIED\x10\x00\x12\x1f\n" +
+	"\x1bLINK_DELIVERY_METHOD_DIRECT\x10\x01\x12#\n" +
+	"\x1fLINK_DELIVERY_METHOD_PROPAGATED\x10\x02\x12&\n" +
+	"\"LINK_DELIVERY_METHOD_OPPORTUNISTIC\x10\x03*_\n" +
+	"\x12LinkRepresentation\x12#\n" +
+	"\x1fLINK_REPRESENTATION_UNSPECIFIED\x10\x00\x12$\n" +
+	" LINK_REPRESENTATION_BINARY_PROTO\x10\x01*\xfe\x03\n" +
 	"\x13RequestPriorityCode\x12%\n" +
 	"!REQUEST_PRIORITY_CODE_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18REQUEST_PRIORITY_CODE_01\x10\x01\x12\x1c\n" +
@@ -8239,250 +8373,254 @@ func file_proto_lxdr_v1_lxdr_proto_rawDescGZIP() []byte {
 	return file_proto_lxdr_v1_lxdr_proto_rawDescData
 }
 
-var file_proto_lxdr_v1_lxdr_proto_enumTypes = make([]protoimpl.EnumInfo, 60)
+var file_proto_lxdr_v1_lxdr_proto_enumTypes = make([]protoimpl.EnumInfo, 62)
 var file_proto_lxdr_v1_lxdr_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
 var file_proto_lxdr_v1_lxdr_proto_goTypes = []any{
 	(FunctionFamily)(0),                                // 0: lxdr.v1.FunctionFamily
 	(CanonicalFileType)(0),                             // 1: lxdr.v1.CanonicalFileType
 	(ExchangeRole)(0),                                  // 2: lxdr.v1.ExchangeRole
-	(RequestPriorityCode)(0),                           // 3: lxdr.v1.RequestPriorityCode
-	(MobilityPaxRequestTypeCode)(0),                    // 4: lxdr.v1.MobilityPaxRequestTypeCode
-	(MobilityCargoRequestTypeCode)(0),                  // 5: lxdr.v1.MobilityCargoRequestTypeCode
-	(CargoHMICCode)(0),                                 // 6: lxdr.v1.CargoHMICCode
-	(CargoHandlingCode)(0),                             // 7: lxdr.v1.CargoHandlingCode
-	(SupplyRequestTypeCode)(0),                         // 8: lxdr.v1.SupplyRequestTypeCode
-	(MaintenanceRequestTypeCode)(0),                    // 9: lxdr.v1.MaintenanceRequestTypeCode
-	(AttachmentIndicatorCode)(0),                       // 10: lxdr.v1.AttachmentIndicatorCode
-	(MaintenanceOperationalConditionCode)(0),           // 11: lxdr.v1.MaintenanceOperationalConditionCode
-	(MaintenanceSupportTypeCode)(0),                    // 12: lxdr.v1.MaintenanceSupportTypeCode
-	(MaintenanceRepairTypeCode)(0),                     // 13: lxdr.v1.MaintenanceRepairTypeCode
-	(MaintenanceMajorDefectCode)(0),                    // 14: lxdr.v1.MaintenanceMajorDefectCode
-	(RoadClassificationCode)(0),                        // 15: lxdr.v1.RoadClassificationCode
-	(RoadDrainageCode)(0),                              // 16: lxdr.v1.RoadDrainageCode
-	(RoadFoundationCode)(0),                            // 17: lxdr.v1.RoadFoundationCode
-	(RoadSurfaceTypeCode)(0),                           // 18: lxdr.v1.RoadSurfaceTypeCode
-	(EstimateCode)(0),                                  // 19: lxdr.v1.EstimateCode
-	(LandingZoneLayoutDesignationCode)(0),              // 20: lxdr.v1.LandingZoneLayoutDesignationCode
-	(AircraftSupportabilityCode)(0),                    // 21: lxdr.v1.AircraftSupportabilityCode
-	(CardinalDirectionCode)(0),                         // 22: lxdr.v1.CardinalDirectionCode
-	(LandingZoneSurfaceSlopeCode)(0),                   // 23: lxdr.v1.LandingZoneSurfaceSlopeCode
-	(LandingZoneObstacleCode)(0),                       // 24: lxdr.v1.LandingZoneObstacleCode
-	(ObstacleActionCode)(0),                            // 25: lxdr.v1.ObstacleActionCode
-	(ObstacleDeterminationCode)(0),                     // 26: lxdr.v1.ObstacleDeterminationCode
-	(BypassCode)(0),                                    // 27: lxdr.v1.BypassCode
-	(CBRNAgentTypeCode)(0),                             // 28: lxdr.v1.CBRNAgentTypeCode
-	(CBRNPhysicalPropertyCode)(0),                      // 29: lxdr.v1.CBRNPhysicalPropertyCode
-	(CBRNContaminationValueCode)(0),                    // 30: lxdr.v1.CBRNContaminationValueCode
-	(MunitionPurposeCode)(0),                           // 31: lxdr.v1.MunitionPurposeCode
-	(MunitionTypeCode)(0),                              // 32: lxdr.v1.MunitionTypeCode
-	(HealthCollectionRequestTypeCode)(0),               // 33: lxdr.v1.HealthCollectionRequestTypeCode
-	(ServiceCode)(0),                                   // 34: lxdr.v1.ServiceCode
-	(HealthPrimaryMechanismCode)(0),                    // 35: lxdr.v1.HealthPrimaryMechanismCode
-	(HealthCBRNExposureCode)(0),                        // 36: lxdr.v1.HealthCBRNExposureCode
-	(HealthMajorSignsSymptomsCode)(0),                  // 37: lxdr.v1.HealthMajorSignsSymptomsCode
-	(HealthPulseLocationCode)(0),                       // 38: lxdr.v1.HealthPulseLocationCode
-	(HealthResponsivenessCode)(0),                      // 39: lxdr.v1.HealthResponsivenessCode
-	(HealthTriagePrecedenceCode)(0),                    // 40: lxdr.v1.HealthTriagePrecedenceCode
-	(TourniquetPlacementCode)(0),                       // 41: lxdr.v1.TourniquetPlacementCode
-	(TourniquetTypeCode)(0),                            // 42: lxdr.v1.TourniquetTypeCode
-	(WoundTreatmentCode)(0),                            // 43: lxdr.v1.WoundTreatmentCode
-	(AirwayTreatmentCode)(0),                           // 44: lxdr.v1.AirwayTreatmentCode
-	(BreathingTreatmentCode)(0),                        // 45: lxdr.v1.BreathingTreatmentCode
-	(FluidNameCode)(0),                                 // 46: lxdr.v1.FluidNameCode
-	(FluidRouteCode)(0),                                // 47: lxdr.v1.FluidRouteCode
-	(BloodProductCode)(0),                              // 48: lxdr.v1.BloodProductCode
-	(MedicationRouteCode)(0),                           // 49: lxdr.v1.MedicationRouteCode
-	(AnalgesicMedicationCode)(0),                       // 50: lxdr.v1.AnalgesicMedicationCode
-	(AntibioticMedicationCode)(0),                      // 51: lxdr.v1.AntibioticMedicationCode
-	(OtherMedicationCode)(0),                           // 52: lxdr.v1.OtherMedicationCode
-	(CasualtyTypeCode)(0),                              // 53: lxdr.v1.CasualtyTypeCode
-	(HealthEvacuationRequestPriorityCode)(0),           // 54: lxdr.v1.HealthEvacuationRequestPriorityCode
-	(HealthEvacuationLocationMarkingCode)(0),           // 55: lxdr.v1.HealthEvacuationLocationMarkingCode
-	(HealthEvacuationContaminationCode)(0),             // 56: lxdr.v1.HealthEvacuationContaminationCode
-	(HealthEvacuationCasualtyTypeCode)(0),              // 57: lxdr.v1.HealthEvacuationCasualtyTypeCode
-	(HealthEvacuationRequestedEquipmentCode)(0),        // 58: lxdr.v1.HealthEvacuationRequestedEquipmentCode
-	(HealthEvacuationSecurityCode)(0),                  // 59: lxdr.v1.HealthEvacuationSecurityCode
-	(*RequestHeader)(nil),                              // 60: lxdr.v1.RequestHeader
-	(*LinkFrame)(nil),                                  // 61: lxdr.v1.LinkFrame
-	(*SynchronizedResponse)(nil),                       // 62: lxdr.v1.SynchronizedResponse
-	(*CanonicalRegistryFieldEntry)(nil),                // 63: lxdr.v1.CanonicalRegistryFieldEntry
-	(*CanonicalRegistry)(nil),                          // 64: lxdr.v1.CanonicalRegistry
-	(*RequestContainer)(nil),                           // 65: lxdr.v1.RequestContainer
-	(*RequestSegment)(nil),                             // 66: lxdr.v1.RequestSegment
-	(*MobilityPaxRequestSegment)(nil),                  // 67: lxdr.v1.MobilityPaxRequestSegment
-	(*MobilityCargoRequestSegment)(nil),                // 68: lxdr.v1.MobilityCargoRequestSegment
-	(*SupplyRequestSegment)(nil),                       // 69: lxdr.v1.SupplyRequestSegment
-	(*MaintenanceRequestSegment)(nil),                  // 70: lxdr.v1.MaintenanceRequestSegment
-	(*EngineerReconAreaItemReport)(nil),                // 71: lxdr.v1.EngineerReconAreaItemReport
-	(*EngineerReconAreaWaterSource)(nil),               // 72: lxdr.v1.EngineerReconAreaWaterSource
-	(*EngineerReconAreaReportSegment)(nil),             // 73: lxdr.v1.EngineerReconAreaReportSegment
-	(*EngineerReconZoneEnemyReport)(nil),               // 74: lxdr.v1.EngineerReconZoneEnemyReport
-	(*EngineerReconZoneReportSegment)(nil),             // 75: lxdr.v1.EngineerReconZoneReportSegment
-	(*EngineerReconRouteReportSegment)(nil),            // 76: lxdr.v1.EngineerReconRouteReportSegment
-	(*EngineerReconRoadReportSegment)(nil),             // 77: lxdr.v1.EngineerReconRoadReportSegment
-	(*EngineerReconLandingZoneReportSegment)(nil),      // 78: lxdr.v1.EngineerReconLandingZoneReportSegment
-	(*GeneralEngineeringObstacleRemovalSegment)(nil),   // 79: lxdr.v1.GeneralEngineeringObstacleRemovalSegment
-	(*ExplosiveOrdnanceDisposalSegment)(nil),           // 80: lxdr.v1.ExplosiveOrdnanceDisposalSegment
-	(*GeneralEngineeringBulkLiquidSupportSegment)(nil), // 81: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
-	(*GeneralEngineeringDemolitionSegment)(nil),        // 82: lxdr.v1.GeneralEngineeringDemolitionSegment
-	(*HealthCollectionSegment)(nil),                    // 83: lxdr.v1.HealthCollectionSegment
-	(*HealthTriageSegment)(nil),                        // 84: lxdr.v1.HealthTriageSegment
-	(*TourniquetTreatment)(nil),                        // 85: lxdr.v1.TourniquetTreatment
-	(*FluidCirculationTreatment)(nil),                  // 86: lxdr.v1.FluidCirculationTreatment
-	(*BloodCirculationTreatment)(nil),                  // 87: lxdr.v1.BloodCirculationTreatment
-	(*AnalgesicMedicationTreatment)(nil),               // 88: lxdr.v1.AnalgesicMedicationTreatment
-	(*AntibioticMedicationTreatment)(nil),              // 89: lxdr.v1.AntibioticMedicationTreatment
-	(*OtherMedicationTreatment)(nil),                   // 90: lxdr.v1.OtherMedicationTreatment
-	(*HealthInterventionSegment)(nil),                  // 91: lxdr.v1.HealthInterventionSegment
-	(*HealthHoldSegment)(nil),                          // 92: lxdr.v1.HealthHoldSegment
-	(*HealthEvacuationPrecedenceCount)(nil),            // 93: lxdr.v1.HealthEvacuationPrecedenceCount
-	(*HealthEvacuationCasualtyTypeCount)(nil),          // 94: lxdr.v1.HealthEvacuationCasualtyTypeCount
-	(*HealthEvacuationCasualtyRecord)(nil),             // 95: lxdr.v1.HealthEvacuationCasualtyRecord
-	(*HealthEvacuationSegment)(nil),                    // 96: lxdr.v1.HealthEvacuationSegment
+	(LinkDeliveryMethod)(0),                            // 3: lxdr.v1.LinkDeliveryMethod
+	(LinkRepresentation)(0),                            // 4: lxdr.v1.LinkRepresentation
+	(RequestPriorityCode)(0),                           // 5: lxdr.v1.RequestPriorityCode
+	(MobilityPaxRequestTypeCode)(0),                    // 6: lxdr.v1.MobilityPaxRequestTypeCode
+	(MobilityCargoRequestTypeCode)(0),                  // 7: lxdr.v1.MobilityCargoRequestTypeCode
+	(CargoHMICCode)(0),                                 // 8: lxdr.v1.CargoHMICCode
+	(CargoHandlingCode)(0),                             // 9: lxdr.v1.CargoHandlingCode
+	(SupplyRequestTypeCode)(0),                         // 10: lxdr.v1.SupplyRequestTypeCode
+	(MaintenanceRequestTypeCode)(0),                    // 11: lxdr.v1.MaintenanceRequestTypeCode
+	(AttachmentIndicatorCode)(0),                       // 12: lxdr.v1.AttachmentIndicatorCode
+	(MaintenanceOperationalConditionCode)(0),           // 13: lxdr.v1.MaintenanceOperationalConditionCode
+	(MaintenanceSupportTypeCode)(0),                    // 14: lxdr.v1.MaintenanceSupportTypeCode
+	(MaintenanceRepairTypeCode)(0),                     // 15: lxdr.v1.MaintenanceRepairTypeCode
+	(MaintenanceMajorDefectCode)(0),                    // 16: lxdr.v1.MaintenanceMajorDefectCode
+	(RoadClassificationCode)(0),                        // 17: lxdr.v1.RoadClassificationCode
+	(RoadDrainageCode)(0),                              // 18: lxdr.v1.RoadDrainageCode
+	(RoadFoundationCode)(0),                            // 19: lxdr.v1.RoadFoundationCode
+	(RoadSurfaceTypeCode)(0),                           // 20: lxdr.v1.RoadSurfaceTypeCode
+	(EstimateCode)(0),                                  // 21: lxdr.v1.EstimateCode
+	(LandingZoneLayoutDesignationCode)(0),              // 22: lxdr.v1.LandingZoneLayoutDesignationCode
+	(AircraftSupportabilityCode)(0),                    // 23: lxdr.v1.AircraftSupportabilityCode
+	(CardinalDirectionCode)(0),                         // 24: lxdr.v1.CardinalDirectionCode
+	(LandingZoneSurfaceSlopeCode)(0),                   // 25: lxdr.v1.LandingZoneSurfaceSlopeCode
+	(LandingZoneObstacleCode)(0),                       // 26: lxdr.v1.LandingZoneObstacleCode
+	(ObstacleActionCode)(0),                            // 27: lxdr.v1.ObstacleActionCode
+	(ObstacleDeterminationCode)(0),                     // 28: lxdr.v1.ObstacleDeterminationCode
+	(BypassCode)(0),                                    // 29: lxdr.v1.BypassCode
+	(CBRNAgentTypeCode)(0),                             // 30: lxdr.v1.CBRNAgentTypeCode
+	(CBRNPhysicalPropertyCode)(0),                      // 31: lxdr.v1.CBRNPhysicalPropertyCode
+	(CBRNContaminationValueCode)(0),                    // 32: lxdr.v1.CBRNContaminationValueCode
+	(MunitionPurposeCode)(0),                           // 33: lxdr.v1.MunitionPurposeCode
+	(MunitionTypeCode)(0),                              // 34: lxdr.v1.MunitionTypeCode
+	(HealthCollectionRequestTypeCode)(0),               // 35: lxdr.v1.HealthCollectionRequestTypeCode
+	(ServiceCode)(0),                                   // 36: lxdr.v1.ServiceCode
+	(HealthPrimaryMechanismCode)(0),                    // 37: lxdr.v1.HealthPrimaryMechanismCode
+	(HealthCBRNExposureCode)(0),                        // 38: lxdr.v1.HealthCBRNExposureCode
+	(HealthMajorSignsSymptomsCode)(0),                  // 39: lxdr.v1.HealthMajorSignsSymptomsCode
+	(HealthPulseLocationCode)(0),                       // 40: lxdr.v1.HealthPulseLocationCode
+	(HealthResponsivenessCode)(0),                      // 41: lxdr.v1.HealthResponsivenessCode
+	(HealthTriagePrecedenceCode)(0),                    // 42: lxdr.v1.HealthTriagePrecedenceCode
+	(TourniquetPlacementCode)(0),                       // 43: lxdr.v1.TourniquetPlacementCode
+	(TourniquetTypeCode)(0),                            // 44: lxdr.v1.TourniquetTypeCode
+	(WoundTreatmentCode)(0),                            // 45: lxdr.v1.WoundTreatmentCode
+	(AirwayTreatmentCode)(0),                           // 46: lxdr.v1.AirwayTreatmentCode
+	(BreathingTreatmentCode)(0),                        // 47: lxdr.v1.BreathingTreatmentCode
+	(FluidNameCode)(0),                                 // 48: lxdr.v1.FluidNameCode
+	(FluidRouteCode)(0),                                // 49: lxdr.v1.FluidRouteCode
+	(BloodProductCode)(0),                              // 50: lxdr.v1.BloodProductCode
+	(MedicationRouteCode)(0),                           // 51: lxdr.v1.MedicationRouteCode
+	(AnalgesicMedicationCode)(0),                       // 52: lxdr.v1.AnalgesicMedicationCode
+	(AntibioticMedicationCode)(0),                      // 53: lxdr.v1.AntibioticMedicationCode
+	(OtherMedicationCode)(0),                           // 54: lxdr.v1.OtherMedicationCode
+	(CasualtyTypeCode)(0),                              // 55: lxdr.v1.CasualtyTypeCode
+	(HealthEvacuationRequestPriorityCode)(0),           // 56: lxdr.v1.HealthEvacuationRequestPriorityCode
+	(HealthEvacuationLocationMarkingCode)(0),           // 57: lxdr.v1.HealthEvacuationLocationMarkingCode
+	(HealthEvacuationContaminationCode)(0),             // 58: lxdr.v1.HealthEvacuationContaminationCode
+	(HealthEvacuationCasualtyTypeCode)(0),              // 59: lxdr.v1.HealthEvacuationCasualtyTypeCode
+	(HealthEvacuationRequestedEquipmentCode)(0),        // 60: lxdr.v1.HealthEvacuationRequestedEquipmentCode
+	(HealthEvacuationSecurityCode)(0),                  // 61: lxdr.v1.HealthEvacuationSecurityCode
+	(*RequestHeader)(nil),                              // 62: lxdr.v1.RequestHeader
+	(*LinkFrame)(nil),                                  // 63: lxdr.v1.LinkFrame
+	(*SynchronizedResponse)(nil),                       // 64: lxdr.v1.SynchronizedResponse
+	(*CanonicalRegistryFieldEntry)(nil),                // 65: lxdr.v1.CanonicalRegistryFieldEntry
+	(*CanonicalRegistry)(nil),                          // 66: lxdr.v1.CanonicalRegistry
+	(*RequestContainer)(nil),                           // 67: lxdr.v1.RequestContainer
+	(*RequestSegment)(nil),                             // 68: lxdr.v1.RequestSegment
+	(*MobilityPaxRequestSegment)(nil),                  // 69: lxdr.v1.MobilityPaxRequestSegment
+	(*MobilityCargoRequestSegment)(nil),                // 70: lxdr.v1.MobilityCargoRequestSegment
+	(*SupplyRequestSegment)(nil),                       // 71: lxdr.v1.SupplyRequestSegment
+	(*MaintenanceRequestSegment)(nil),                  // 72: lxdr.v1.MaintenanceRequestSegment
+	(*EngineerReconAreaItemReport)(nil),                // 73: lxdr.v1.EngineerReconAreaItemReport
+	(*EngineerReconAreaWaterSource)(nil),               // 74: lxdr.v1.EngineerReconAreaWaterSource
+	(*EngineerReconAreaReportSegment)(nil),             // 75: lxdr.v1.EngineerReconAreaReportSegment
+	(*EngineerReconZoneEnemyReport)(nil),               // 76: lxdr.v1.EngineerReconZoneEnemyReport
+	(*EngineerReconZoneReportSegment)(nil),             // 77: lxdr.v1.EngineerReconZoneReportSegment
+	(*EngineerReconRouteReportSegment)(nil),            // 78: lxdr.v1.EngineerReconRouteReportSegment
+	(*EngineerReconRoadReportSegment)(nil),             // 79: lxdr.v1.EngineerReconRoadReportSegment
+	(*EngineerReconLandingZoneReportSegment)(nil),      // 80: lxdr.v1.EngineerReconLandingZoneReportSegment
+	(*GeneralEngineeringObstacleRemovalSegment)(nil),   // 81: lxdr.v1.GeneralEngineeringObstacleRemovalSegment
+	(*ExplosiveOrdnanceDisposalSegment)(nil),           // 82: lxdr.v1.ExplosiveOrdnanceDisposalSegment
+	(*GeneralEngineeringBulkLiquidSupportSegment)(nil), // 83: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
+	(*GeneralEngineeringDemolitionSegment)(nil),        // 84: lxdr.v1.GeneralEngineeringDemolitionSegment
+	(*HealthCollectionSegment)(nil),                    // 85: lxdr.v1.HealthCollectionSegment
+	(*HealthTriageSegment)(nil),                        // 86: lxdr.v1.HealthTriageSegment
+	(*TourniquetTreatment)(nil),                        // 87: lxdr.v1.TourniquetTreatment
+	(*FluidCirculationTreatment)(nil),                  // 88: lxdr.v1.FluidCirculationTreatment
+	(*BloodCirculationTreatment)(nil),                  // 89: lxdr.v1.BloodCirculationTreatment
+	(*AnalgesicMedicationTreatment)(nil),               // 90: lxdr.v1.AnalgesicMedicationTreatment
+	(*AntibioticMedicationTreatment)(nil),              // 91: lxdr.v1.AntibioticMedicationTreatment
+	(*OtherMedicationTreatment)(nil),                   // 92: lxdr.v1.OtherMedicationTreatment
+	(*HealthInterventionSegment)(nil),                  // 93: lxdr.v1.HealthInterventionSegment
+	(*HealthHoldSegment)(nil),                          // 94: lxdr.v1.HealthHoldSegment
+	(*HealthEvacuationPrecedenceCount)(nil),            // 95: lxdr.v1.HealthEvacuationPrecedenceCount
+	(*HealthEvacuationCasualtyTypeCount)(nil),          // 96: lxdr.v1.HealthEvacuationCasualtyTypeCount
+	(*HealthEvacuationCasualtyRecord)(nil),             // 97: lxdr.v1.HealthEvacuationCasualtyRecord
+	(*HealthEvacuationSegment)(nil),                    // 98: lxdr.v1.HealthEvacuationSegment
 }
 var file_proto_lxdr_v1_lxdr_proto_depIdxs = []int32{
-	3,   // 0: lxdr.v1.RequestHeader.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	65,  // 1: lxdr.v1.LinkFrame.request_container:type_name -> lxdr.v1.RequestContainer
-	62,  // 2: lxdr.v1.LinkFrame.synchronized_response:type_name -> lxdr.v1.SynchronizedResponse
-	64,  // 3: lxdr.v1.LinkFrame.canonical_registry:type_name -> lxdr.v1.CanonicalRegistry
-	1,   // 4: lxdr.v1.CanonicalRegistryFieldEntry.canonical_file:type_name -> lxdr.v1.CanonicalFileType
-	2,   // 5: lxdr.v1.CanonicalRegistryFieldEntry.exchange_role:type_name -> lxdr.v1.ExchangeRole
-	63,  // 6: lxdr.v1.CanonicalRegistry.entries:type_name -> lxdr.v1.CanonicalRegistryFieldEntry
-	60,  // 7: lxdr.v1.RequestContainer.header:type_name -> lxdr.v1.RequestHeader
-	66,  // 8: lxdr.v1.RequestContainer.segments:type_name -> lxdr.v1.RequestSegment
-	0,   // 9: lxdr.v1.RequestSegment.function_family:type_name -> lxdr.v1.FunctionFamily
-	67,  // 10: lxdr.v1.RequestSegment.mobility_pax:type_name -> lxdr.v1.MobilityPaxRequestSegment
-	68,  // 11: lxdr.v1.RequestSegment.mobility_cargo:type_name -> lxdr.v1.MobilityCargoRequestSegment
-	69,  // 12: lxdr.v1.RequestSegment.supply:type_name -> lxdr.v1.SupplyRequestSegment
-	70,  // 13: lxdr.v1.RequestSegment.maintenance:type_name -> lxdr.v1.MaintenanceRequestSegment
-	73,  // 14: lxdr.v1.RequestSegment.engineer_recon_area:type_name -> lxdr.v1.EngineerReconAreaReportSegment
-	75,  // 15: lxdr.v1.RequestSegment.engineer_recon_zone:type_name -> lxdr.v1.EngineerReconZoneReportSegment
-	76,  // 16: lxdr.v1.RequestSegment.engineer_recon_route:type_name -> lxdr.v1.EngineerReconRouteReportSegment
-	77,  // 17: lxdr.v1.RequestSegment.engineer_recon_road:type_name -> lxdr.v1.EngineerReconRoadReportSegment
-	78,  // 18: lxdr.v1.RequestSegment.engineer_recon_landing_zone:type_name -> lxdr.v1.EngineerReconLandingZoneReportSegment
-	79,  // 19: lxdr.v1.RequestSegment.obstacle_removal:type_name -> lxdr.v1.GeneralEngineeringObstacleRemovalSegment
-	80,  // 20: lxdr.v1.RequestSegment.eod:type_name -> lxdr.v1.ExplosiveOrdnanceDisposalSegment
-	81,  // 21: lxdr.v1.RequestSegment.bulk_liquid_support:type_name -> lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
-	82,  // 22: lxdr.v1.RequestSegment.demolition:type_name -> lxdr.v1.GeneralEngineeringDemolitionSegment
-	83,  // 23: lxdr.v1.RequestSegment.health_collection:type_name -> lxdr.v1.HealthCollectionSegment
-	84,  // 24: lxdr.v1.RequestSegment.health_triage:type_name -> lxdr.v1.HealthTriageSegment
-	91,  // 25: lxdr.v1.RequestSegment.health_intervention:type_name -> lxdr.v1.HealthInterventionSegment
-	92,  // 26: lxdr.v1.RequestSegment.health_hold:type_name -> lxdr.v1.HealthHoldSegment
-	96,  // 27: lxdr.v1.RequestSegment.health_evacuation:type_name -> lxdr.v1.HealthEvacuationSegment
-	4,   // 28: lxdr.v1.MobilityPaxRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityPaxRequestTypeCode
-	3,   // 29: lxdr.v1.MobilityPaxRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	5,   // 30: lxdr.v1.MobilityCargoRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityCargoRequestTypeCode
-	3,   // 31: lxdr.v1.MobilityCargoRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	6,   // 32: lxdr.v1.MobilityCargoRequestSegment.hmic:type_name -> lxdr.v1.CargoHMICCode
-	7,   // 33: lxdr.v1.MobilityCargoRequestSegment.handling:type_name -> lxdr.v1.CargoHandlingCode
-	8,   // 34: lxdr.v1.SupplyRequestSegment.request_type_code:type_name -> lxdr.v1.SupplyRequestTypeCode
-	3,   // 35: lxdr.v1.SupplyRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	10,  // 36: lxdr.v1.SupplyRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	9,   // 37: lxdr.v1.MaintenanceRequestSegment.request_type_code:type_name -> lxdr.v1.MaintenanceRequestTypeCode
-	3,   // 38: lxdr.v1.MaintenanceRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	11,  // 39: lxdr.v1.MaintenanceRequestSegment.equipment_operational_condition:type_name -> lxdr.v1.MaintenanceOperationalConditionCode
-	12,  // 40: lxdr.v1.MaintenanceRequestSegment.type_of_maintenance_support_required:type_name -> lxdr.v1.MaintenanceSupportTypeCode
-	13,  // 41: lxdr.v1.MaintenanceRequestSegment.type_of_repair:type_name -> lxdr.v1.MaintenanceRepairTypeCode
-	14,  // 42: lxdr.v1.MaintenanceRequestSegment.repair_major_defect:type_name -> lxdr.v1.MaintenanceMajorDefectCode
-	10,  // 43: lxdr.v1.MaintenanceRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	72,  // 44: lxdr.v1.EngineerReconAreaReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
-	71,  // 45: lxdr.v1.EngineerReconAreaReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
-	10,  // 46: lxdr.v1.EngineerReconAreaReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	74,  // 47: lxdr.v1.EngineerReconZoneReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
-	72,  // 48: lxdr.v1.EngineerReconZoneReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
-	71,  // 49: lxdr.v1.EngineerReconZoneReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
-	10,  // 50: lxdr.v1.EngineerReconZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	74,  // 51: lxdr.v1.EngineerReconRouteReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
-	72,  // 52: lxdr.v1.EngineerReconRouteReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
-	71,  // 53: lxdr.v1.EngineerReconRouteReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
-	10,  // 54: lxdr.v1.EngineerReconRouteReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	15,  // 55: lxdr.v1.EngineerReconRoadReportSegment.road_classification:type_name -> lxdr.v1.RoadClassificationCode
-	16,  // 56: lxdr.v1.EngineerReconRoadReportSegment.drainage:type_name -> lxdr.v1.RoadDrainageCode
-	17,  // 57: lxdr.v1.EngineerReconRoadReportSegment.foundation:type_name -> lxdr.v1.RoadFoundationCode
-	18,  // 58: lxdr.v1.EngineerReconRoadReportSegment.surface_type:type_name -> lxdr.v1.RoadSurfaceTypeCode
-	10,  // 59: lxdr.v1.EngineerReconRoadReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	19,  // 60: lxdr.v1.EngineerReconLandingZoneReportSegment.estimate:type_name -> lxdr.v1.EstimateCode
-	20,  // 61: lxdr.v1.EngineerReconLandingZoneReportSegment.layout_designation:type_name -> lxdr.v1.LandingZoneLayoutDesignationCode
-	21,  // 62: lxdr.v1.EngineerReconLandingZoneReportSegment.aircraft_supportability:type_name -> lxdr.v1.AircraftSupportabilityCode
-	22,  // 63: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_approach:type_name -> lxdr.v1.CardinalDirectionCode
-	22,  // 64: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_departure:type_name -> lxdr.v1.CardinalDirectionCode
-	23,  // 65: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_surface_slope:type_name -> lxdr.v1.LandingZoneSurfaceSlopeCode
-	24,  // 66: lxdr.v1.EngineerReconLandingZoneReportSegment.obstacle:type_name -> lxdr.v1.LandingZoneObstacleCode
-	10,  // 67: lxdr.v1.EngineerReconLandingZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	25,  // 68: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.obstacle:type_name -> lxdr.v1.ObstacleActionCode
-	26,  // 69: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
-	27,  // 70: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.bypass:type_name -> lxdr.v1.BypassCode
-	10,  // 71: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	28,  // 72: lxdr.v1.ExplosiveOrdnanceDisposalSegment.type_of_cbrn_agent:type_name -> lxdr.v1.CBRNAgentTypeCode
-	29,  // 73: lxdr.v1.ExplosiveOrdnanceDisposalSegment.physical_property_of_cbrn_agent:type_name -> lxdr.v1.CBRNPhysicalPropertyCode
-	30,  // 74: lxdr.v1.ExplosiveOrdnanceDisposalSegment.contamination_value_of_cbrn_agent:type_name -> lxdr.v1.CBRNContaminationValueCode
-	31,  // 75: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_purpose:type_name -> lxdr.v1.MunitionPurposeCode
-	32,  // 76: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_type:type_name -> lxdr.v1.MunitionTypeCode
-	10,  // 77: lxdr.v1.ExplosiveOrdnanceDisposalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	19,  // 78: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.estimate:type_name -> lxdr.v1.EstimateCode
-	10,  // 79: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	26,  // 80: lxdr.v1.GeneralEngineeringDemolitionSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
-	27,  // 81: lxdr.v1.GeneralEngineeringDemolitionSegment.bypass:type_name -> lxdr.v1.BypassCode
-	10,  // 82: lxdr.v1.GeneralEngineeringDemolitionSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	33,  // 83: lxdr.v1.HealthCollectionSegment.request_type_code:type_name -> lxdr.v1.HealthCollectionRequestTypeCode
-	3,   // 84: lxdr.v1.HealthCollectionSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	34,  // 85: lxdr.v1.HealthCollectionSegment.service:type_name -> lxdr.v1.ServiceCode
-	35,  // 86: lxdr.v1.HealthTriageSegment.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
-	36,  // 87: lxdr.v1.HealthTriageSegment.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
-	37,  // 88: lxdr.v1.HealthTriageSegment.major_signs_symptoms:type_name -> lxdr.v1.HealthMajorSignsSymptomsCode
-	38,  // 89: lxdr.v1.HealthTriageSegment.pulse_location:type_name -> lxdr.v1.HealthPulseLocationCode
-	39,  // 90: lxdr.v1.HealthTriageSegment.responsiveness:type_name -> lxdr.v1.HealthResponsivenessCode
-	40,  // 91: lxdr.v1.HealthTriageSegment.triage_precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
-	41,  // 92: lxdr.v1.TourniquetTreatment.placement:type_name -> lxdr.v1.TourniquetPlacementCode
-	42,  // 93: lxdr.v1.TourniquetTreatment.type:type_name -> lxdr.v1.TourniquetTypeCode
-	46,  // 94: lxdr.v1.FluidCirculationTreatment.fluid_name_code:type_name -> lxdr.v1.FluidNameCode
-	47,  // 95: lxdr.v1.FluidCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
-	48,  // 96: lxdr.v1.BloodCirculationTreatment.blood_product_name:type_name -> lxdr.v1.BloodProductCode
-	47,  // 97: lxdr.v1.BloodCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
-	50,  // 98: lxdr.v1.AnalgesicMedicationTreatment.medication_code:type_name -> lxdr.v1.AnalgesicMedicationCode
-	49,  // 99: lxdr.v1.AnalgesicMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
-	51,  // 100: lxdr.v1.AntibioticMedicationTreatment.medication_code:type_name -> lxdr.v1.AntibioticMedicationCode
-	49,  // 101: lxdr.v1.AntibioticMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
-	52,  // 102: lxdr.v1.OtherMedicationTreatment.medication_code:type_name -> lxdr.v1.OtherMedicationCode
-	49,  // 103: lxdr.v1.OtherMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
-	85,  // 104: lxdr.v1.HealthInterventionSegment.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
-	43,  // 105: lxdr.v1.HealthInterventionSegment.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
-	44,  // 106: lxdr.v1.HealthInterventionSegment.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
-	45,  // 107: lxdr.v1.HealthInterventionSegment.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
-	86,  // 108: lxdr.v1.HealthInterventionSegment.fluid_circulation_treatments:type_name -> lxdr.v1.FluidCirculationTreatment
-	87,  // 109: lxdr.v1.HealthInterventionSegment.blood_circulation_treatments:type_name -> lxdr.v1.BloodCirculationTreatment
-	88,  // 110: lxdr.v1.HealthInterventionSegment.analgesic_medication_treatments:type_name -> lxdr.v1.AnalgesicMedicationTreatment
-	89,  // 111: lxdr.v1.HealthInterventionSegment.antibiotic_medication_treatments:type_name -> lxdr.v1.AntibioticMedicationTreatment
-	90,  // 112: lxdr.v1.HealthInterventionSegment.other_medication_treatments:type_name -> lxdr.v1.OtherMedicationTreatment
-	53,  // 113: lxdr.v1.HealthInterventionSegment.casualty_type:type_name -> lxdr.v1.CasualtyTypeCode
-	84,  // 114: lxdr.v1.HealthHoldSegment.triage_entries:type_name -> lxdr.v1.HealthTriageSegment
-	91,  // 115: lxdr.v1.HealthHoldSegment.intervention_entries:type_name -> lxdr.v1.HealthInterventionSegment
-	40,  // 116: lxdr.v1.HealthEvacuationPrecedenceCount.precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
-	57,  // 117: lxdr.v1.HealthEvacuationCasualtyTypeCount.casualty_type:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCode
-	35,  // 118: lxdr.v1.HealthEvacuationCasualtyRecord.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
-	85,  // 119: lxdr.v1.HealthEvacuationCasualtyRecord.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
-	43,  // 120: lxdr.v1.HealthEvacuationCasualtyRecord.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
-	44,  // 121: lxdr.v1.HealthEvacuationCasualtyRecord.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
-	45,  // 122: lxdr.v1.HealthEvacuationCasualtyRecord.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
-	86,  // 123: lxdr.v1.HealthEvacuationCasualtyRecord.fluid_circulation_treatment:type_name -> lxdr.v1.FluidCirculationTreatment
-	87,  // 124: lxdr.v1.HealthEvacuationCasualtyRecord.blood_circulation_treatment:type_name -> lxdr.v1.BloodCirculationTreatment
-	88,  // 125: lxdr.v1.HealthEvacuationCasualtyRecord.analgesic_medication_treatment:type_name -> lxdr.v1.AnalgesicMedicationTreatment
-	89,  // 126: lxdr.v1.HealthEvacuationCasualtyRecord.antibiotic_medication_treatment:type_name -> lxdr.v1.AntibioticMedicationTreatment
-	90,  // 127: lxdr.v1.HealthEvacuationCasualtyRecord.other_medication_treatment:type_name -> lxdr.v1.OtherMedicationTreatment
-	36,  // 128: lxdr.v1.HealthEvacuationCasualtyRecord.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
-	54,  // 129: lxdr.v1.HealthEvacuationSegment.request_priority:type_name -> lxdr.v1.HealthEvacuationRequestPriorityCode
-	55,  // 130: lxdr.v1.HealthEvacuationSegment.location_marking:type_name -> lxdr.v1.HealthEvacuationLocationMarkingCode
-	56,  // 131: lxdr.v1.HealthEvacuationSegment.location_contamination:type_name -> lxdr.v1.HealthEvacuationContaminationCode
-	93,  // 132: lxdr.v1.HealthEvacuationSegment.count_of_casualties_precedence:type_name -> lxdr.v1.HealthEvacuationPrecedenceCount
-	94,  // 133: lxdr.v1.HealthEvacuationSegment.count_of_casualty_types:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCount
-	58,  // 134: lxdr.v1.HealthEvacuationSegment.requested_equipment:type_name -> lxdr.v1.HealthEvacuationRequestedEquipmentCode
-	59,  // 135: lxdr.v1.HealthEvacuationSegment.security:type_name -> lxdr.v1.HealthEvacuationSecurityCode
-	95,  // 136: lxdr.v1.HealthEvacuationSegment.casualties:type_name -> lxdr.v1.HealthEvacuationCasualtyRecord
-	137, // [137:137] is the sub-list for method output_type
-	137, // [137:137] is the sub-list for method input_type
-	137, // [137:137] is the sub-list for extension type_name
-	137, // [137:137] is the sub-list for extension extendee
-	0,   // [0:137] is the sub-list for field type_name
+	5,   // 0: lxdr.v1.RequestHeader.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	3,   // 1: lxdr.v1.LinkFrame.delivery_method:type_name -> lxdr.v1.LinkDeliveryMethod
+	4,   // 2: lxdr.v1.LinkFrame.representation:type_name -> lxdr.v1.LinkRepresentation
+	67,  // 3: lxdr.v1.LinkFrame.request_container:type_name -> lxdr.v1.RequestContainer
+	64,  // 4: lxdr.v1.LinkFrame.synchronized_response:type_name -> lxdr.v1.SynchronizedResponse
+	66,  // 5: lxdr.v1.LinkFrame.canonical_registry:type_name -> lxdr.v1.CanonicalRegistry
+	1,   // 6: lxdr.v1.CanonicalRegistryFieldEntry.canonical_file:type_name -> lxdr.v1.CanonicalFileType
+	2,   // 7: lxdr.v1.CanonicalRegistryFieldEntry.exchange_role:type_name -> lxdr.v1.ExchangeRole
+	65,  // 8: lxdr.v1.CanonicalRegistry.entries:type_name -> lxdr.v1.CanonicalRegistryFieldEntry
+	62,  // 9: lxdr.v1.RequestContainer.header:type_name -> lxdr.v1.RequestHeader
+	68,  // 10: lxdr.v1.RequestContainer.segments:type_name -> lxdr.v1.RequestSegment
+	0,   // 11: lxdr.v1.RequestSegment.function_family:type_name -> lxdr.v1.FunctionFamily
+	69,  // 12: lxdr.v1.RequestSegment.mobility_pax:type_name -> lxdr.v1.MobilityPaxRequestSegment
+	70,  // 13: lxdr.v1.RequestSegment.mobility_cargo:type_name -> lxdr.v1.MobilityCargoRequestSegment
+	71,  // 14: lxdr.v1.RequestSegment.supply:type_name -> lxdr.v1.SupplyRequestSegment
+	72,  // 15: lxdr.v1.RequestSegment.maintenance:type_name -> lxdr.v1.MaintenanceRequestSegment
+	75,  // 16: lxdr.v1.RequestSegment.engineer_recon_area:type_name -> lxdr.v1.EngineerReconAreaReportSegment
+	77,  // 17: lxdr.v1.RequestSegment.engineer_recon_zone:type_name -> lxdr.v1.EngineerReconZoneReportSegment
+	78,  // 18: lxdr.v1.RequestSegment.engineer_recon_route:type_name -> lxdr.v1.EngineerReconRouteReportSegment
+	79,  // 19: lxdr.v1.RequestSegment.engineer_recon_road:type_name -> lxdr.v1.EngineerReconRoadReportSegment
+	80,  // 20: lxdr.v1.RequestSegment.engineer_recon_landing_zone:type_name -> lxdr.v1.EngineerReconLandingZoneReportSegment
+	81,  // 21: lxdr.v1.RequestSegment.obstacle_removal:type_name -> lxdr.v1.GeneralEngineeringObstacleRemovalSegment
+	82,  // 22: lxdr.v1.RequestSegment.eod:type_name -> lxdr.v1.ExplosiveOrdnanceDisposalSegment
+	83,  // 23: lxdr.v1.RequestSegment.bulk_liquid_support:type_name -> lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
+	84,  // 24: lxdr.v1.RequestSegment.demolition:type_name -> lxdr.v1.GeneralEngineeringDemolitionSegment
+	85,  // 25: lxdr.v1.RequestSegment.health_collection:type_name -> lxdr.v1.HealthCollectionSegment
+	86,  // 26: lxdr.v1.RequestSegment.health_triage:type_name -> lxdr.v1.HealthTriageSegment
+	93,  // 27: lxdr.v1.RequestSegment.health_intervention:type_name -> lxdr.v1.HealthInterventionSegment
+	94,  // 28: lxdr.v1.RequestSegment.health_hold:type_name -> lxdr.v1.HealthHoldSegment
+	98,  // 29: lxdr.v1.RequestSegment.health_evacuation:type_name -> lxdr.v1.HealthEvacuationSegment
+	6,   // 30: lxdr.v1.MobilityPaxRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityPaxRequestTypeCode
+	5,   // 31: lxdr.v1.MobilityPaxRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	7,   // 32: lxdr.v1.MobilityCargoRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityCargoRequestTypeCode
+	5,   // 33: lxdr.v1.MobilityCargoRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	8,   // 34: lxdr.v1.MobilityCargoRequestSegment.hmic:type_name -> lxdr.v1.CargoHMICCode
+	9,   // 35: lxdr.v1.MobilityCargoRequestSegment.handling:type_name -> lxdr.v1.CargoHandlingCode
+	10,  // 36: lxdr.v1.SupplyRequestSegment.request_type_code:type_name -> lxdr.v1.SupplyRequestTypeCode
+	5,   // 37: lxdr.v1.SupplyRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	12,  // 38: lxdr.v1.SupplyRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	11,  // 39: lxdr.v1.MaintenanceRequestSegment.request_type_code:type_name -> lxdr.v1.MaintenanceRequestTypeCode
+	5,   // 40: lxdr.v1.MaintenanceRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	13,  // 41: lxdr.v1.MaintenanceRequestSegment.equipment_operational_condition:type_name -> lxdr.v1.MaintenanceOperationalConditionCode
+	14,  // 42: lxdr.v1.MaintenanceRequestSegment.type_of_maintenance_support_required:type_name -> lxdr.v1.MaintenanceSupportTypeCode
+	15,  // 43: lxdr.v1.MaintenanceRequestSegment.type_of_repair:type_name -> lxdr.v1.MaintenanceRepairTypeCode
+	16,  // 44: lxdr.v1.MaintenanceRequestSegment.repair_major_defect:type_name -> lxdr.v1.MaintenanceMajorDefectCode
+	12,  // 45: lxdr.v1.MaintenanceRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	74,  // 46: lxdr.v1.EngineerReconAreaReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
+	73,  // 47: lxdr.v1.EngineerReconAreaReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
+	12,  // 48: lxdr.v1.EngineerReconAreaReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	76,  // 49: lxdr.v1.EngineerReconZoneReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
+	74,  // 50: lxdr.v1.EngineerReconZoneReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
+	73,  // 51: lxdr.v1.EngineerReconZoneReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
+	12,  // 52: lxdr.v1.EngineerReconZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	76,  // 53: lxdr.v1.EngineerReconRouteReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
+	74,  // 54: lxdr.v1.EngineerReconRouteReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
+	73,  // 55: lxdr.v1.EngineerReconRouteReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
+	12,  // 56: lxdr.v1.EngineerReconRouteReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	17,  // 57: lxdr.v1.EngineerReconRoadReportSegment.road_classification:type_name -> lxdr.v1.RoadClassificationCode
+	18,  // 58: lxdr.v1.EngineerReconRoadReportSegment.drainage:type_name -> lxdr.v1.RoadDrainageCode
+	19,  // 59: lxdr.v1.EngineerReconRoadReportSegment.foundation:type_name -> lxdr.v1.RoadFoundationCode
+	20,  // 60: lxdr.v1.EngineerReconRoadReportSegment.surface_type:type_name -> lxdr.v1.RoadSurfaceTypeCode
+	12,  // 61: lxdr.v1.EngineerReconRoadReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	21,  // 62: lxdr.v1.EngineerReconLandingZoneReportSegment.estimate:type_name -> lxdr.v1.EstimateCode
+	22,  // 63: lxdr.v1.EngineerReconLandingZoneReportSegment.layout_designation:type_name -> lxdr.v1.LandingZoneLayoutDesignationCode
+	23,  // 64: lxdr.v1.EngineerReconLandingZoneReportSegment.aircraft_supportability:type_name -> lxdr.v1.AircraftSupportabilityCode
+	24,  // 65: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_approach:type_name -> lxdr.v1.CardinalDirectionCode
+	24,  // 66: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_departure:type_name -> lxdr.v1.CardinalDirectionCode
+	25,  // 67: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_surface_slope:type_name -> lxdr.v1.LandingZoneSurfaceSlopeCode
+	26,  // 68: lxdr.v1.EngineerReconLandingZoneReportSegment.obstacle:type_name -> lxdr.v1.LandingZoneObstacleCode
+	12,  // 69: lxdr.v1.EngineerReconLandingZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	27,  // 70: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.obstacle:type_name -> lxdr.v1.ObstacleActionCode
+	28,  // 71: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
+	29,  // 72: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.bypass:type_name -> lxdr.v1.BypassCode
+	12,  // 73: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	30,  // 74: lxdr.v1.ExplosiveOrdnanceDisposalSegment.type_of_cbrn_agent:type_name -> lxdr.v1.CBRNAgentTypeCode
+	31,  // 75: lxdr.v1.ExplosiveOrdnanceDisposalSegment.physical_property_of_cbrn_agent:type_name -> lxdr.v1.CBRNPhysicalPropertyCode
+	32,  // 76: lxdr.v1.ExplosiveOrdnanceDisposalSegment.contamination_value_of_cbrn_agent:type_name -> lxdr.v1.CBRNContaminationValueCode
+	33,  // 77: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_purpose:type_name -> lxdr.v1.MunitionPurposeCode
+	34,  // 78: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_type:type_name -> lxdr.v1.MunitionTypeCode
+	12,  // 79: lxdr.v1.ExplosiveOrdnanceDisposalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	21,  // 80: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.estimate:type_name -> lxdr.v1.EstimateCode
+	12,  // 81: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	28,  // 82: lxdr.v1.GeneralEngineeringDemolitionSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
+	29,  // 83: lxdr.v1.GeneralEngineeringDemolitionSegment.bypass:type_name -> lxdr.v1.BypassCode
+	12,  // 84: lxdr.v1.GeneralEngineeringDemolitionSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	35,  // 85: lxdr.v1.HealthCollectionSegment.request_type_code:type_name -> lxdr.v1.HealthCollectionRequestTypeCode
+	5,   // 86: lxdr.v1.HealthCollectionSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	36,  // 87: lxdr.v1.HealthCollectionSegment.service:type_name -> lxdr.v1.ServiceCode
+	37,  // 88: lxdr.v1.HealthTriageSegment.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
+	38,  // 89: lxdr.v1.HealthTriageSegment.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
+	39,  // 90: lxdr.v1.HealthTriageSegment.major_signs_symptoms:type_name -> lxdr.v1.HealthMajorSignsSymptomsCode
+	40,  // 91: lxdr.v1.HealthTriageSegment.pulse_location:type_name -> lxdr.v1.HealthPulseLocationCode
+	41,  // 92: lxdr.v1.HealthTriageSegment.responsiveness:type_name -> lxdr.v1.HealthResponsivenessCode
+	42,  // 93: lxdr.v1.HealthTriageSegment.triage_precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
+	43,  // 94: lxdr.v1.TourniquetTreatment.placement:type_name -> lxdr.v1.TourniquetPlacementCode
+	44,  // 95: lxdr.v1.TourniquetTreatment.type:type_name -> lxdr.v1.TourniquetTypeCode
+	48,  // 96: lxdr.v1.FluidCirculationTreatment.fluid_name_code:type_name -> lxdr.v1.FluidNameCode
+	49,  // 97: lxdr.v1.FluidCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
+	50,  // 98: lxdr.v1.BloodCirculationTreatment.blood_product_name:type_name -> lxdr.v1.BloodProductCode
+	49,  // 99: lxdr.v1.BloodCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
+	52,  // 100: lxdr.v1.AnalgesicMedicationTreatment.medication_code:type_name -> lxdr.v1.AnalgesicMedicationCode
+	51,  // 101: lxdr.v1.AnalgesicMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
+	53,  // 102: lxdr.v1.AntibioticMedicationTreatment.medication_code:type_name -> lxdr.v1.AntibioticMedicationCode
+	51,  // 103: lxdr.v1.AntibioticMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
+	54,  // 104: lxdr.v1.OtherMedicationTreatment.medication_code:type_name -> lxdr.v1.OtherMedicationCode
+	51,  // 105: lxdr.v1.OtherMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
+	87,  // 106: lxdr.v1.HealthInterventionSegment.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
+	45,  // 107: lxdr.v1.HealthInterventionSegment.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
+	46,  // 108: lxdr.v1.HealthInterventionSegment.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
+	47,  // 109: lxdr.v1.HealthInterventionSegment.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
+	88,  // 110: lxdr.v1.HealthInterventionSegment.fluid_circulation_treatments:type_name -> lxdr.v1.FluidCirculationTreatment
+	89,  // 111: lxdr.v1.HealthInterventionSegment.blood_circulation_treatments:type_name -> lxdr.v1.BloodCirculationTreatment
+	90,  // 112: lxdr.v1.HealthInterventionSegment.analgesic_medication_treatments:type_name -> lxdr.v1.AnalgesicMedicationTreatment
+	91,  // 113: lxdr.v1.HealthInterventionSegment.antibiotic_medication_treatments:type_name -> lxdr.v1.AntibioticMedicationTreatment
+	92,  // 114: lxdr.v1.HealthInterventionSegment.other_medication_treatments:type_name -> lxdr.v1.OtherMedicationTreatment
+	55,  // 115: lxdr.v1.HealthInterventionSegment.casualty_type:type_name -> lxdr.v1.CasualtyTypeCode
+	86,  // 116: lxdr.v1.HealthHoldSegment.triage_entries:type_name -> lxdr.v1.HealthTriageSegment
+	93,  // 117: lxdr.v1.HealthHoldSegment.intervention_entries:type_name -> lxdr.v1.HealthInterventionSegment
+	42,  // 118: lxdr.v1.HealthEvacuationPrecedenceCount.precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
+	59,  // 119: lxdr.v1.HealthEvacuationCasualtyTypeCount.casualty_type:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCode
+	37,  // 120: lxdr.v1.HealthEvacuationCasualtyRecord.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
+	87,  // 121: lxdr.v1.HealthEvacuationCasualtyRecord.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
+	45,  // 122: lxdr.v1.HealthEvacuationCasualtyRecord.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
+	46,  // 123: lxdr.v1.HealthEvacuationCasualtyRecord.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
+	47,  // 124: lxdr.v1.HealthEvacuationCasualtyRecord.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
+	88,  // 125: lxdr.v1.HealthEvacuationCasualtyRecord.fluid_circulation_treatment:type_name -> lxdr.v1.FluidCirculationTreatment
+	89,  // 126: lxdr.v1.HealthEvacuationCasualtyRecord.blood_circulation_treatment:type_name -> lxdr.v1.BloodCirculationTreatment
+	90,  // 127: lxdr.v1.HealthEvacuationCasualtyRecord.analgesic_medication_treatment:type_name -> lxdr.v1.AnalgesicMedicationTreatment
+	91,  // 128: lxdr.v1.HealthEvacuationCasualtyRecord.antibiotic_medication_treatment:type_name -> lxdr.v1.AntibioticMedicationTreatment
+	92,  // 129: lxdr.v1.HealthEvacuationCasualtyRecord.other_medication_treatment:type_name -> lxdr.v1.OtherMedicationTreatment
+	38,  // 130: lxdr.v1.HealthEvacuationCasualtyRecord.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
+	56,  // 131: lxdr.v1.HealthEvacuationSegment.request_priority:type_name -> lxdr.v1.HealthEvacuationRequestPriorityCode
+	57,  // 132: lxdr.v1.HealthEvacuationSegment.location_marking:type_name -> lxdr.v1.HealthEvacuationLocationMarkingCode
+	58,  // 133: lxdr.v1.HealthEvacuationSegment.location_contamination:type_name -> lxdr.v1.HealthEvacuationContaminationCode
+	95,  // 134: lxdr.v1.HealthEvacuationSegment.count_of_casualties_precedence:type_name -> lxdr.v1.HealthEvacuationPrecedenceCount
+	96,  // 135: lxdr.v1.HealthEvacuationSegment.count_of_casualty_types:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCount
+	60,  // 136: lxdr.v1.HealthEvacuationSegment.requested_equipment:type_name -> lxdr.v1.HealthEvacuationRequestedEquipmentCode
+	61,  // 137: lxdr.v1.HealthEvacuationSegment.security:type_name -> lxdr.v1.HealthEvacuationSecurityCode
+	97,  // 138: lxdr.v1.HealthEvacuationSegment.casualties:type_name -> lxdr.v1.HealthEvacuationCasualtyRecord
+	139, // [139:139] is the sub-list for method output_type
+	139, // [139:139] is the sub-list for method input_type
+	139, // [139:139] is the sub-list for extension type_name
+	139, // [139:139] is the sub-list for extension extendee
+	0,   // [0:139] is the sub-list for field type_name
 }
 
 func init() { file_proto_lxdr_v1_lxdr_proto_init() }
@@ -8542,7 +8680,7 @@ func file_proto_lxdr_v1_lxdr_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_lxdr_v1_lxdr_proto_rawDesc), len(file_proto_lxdr_v1_lxdr_proto_rawDesc)),
-			NumEnums:      60,
+			NumEnums:      62,
 			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   0,

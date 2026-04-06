@@ -128,6 +128,9 @@ func TestMarshalUnmarshalCanonicalRegistryBinary(t *testing.T) {
 
 func TestMarshalUnmarshalLinkFrameBinaryWithRequestContainer(t *testing.T) {
 	frame := &LinkFrame{
+		LinkMessageId:  "LF-0001",
+		DeliveryMethod: LinkDeliveryMethodDirect,
+		Representation: LinkRepresentationBinaryProto,
 		Payload: &LinkFrame_RequestContainer{
 			RequestContainer: &RequestContainer{
 				Header: testHeader(),
@@ -162,6 +165,9 @@ func TestMarshalUnmarshalLinkFrameBinaryWithRequestContainer(t *testing.T) {
 	if got.GetRequestContainer() == nil {
 		t.Fatalf("expected request container payload")
 	}
+	if got.LinkMessageId != "LF-0001" {
+		t.Fatalf("link message id = %q, want %q", got.LinkMessageId, "LF-0001")
+	}
 	if got.GetRequestContainer().Header.LocalRequestId != "3838JBNM5" {
 		t.Fatalf(
 			"local request id = %q, want %q",
@@ -176,5 +182,20 @@ func TestMarshalLinkFrameBinaryRejectsEmptyFrame(t *testing.T) {
 
 	if _, err := MarshalLinkFrameBinary(frame); err == nil {
 		t.Fatalf("expected invalid link frame error")
+	}
+}
+
+func TestMarshalLinkFrameBinaryRejectsMissingLinkMetadata(t *testing.T) {
+	frame := &LinkFrame{
+		Payload: &LinkFrame_SynchronizedResponse{
+			SynchronizedResponse: &SynchronizedResponse{
+				LocalRequestId:        "3838JBNM5",
+				SynchronizedRequestId: "KL9K15474QFJ",
+			},
+		},
+	}
+
+	if _, err := MarshalLinkFrameBinary(frame); err == nil {
+		t.Fatalf("expected invalid link frame metadata error")
 	}
 }

@@ -308,22 +308,30 @@ From Sections 3.4 through 3.8, LXDR MUST be organized by function family:
 - general engineering
 - health services
 
-This draft currently records the following early request segment families as
-normatively introduced in Sections 3.4 through 3.7:
+This draft currently defines the following Chapter 3 request segment
+families in schema and validation form:
 
 - mobility PAX request
 - mobility cargo request
 - supply request
 - maintenance request
+- engineer reconnaissance area report
+- engineer reconnaissance zone report
+- engineer reconnaissance route report
 - engineer reconnaissance road report
 - engineer reconnaissance landing zone report
 - general engineering obstacle removal
 - explosive ordnance disposal clearing/rendering safe
+- general engineering bulk liquid support
+- general engineering demolition
 - health services collection
+- health services triage
+- health services intervention
+- health services hold
+- health services evacuate (CASEVAC)
 
-Later families in Chapter 3 remain part of the protocol scope, but this
-draft does not yet define their schemas because this document is limited to
-the extracted baseline needed for initial implementation.
+The remaining Chapter 3 reports listed below remain protocol scope, but
+are intentionally deferred from the current v1 implementation baseline.
 
 The following Chapter 3 reports are intentionally deferred for a later
 protocol increment:
@@ -1365,28 +1373,37 @@ This draft does not yet define:
 - cryptographic protections
 - bearer-specific transport behavior
 - fragmentation rules
-- binary encoding rules
-- protobuf or other structured schema mappings
-- appendix-derived canonical field registries
-- full general engineering and health segment schemas
+- delivery receipts or acknowledgement semantics
+- message routing policy
+- transport-interface behavior
+- full Appendix F registry population
+- deferred engineer reconnaissance reports:
+  - tunnel
+  - bridge
+  - ford
+  - ferry
+  - river
 
-Those belong to later protocol sections once this preamble is accepted.
+Those belong to later protocol increments beyond the current v1 draft.
 
 ## 16. Immediate Consequence for Implementation
 
 An implementation based on this draft should begin with:
 
-- a canonical header model
-- canonical request segment models for the families already extracted
-- canonical text render and parse rules for header and segments
-- synchronized response handling
+- protobuf-backed core schema as the canonical typed model
+- canonical header and synchronized-response handling
+- schema and validation for the implemented Chapter 3 request segments
+- canonical text render and parse rules where Project ADRIAN provides
+  normative serialized examples
+- a minimal LXDR-Link frame carrying exactly one valid core payload
+- binary marshal and unmarshal support for current core and link objects
 - a strict separation between:
     - generated header data
     - transmitted fields
     - calculated but non-transmitted fields
 
 The implementation should remain subordinate to the doctrinal structure in
-Project ADRIAN rather than inventing a generalized messaging system first.
+Project ADRIAN rather than inventing transport or application layers first.
 
 ## 17. Canonical Examples from Project ADRIAN Tables
 
@@ -1500,10 +1517,41 @@ This example represents:
 - departure location: `4QFJ123456`
 - destination location: `4QFJ456789`
 
-### 17.7 Cargo Code Domains
+### 17.7 Cargo Request Schema Example
 
-Section 3.4.3.2 defines two closed one-character code domains for cargo
-movement.
+From Table 16, the canonical cargo request schema is:
+
+```text
+0-XX-00-XXXXXXXXX-0-XXXXXX-00000-000-000-000-X-X-CCYYMMMDD-CCYYMMMDD-XXXX123456-XXXX123456
+```
+
+The canonical cargo request example for one item is:
+
+```text
+1-CM-02-015519434-1-598742-28000-126-100-315-D-R-2027OCT15-2027OCT20-4QFJ123456-4QFJ456789
+```
+
+This example represents:
+
+- segment number: `1`
+- request type: `CM`
+- request priority: `02`
+- NIIN: `015519434`
+- quantity: `1`
+- serial number: `598742`
+- gross weight pounds: `28000`
+- height inches: `126`
+- width inches: `100`
+- length inches: `315`
+- HMIC: `D`
+- handling: `R`
+- earliest departure date: `2027OCT15`
+- latest departure date: `2027OCT20`
+- departure location: `4QFJ123456`
+- destination location: `4QFJ456789`
+
+Section 3.4.3.2 also defines two closed one-character code domains for
+cargo movement.
 
 #### 17.7.1 HMIC
 
@@ -1924,14 +1972,30 @@ The initial frame supports exactly one payload of:
 - `SynchronizedResponse`
 - `CanonicalRegistry`
 
+In addition, the initial frame carries three link-level metadata fields:
+
+- `link_message_id`
+  a stable identifier for the carried frame
+- `delivery_method`
+  the delivery intent class for the frame:
+  - `DIRECT`
+  - `PROPAGATED`
+  - `OPPORTUNISTIC`
+- `representation`
+  the carried representation of the core payload
+
+In the current implementation, `representation` is constrained to:
+
+- `BINARY_PROTO`
+
 This means the frame is a typed wrapper around one core object. It does
 not yet define:
 
-- message identifiers
 - routing metadata
 - acknowledgements
 - fragmentation fields
 - integrity fields
+- correlation or reply-reference fields
 - transport hints
 
 Those remain later concerns.
@@ -1940,12 +2004,23 @@ Those remain later concerns.
 
 An `LXDR-Link` frame is valid only when:
 
+- `link_message_id` is present
+- `delivery_method` is a known link-level delivery intent
+- `representation` is a known link-level representation
 - exactly one payload is present
 - the carried payload is itself valid under the corresponding `LXDR-Core`
   rules
 
 The link layer therefore does not weaken core validation. It only adds a
 typed carried-message boundary.
+
+The current implementation also constrains the frame/payload combination:
+
+- when a payload is carried directly as a protobuf-typed object inside the
+  frame, `representation` must be `BINARY_PROTO`
+
+Future canonical-text or packed link representations may require
+different payload carriers, but those are not part of this draft yet.
 
 ## 23. Conformance Matrix
 

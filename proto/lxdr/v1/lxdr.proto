@@ -7,20 +7,21 @@ option go_package = "lxdr/lxdr;lxdr";
 // LXDR v1 core schema.
 //
 // This schema is derived strictly from docs/lxdr-protocol.md as it
-// currently stands. It models only the protocol objects and segment
-// families already defined in the draft:
+// currently stands. It models the current v1 protocol objects and the
+// implemented Chapter 3 segment families:
 // - request header
 // - synchronized response
 // - request container
+// - link frame
 // - mobility PAX request segment
 // - mobility cargo request segment
 // - supply request segment
 // - maintenance request segment
-// - engineer reconnaissance road report segment
-// - engineer reconnaissance landing zone report segment
-// - general engineering obstacle removal segment
-// - explosive ordnance disposal clearing/rendering safe segment
-// - health services collection segment
+// - engineer reconnaissance area, zone, route, road, and landing zone
+// - general engineering obstacle removal, bulk liquid support, demolition
+// - explosive ordnance disposal clearing/rendering safe
+// - health services collection, triage, intervention, hold, and CASEVAC
+// - canonical registry schema
 //
 // It does not yet model:
 // - deferred engineer reconnaissance segment families
@@ -50,6 +51,18 @@ enum ExchangeRole {
   EXCHANGE_ROLE_CALCULATED = 2;
   EXCHANGE_ROLE_SYNCHRONIZED = 3;
   EXCHANGE_ROLE_LOCAL_ONLY = 4;
+}
+
+enum LinkDeliveryMethod {
+  LINK_DELIVERY_METHOD_UNSPECIFIED = 0;
+  LINK_DELIVERY_METHOD_DIRECT = 1;
+  LINK_DELIVERY_METHOD_PROPAGATED = 2;
+  LINK_DELIVERY_METHOD_OPPORTUNISTIC = 3;
+}
+
+enum LinkRepresentation {
+  LINK_REPRESENTATION_UNSPECIFIED = 0;
+  LINK_REPRESENTATION_BINARY_PROTO = 1;
 }
 
 enum RequestPriorityCode {
@@ -553,10 +566,14 @@ message RequestHeader {
 }
 
 message LinkFrame {
+  string link_message_id = 1;
+  LinkDeliveryMethod delivery_method = 2;
+  LinkRepresentation representation = 3;
+
   oneof payload {
-    RequestContainer request_container = 1;
-    SynchronizedResponse synchronized_response = 2;
-    CanonicalRegistry canonical_registry = 3;
+    RequestContainer request_container = 10;
+    SynchronizedResponse synchronized_response = 11;
+    CanonicalRegistry canonical_registry = 12;
   }
 }
 

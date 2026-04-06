@@ -208,6 +208,19 @@ func (c ExchangeRole) IsValid() bool {
 	)
 }
 
+func (m LinkDeliveryMethod) IsValid() bool {
+	return isOneOf(
+		m,
+		LinkDeliveryMethodDirect,
+		LinkDeliveryMethodPropagated,
+		LinkDeliveryMethodOpportunistic,
+	)
+}
+
+func (r LinkRepresentation) IsValid() bool {
+	return isOneOf(r, LinkRepresentationBinaryProto)
+}
+
 func (c CargoHMICCode) IsValid() bool {
 	return isOneOf(
 		c,
@@ -1039,6 +1052,15 @@ func (s RequestSegment) Validate() error {
 }
 
 func (f LinkFrame) Validate() error {
+	if f.LinkMessageId == "" {
+		return errors.New("link frame link message ID is required")
+	}
+	if !f.DeliveryMethod.IsValid() {
+		return errors.New("link frame delivery method is required")
+	}
+	if !f.Representation.IsValid() {
+		return errors.New("link frame representation is required")
+	}
 	return validateExactlyOneBranch(
 		"link frame",
 		validationBranch{
