@@ -199,3 +199,115 @@ func TestMarshalLinkFrameBinaryRejectsMissingLinkMetadata(t *testing.T) {
 		t.Fatalf("expected invalid link frame metadata error")
 	}
 }
+
+func TestNewRequestContainerLinkFrame(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+
+	frame, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame: %v", err)
+	}
+
+	if frame.LinkMessageId == "" {
+		t.Fatalf("expected link message id")
+	}
+	if frame.DeliveryMethod != LinkDeliveryMethodDirect {
+		t.Fatalf("delivery method = %v, want %v", frame.DeliveryMethod, LinkDeliveryMethodDirect)
+	}
+	if frame.Representation != LinkRepresentationBinaryProto {
+		t.Fatalf("representation = %v, want %v", frame.Representation, LinkRepresentationBinaryProto)
+	}
+	if frame.PayloadKind() != LinkPayloadKindRequestContainer {
+		t.Fatalf("payload kind = %q, want %q", frame.PayloadKind(), LinkPayloadKindRequestContainer)
+	}
+}
+
+func TestNewRequestContainerLinkFrameIsDeterministic(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+
+	frameA, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame A: %v", err)
+	}
+	frameB, err := NewRequestContainerLinkFrame(container, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("new request-container link frame B: %v", err)
+	}
+
+	if frameA.LinkMessageId != frameB.LinkMessageId {
+		t.Fatalf("link message ids differ: %q != %q", frameA.LinkMessageId, frameB.LinkMessageId)
+	}
+}
+
+func TestNewSynchronizedResponseLinkFrame(t *testing.T) {
+	resp := &SynchronizedResponse{
+		LocalRequestId:        "3838JBNM5",
+		SynchronizedRequestId: "KL9K15474QFJ",
+	}
+
+	frame, err := NewSynchronizedResponseLinkFrame(resp, LinkDeliveryMethodPropagated)
+	if err != nil {
+		t.Fatalf("new synchronized-response link frame: %v", err)
+	}
+
+	if frame.PayloadKind() != LinkPayloadKindSynchronizedResponse {
+		t.Fatalf("payload kind = %q, want %q", frame.PayloadKind(), LinkPayloadKindSynchronizedResponse)
+	}
+	if frame.DeliveryMethod != LinkDeliveryMethodPropagated {
+		t.Fatalf("delivery method = %v, want %v", frame.DeliveryMethod, LinkDeliveryMethodPropagated)
+	}
+}
+
+func TestNewCanonicalRegistryLinkFrame(t *testing.T) {
+	var registry CanonicalRegistry
+	if err := prototext.Unmarshal(
+		readTextProtoFixture(t, "appendix_f_header_registry.textproto"),
+		&registry,
+	); err != nil {
+		t.Fatalf("unmarshal textproto fixture: %v", err)
+	}
+
+	frame, err := NewCanonicalRegistryLinkFrame(&registry, LinkDeliveryMethodOpportunistic)
+	if err != nil {
+		t.Fatalf("new canonical-registry link frame: %v", err)
+	}
+
+	if frame.PayloadKind() != LinkPayloadKindCanonicalRegistry {
+		t.Fatalf("payload kind = %q, want %q", frame.PayloadKind(), LinkPayloadKindCanonicalRegistry)
+	}
+	if frame.DeliveryMethod != LinkDeliveryMethodOpportunistic {
+		t.Fatalf("delivery method = %v, want %v", frame.DeliveryMethod, LinkDeliveryMethodOpportunistic)
+	}
+}
