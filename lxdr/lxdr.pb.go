@@ -79,6 +79,119 @@ func (FunctionFamily) EnumDescriptor() ([]byte, []int) {
 	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{0}
 }
 
+type CanonicalFileType int32
+
+const (
+	CanonicalFileType_CANONICAL_FILE_TYPE_UNSPECIFIED                   CanonicalFileType = 0
+	CanonicalFileType_CANONICAL_FILE_TYPE_REQUEST_HEADER                CanonicalFileType = 1
+	CanonicalFileType_CANONICAL_FILE_TYPE_REQUEST_SEGMENT               CanonicalFileType = 2
+	CanonicalFileType_CANONICAL_FILE_TYPE_REQUEST_CONTAINER             CanonicalFileType = 3
+	CanonicalFileType_CANONICAL_FILE_TYPE_SYNC_RESPONSE                 CanonicalFileType = 4
+	CanonicalFileType_CANONICAL_FILE_TYPE_ATTACHMENT_OR_MEDIA_REFERENCE CanonicalFileType = 5
+)
+
+// Enum value maps for CanonicalFileType.
+var (
+	CanonicalFileType_name = map[int32]string{
+		0: "CANONICAL_FILE_TYPE_UNSPECIFIED",
+		1: "CANONICAL_FILE_TYPE_REQUEST_HEADER",
+		2: "CANONICAL_FILE_TYPE_REQUEST_SEGMENT",
+		3: "CANONICAL_FILE_TYPE_REQUEST_CONTAINER",
+		4: "CANONICAL_FILE_TYPE_SYNC_RESPONSE",
+		5: "CANONICAL_FILE_TYPE_ATTACHMENT_OR_MEDIA_REFERENCE",
+	}
+	CanonicalFileType_value = map[string]int32{
+		"CANONICAL_FILE_TYPE_UNSPECIFIED":                   0,
+		"CANONICAL_FILE_TYPE_REQUEST_HEADER":                1,
+		"CANONICAL_FILE_TYPE_REQUEST_SEGMENT":               2,
+		"CANONICAL_FILE_TYPE_REQUEST_CONTAINER":             3,
+		"CANONICAL_FILE_TYPE_SYNC_RESPONSE":                 4,
+		"CANONICAL_FILE_TYPE_ATTACHMENT_OR_MEDIA_REFERENCE": 5,
+	}
+)
+
+func (x CanonicalFileType) Enum() *CanonicalFileType {
+	p := new(CanonicalFileType)
+	*p = x
+	return p
+}
+
+func (x CanonicalFileType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CanonicalFileType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[1].Descriptor()
+}
+
+func (CanonicalFileType) Type() protoreflect.EnumType {
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[1]
+}
+
+func (x CanonicalFileType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CanonicalFileType.Descriptor instead.
+func (CanonicalFileType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{1}
+}
+
+type ExchangeRole int32
+
+const (
+	ExchangeRole_EXCHANGE_ROLE_UNSPECIFIED  ExchangeRole = 0
+	ExchangeRole_EXCHANGE_ROLE_TRANSMITTED  ExchangeRole = 1
+	ExchangeRole_EXCHANGE_ROLE_CALCULATED   ExchangeRole = 2
+	ExchangeRole_EXCHANGE_ROLE_SYNCHRONIZED ExchangeRole = 3
+	ExchangeRole_EXCHANGE_ROLE_LOCAL_ONLY   ExchangeRole = 4
+)
+
+// Enum value maps for ExchangeRole.
+var (
+	ExchangeRole_name = map[int32]string{
+		0: "EXCHANGE_ROLE_UNSPECIFIED",
+		1: "EXCHANGE_ROLE_TRANSMITTED",
+		2: "EXCHANGE_ROLE_CALCULATED",
+		3: "EXCHANGE_ROLE_SYNCHRONIZED",
+		4: "EXCHANGE_ROLE_LOCAL_ONLY",
+	}
+	ExchangeRole_value = map[string]int32{
+		"EXCHANGE_ROLE_UNSPECIFIED":  0,
+		"EXCHANGE_ROLE_TRANSMITTED":  1,
+		"EXCHANGE_ROLE_CALCULATED":   2,
+		"EXCHANGE_ROLE_SYNCHRONIZED": 3,
+		"EXCHANGE_ROLE_LOCAL_ONLY":   4,
+	}
+)
+
+func (x ExchangeRole) Enum() *ExchangeRole {
+	p := new(ExchangeRole)
+	*p = x
+	return p
+}
+
+func (x ExchangeRole) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ExchangeRole) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[2].Descriptor()
+}
+
+func (ExchangeRole) Type() protoreflect.EnumType {
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[2]
+}
+
+func (x ExchangeRole) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ExchangeRole.Descriptor instead.
+func (ExchangeRole) EnumDescriptor() ([]byte, []int) {
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{2}
+}
+
 type RequestPriorityCode int32
 
 const (
@@ -151,11 +264,11 @@ func (x RequestPriorityCode) String() string {
 }
 
 func (RequestPriorityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[1].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[3].Descriptor()
 }
 
 func (RequestPriorityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[1]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[3]
 }
 
 func (x RequestPriorityCode) Number() protoreflect.EnumNumber {
@@ -164,7 +277,7 @@ func (x RequestPriorityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RequestPriorityCode.Descriptor instead.
 func (RequestPriorityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{1}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{3}
 }
 
 type MobilityPaxRequestTypeCode int32
@@ -197,11 +310,11 @@ func (x MobilityPaxRequestTypeCode) String() string {
 }
 
 func (MobilityPaxRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[2].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[4].Descriptor()
 }
 
 func (MobilityPaxRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[2]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[4]
 }
 
 func (x MobilityPaxRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -210,7 +323,7 @@ func (x MobilityPaxRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MobilityPaxRequestTypeCode.Descriptor instead.
 func (MobilityPaxRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{2}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{4}
 }
 
 type MobilityCargoRequestTypeCode int32
@@ -243,11 +356,11 @@ func (x MobilityCargoRequestTypeCode) String() string {
 }
 
 func (MobilityCargoRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[3].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[5].Descriptor()
 }
 
 func (MobilityCargoRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[3]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[5]
 }
 
 func (x MobilityCargoRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -256,7 +369,7 @@ func (x MobilityCargoRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MobilityCargoRequestTypeCode.Descriptor instead.
 func (MobilityCargoRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{3}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{5}
 }
 
 type CargoHMICCode int32
@@ -298,11 +411,11 @@ func (x CargoHMICCode) String() string {
 }
 
 func (CargoHMICCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[4].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[6].Descriptor()
 }
 
 func (CargoHMICCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[4]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[6]
 }
 
 func (x CargoHMICCode) Number() protoreflect.EnumNumber {
@@ -311,7 +424,7 @@ func (x CargoHMICCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CargoHMICCode.Descriptor instead.
 func (CargoHMICCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{4}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{6}
 }
 
 type CargoHandlingCode int32
@@ -356,11 +469,11 @@ func (x CargoHandlingCode) String() string {
 }
 
 func (CargoHandlingCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[5].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[7].Descriptor()
 }
 
 func (CargoHandlingCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[5]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[7]
 }
 
 func (x CargoHandlingCode) Number() protoreflect.EnumNumber {
@@ -369,7 +482,7 @@ func (x CargoHandlingCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CargoHandlingCode.Descriptor instead.
 func (CargoHandlingCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{5}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{7}
 }
 
 type SupplyRequestTypeCode int32
@@ -402,11 +515,11 @@ func (x SupplyRequestTypeCode) String() string {
 }
 
 func (SupplyRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[6].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[8].Descriptor()
 }
 
 func (SupplyRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[6]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[8]
 }
 
 func (x SupplyRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -415,7 +528,7 @@ func (x SupplyRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SupplyRequestTypeCode.Descriptor instead.
 func (SupplyRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{6}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{8}
 }
 
 type MaintenanceRequestTypeCode int32
@@ -448,11 +561,11 @@ func (x MaintenanceRequestTypeCode) String() string {
 }
 
 func (MaintenanceRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[7].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[9].Descriptor()
 }
 
 func (MaintenanceRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[7]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[9]
 }
 
 func (x MaintenanceRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -461,7 +574,7 @@ func (x MaintenanceRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceRequestTypeCode.Descriptor instead.
 func (MaintenanceRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{7}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{9}
 }
 
 type AttachmentIndicatorCode int32
@@ -497,11 +610,11 @@ func (x AttachmentIndicatorCode) String() string {
 }
 
 func (AttachmentIndicatorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[8].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[10].Descriptor()
 }
 
 func (AttachmentIndicatorCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[8]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[10]
 }
 
 func (x AttachmentIndicatorCode) Number() protoreflect.EnumNumber {
@@ -510,7 +623,7 @@ func (x AttachmentIndicatorCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AttachmentIndicatorCode.Descriptor instead.
 func (AttachmentIndicatorCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{8}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{10}
 }
 
 type MaintenanceOperationalConditionCode int32
@@ -549,11 +662,11 @@ func (x MaintenanceOperationalConditionCode) String() string {
 }
 
 func (MaintenanceOperationalConditionCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[9].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[11].Descriptor()
 }
 
 func (MaintenanceOperationalConditionCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[9]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[11]
 }
 
 func (x MaintenanceOperationalConditionCode) Number() protoreflect.EnumNumber {
@@ -562,7 +675,7 @@ func (x MaintenanceOperationalConditionCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceOperationalConditionCode.Descriptor instead.
 func (MaintenanceOperationalConditionCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{9}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{11}
 }
 
 type MaintenanceSupportTypeCode int32
@@ -607,11 +720,11 @@ func (x MaintenanceSupportTypeCode) String() string {
 }
 
 func (MaintenanceSupportTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[10].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[12].Descriptor()
 }
 
 func (MaintenanceSupportTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[10]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[12]
 }
 
 func (x MaintenanceSupportTypeCode) Number() protoreflect.EnumNumber {
@@ -620,7 +733,7 @@ func (x MaintenanceSupportTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceSupportTypeCode.Descriptor instead.
 func (MaintenanceSupportTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{10}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{12}
 }
 
 type MaintenanceRepairTypeCode int32
@@ -665,11 +778,11 @@ func (x MaintenanceRepairTypeCode) String() string {
 }
 
 func (MaintenanceRepairTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[11].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[13].Descriptor()
 }
 
 func (MaintenanceRepairTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[11]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[13]
 }
 
 func (x MaintenanceRepairTypeCode) Number() protoreflect.EnumNumber {
@@ -678,7 +791,7 @@ func (x MaintenanceRepairTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceRepairTypeCode.Descriptor instead.
 func (MaintenanceRepairTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{11}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{13}
 }
 
 type MaintenanceMajorDefectCode int32
@@ -759,11 +872,11 @@ func (x MaintenanceMajorDefectCode) String() string {
 }
 
 func (MaintenanceMajorDefectCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[12].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[14].Descriptor()
 }
 
 func (MaintenanceMajorDefectCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[12]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[14]
 }
 
 func (x MaintenanceMajorDefectCode) Number() protoreflect.EnumNumber {
@@ -772,7 +885,7 @@ func (x MaintenanceMajorDefectCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MaintenanceMajorDefectCode.Descriptor instead.
 func (MaintenanceMajorDefectCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{12}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{14}
 }
 
 type RoadClassificationCode int32
@@ -814,11 +927,11 @@ func (x RoadClassificationCode) String() string {
 }
 
 func (RoadClassificationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[13].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[15].Descriptor()
 }
 
 func (RoadClassificationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[13]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[15]
 }
 
 func (x RoadClassificationCode) Number() protoreflect.EnumNumber {
@@ -827,7 +940,7 @@ func (x RoadClassificationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadClassificationCode.Descriptor instead.
 func (RoadClassificationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{13}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{15}
 }
 
 type RoadDrainageCode int32
@@ -863,11 +976,11 @@ func (x RoadDrainageCode) String() string {
 }
 
 func (RoadDrainageCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[14].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[16].Descriptor()
 }
 
 func (RoadDrainageCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[14]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[16]
 }
 
 func (x RoadDrainageCode) Number() protoreflect.EnumNumber {
@@ -876,7 +989,7 @@ func (x RoadDrainageCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadDrainageCode.Descriptor instead.
 func (RoadDrainageCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{14}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{16}
 }
 
 type RoadFoundationCode int32
@@ -912,11 +1025,11 @@ func (x RoadFoundationCode) String() string {
 }
 
 func (RoadFoundationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[15].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[17].Descriptor()
 }
 
 func (RoadFoundationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[15]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[17]
 }
 
 func (x RoadFoundationCode) Number() protoreflect.EnumNumber {
@@ -925,7 +1038,7 @@ func (x RoadFoundationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadFoundationCode.Descriptor instead.
 func (RoadFoundationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{15}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{17}
 }
 
 type RoadSurfaceTypeCode int32
@@ -985,11 +1098,11 @@ func (x RoadSurfaceTypeCode) String() string {
 }
 
 func (RoadSurfaceTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[16].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[18].Descriptor()
 }
 
 func (RoadSurfaceTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[16]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[18]
 }
 
 func (x RoadSurfaceTypeCode) Number() protoreflect.EnumNumber {
@@ -998,7 +1111,7 @@ func (x RoadSurfaceTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RoadSurfaceTypeCode.Descriptor instead.
 func (RoadSurfaceTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{16}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{18}
 }
 
 type EstimateCode int32
@@ -1034,11 +1147,11 @@ func (x EstimateCode) String() string {
 }
 
 func (EstimateCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[17].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[19].Descriptor()
 }
 
 func (EstimateCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[17]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[19]
 }
 
 func (x EstimateCode) Number() protoreflect.EnumNumber {
@@ -1047,7 +1160,7 @@ func (x EstimateCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use EstimateCode.Descriptor instead.
 func (EstimateCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{17}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{19}
 }
 
 type LandingZoneLayoutDesignationCode int32
@@ -1086,11 +1199,11 @@ func (x LandingZoneLayoutDesignationCode) String() string {
 }
 
 func (LandingZoneLayoutDesignationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[18].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[20].Descriptor()
 }
 
 func (LandingZoneLayoutDesignationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[18]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[20]
 }
 
 func (x LandingZoneLayoutDesignationCode) Number() protoreflect.EnumNumber {
@@ -1099,7 +1212,7 @@ func (x LandingZoneLayoutDesignationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LandingZoneLayoutDesignationCode.Descriptor instead.
 func (LandingZoneLayoutDesignationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{18}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{20}
 }
 
 type AircraftSupportabilityCode int32
@@ -1147,11 +1260,11 @@ func (x AircraftSupportabilityCode) String() string {
 }
 
 func (AircraftSupportabilityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[19].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[21].Descriptor()
 }
 
 func (AircraftSupportabilityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[19]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[21]
 }
 
 func (x AircraftSupportabilityCode) Number() protoreflect.EnumNumber {
@@ -1160,7 +1273,7 @@ func (x AircraftSupportabilityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AircraftSupportabilityCode.Descriptor instead.
 func (AircraftSupportabilityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{19}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{21}
 }
 
 type CardinalDirectionCode int32
@@ -1202,11 +1315,11 @@ func (x CardinalDirectionCode) String() string {
 }
 
 func (CardinalDirectionCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[20].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[22].Descriptor()
 }
 
 func (CardinalDirectionCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[20]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[22]
 }
 
 func (x CardinalDirectionCode) Number() protoreflect.EnumNumber {
@@ -1215,7 +1328,7 @@ func (x CardinalDirectionCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardinalDirectionCode.Descriptor instead.
 func (CardinalDirectionCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{20}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{22}
 }
 
 type LandingZoneSurfaceSlopeCode int32
@@ -1251,11 +1364,11 @@ func (x LandingZoneSurfaceSlopeCode) String() string {
 }
 
 func (LandingZoneSurfaceSlopeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[21].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[23].Descriptor()
 }
 
 func (LandingZoneSurfaceSlopeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[21]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[23]
 }
 
 func (x LandingZoneSurfaceSlopeCode) Number() protoreflect.EnumNumber {
@@ -1264,7 +1377,7 @@ func (x LandingZoneSurfaceSlopeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LandingZoneSurfaceSlopeCode.Descriptor instead.
 func (LandingZoneSurfaceSlopeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{21}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{23}
 }
 
 type LandingZoneObstacleCode int32
@@ -1303,11 +1416,11 @@ func (x LandingZoneObstacleCode) String() string {
 }
 
 func (LandingZoneObstacleCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[22].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[24].Descriptor()
 }
 
 func (LandingZoneObstacleCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[22]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[24]
 }
 
 func (x LandingZoneObstacleCode) Number() protoreflect.EnumNumber {
@@ -1316,7 +1429,7 @@ func (x LandingZoneObstacleCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LandingZoneObstacleCode.Descriptor instead.
 func (LandingZoneObstacleCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{22}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{24}
 }
 
 type ObstacleActionCode int32
@@ -1355,11 +1468,11 @@ func (x ObstacleActionCode) String() string {
 }
 
 func (ObstacleActionCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[23].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[25].Descriptor()
 }
 
 func (ObstacleActionCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[23]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[25]
 }
 
 func (x ObstacleActionCode) Number() protoreflect.EnumNumber {
@@ -1368,7 +1481,7 @@ func (x ObstacleActionCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ObstacleActionCode.Descriptor instead.
 func (ObstacleActionCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{23}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{25}
 }
 
 type ObstacleDeterminationCode int32
@@ -1410,11 +1523,11 @@ func (x ObstacleDeterminationCode) String() string {
 }
 
 func (ObstacleDeterminationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[24].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[26].Descriptor()
 }
 
 func (ObstacleDeterminationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[24]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[26]
 }
 
 func (x ObstacleDeterminationCode) Number() protoreflect.EnumNumber {
@@ -1423,7 +1536,7 @@ func (x ObstacleDeterminationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ObstacleDeterminationCode.Descriptor instead.
 func (ObstacleDeterminationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{24}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{26}
 }
 
 type BypassCode int32
@@ -1459,11 +1572,11 @@ func (x BypassCode) String() string {
 }
 
 func (BypassCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[25].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[27].Descriptor()
 }
 
 func (BypassCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[25]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[27]
 }
 
 func (x BypassCode) Number() protoreflect.EnumNumber {
@@ -1472,7 +1585,7 @@ func (x BypassCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BypassCode.Descriptor instead.
 func (BypassCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{25}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{27}
 }
 
 type CBRNAgentTypeCode int32
@@ -1517,11 +1630,11 @@ func (x CBRNAgentTypeCode) String() string {
 }
 
 func (CBRNAgentTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[26].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[28].Descriptor()
 }
 
 func (CBRNAgentTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[26]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[28]
 }
 
 func (x CBRNAgentTypeCode) Number() protoreflect.EnumNumber {
@@ -1530,7 +1643,7 @@ func (x CBRNAgentTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CBRNAgentTypeCode.Descriptor instead.
 func (CBRNAgentTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{26}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{28}
 }
 
 type CBRNPhysicalPropertyCode int32
@@ -1572,11 +1685,11 @@ func (x CBRNPhysicalPropertyCode) String() string {
 }
 
 func (CBRNPhysicalPropertyCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[27].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[29].Descriptor()
 }
 
 func (CBRNPhysicalPropertyCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[27]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[29]
 }
 
 func (x CBRNPhysicalPropertyCode) Number() protoreflect.EnumNumber {
@@ -1585,7 +1698,7 @@ func (x CBRNPhysicalPropertyCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CBRNPhysicalPropertyCode.Descriptor instead.
 func (CBRNPhysicalPropertyCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{27}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{29}
 }
 
 type CBRNContaminationValueCode int32
@@ -1627,11 +1740,11 @@ func (x CBRNContaminationValueCode) String() string {
 }
 
 func (CBRNContaminationValueCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[28].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[30].Descriptor()
 }
 
 func (CBRNContaminationValueCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[28]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[30]
 }
 
 func (x CBRNContaminationValueCode) Number() protoreflect.EnumNumber {
@@ -1640,7 +1753,7 @@ func (x CBRNContaminationValueCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CBRNContaminationValueCode.Descriptor instead.
 func (CBRNContaminationValueCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{28}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{30}
 }
 
 type MunitionPurposeCode int32
@@ -1685,11 +1798,11 @@ func (x MunitionPurposeCode) String() string {
 }
 
 func (MunitionPurposeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[29].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[31].Descriptor()
 }
 
 func (MunitionPurposeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[29]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[31]
 }
 
 func (x MunitionPurposeCode) Number() protoreflect.EnumNumber {
@@ -1698,7 +1811,7 @@ func (x MunitionPurposeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MunitionPurposeCode.Descriptor instead.
 func (MunitionPurposeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{29}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{31}
 }
 
 type MunitionTypeCode int32
@@ -1740,11 +1853,11 @@ func (x MunitionTypeCode) String() string {
 }
 
 func (MunitionTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[30].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[32].Descriptor()
 }
 
 func (MunitionTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[30]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[32]
 }
 
 func (x MunitionTypeCode) Number() protoreflect.EnumNumber {
@@ -1753,7 +1866,7 @@ func (x MunitionTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MunitionTypeCode.Descriptor instead.
 func (MunitionTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{30}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{32}
 }
 
 type HealthCollectionRequestTypeCode int32
@@ -1786,11 +1899,11 @@ func (x HealthCollectionRequestTypeCode) String() string {
 }
 
 func (HealthCollectionRequestTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[31].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[33].Descriptor()
 }
 
 func (HealthCollectionRequestTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[31]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[33]
 }
 
 func (x HealthCollectionRequestTypeCode) Number() protoreflect.EnumNumber {
@@ -1799,7 +1912,7 @@ func (x HealthCollectionRequestTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthCollectionRequestTypeCode.Descriptor instead.
 func (HealthCollectionRequestTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{31}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{33}
 }
 
 type ServiceCode int32
@@ -1856,11 +1969,11 @@ func (x ServiceCode) String() string {
 }
 
 func (ServiceCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[32].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[34].Descriptor()
 }
 
 func (ServiceCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[32]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[34]
 }
 
 func (x ServiceCode) Number() protoreflect.EnumNumber {
@@ -1869,7 +1982,7 @@ func (x ServiceCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ServiceCode.Descriptor instead.
 func (ServiceCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{32}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{34}
 }
 
 type HealthPrimaryMechanismCode int32
@@ -1941,11 +2054,11 @@ func (x HealthPrimaryMechanismCode) String() string {
 }
 
 func (HealthPrimaryMechanismCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[33].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[35].Descriptor()
 }
 
 func (HealthPrimaryMechanismCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[33]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[35]
 }
 
 func (x HealthPrimaryMechanismCode) Number() protoreflect.EnumNumber {
@@ -1954,7 +2067,7 @@ func (x HealthPrimaryMechanismCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthPrimaryMechanismCode.Descriptor instead.
 func (HealthPrimaryMechanismCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{33}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{35}
 }
 
 type HealthCBRNExposureCode int32
@@ -1999,11 +2112,11 @@ func (x HealthCBRNExposureCode) String() string {
 }
 
 func (HealthCBRNExposureCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[34].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[36].Descriptor()
 }
 
 func (HealthCBRNExposureCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[34]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[36]
 }
 
 func (x HealthCBRNExposureCode) Number() protoreflect.EnumNumber {
@@ -2012,7 +2125,7 @@ func (x HealthCBRNExposureCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthCBRNExposureCode.Descriptor instead.
 func (HealthCBRNExposureCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{34}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{36}
 }
 
 type HealthMajorSignsSymptomsCode int32
@@ -2054,11 +2167,11 @@ func (x HealthMajorSignsSymptomsCode) String() string {
 }
 
 func (HealthMajorSignsSymptomsCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[35].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[37].Descriptor()
 }
 
 func (HealthMajorSignsSymptomsCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[35]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[37]
 }
 
 func (x HealthMajorSignsSymptomsCode) Number() protoreflect.EnumNumber {
@@ -2067,7 +2180,7 @@ func (x HealthMajorSignsSymptomsCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthMajorSignsSymptomsCode.Descriptor instead.
 func (HealthMajorSignsSymptomsCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{35}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{37}
 }
 
 type HealthPulseLocationCode int32
@@ -2103,11 +2216,11 @@ func (x HealthPulseLocationCode) String() string {
 }
 
 func (HealthPulseLocationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[36].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[38].Descriptor()
 }
 
 func (HealthPulseLocationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[36]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[38]
 }
 
 func (x HealthPulseLocationCode) Number() protoreflect.EnumNumber {
@@ -2116,7 +2229,7 @@ func (x HealthPulseLocationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthPulseLocationCode.Descriptor instead.
 func (HealthPulseLocationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{36}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{38}
 }
 
 type HealthResponsivenessCode int32
@@ -2158,11 +2271,11 @@ func (x HealthResponsivenessCode) String() string {
 }
 
 func (HealthResponsivenessCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[37].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[39].Descriptor()
 }
 
 func (HealthResponsivenessCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[37]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[39]
 }
 
 func (x HealthResponsivenessCode) Number() protoreflect.EnumNumber {
@@ -2171,7 +2284,7 @@ func (x HealthResponsivenessCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthResponsivenessCode.Descriptor instead.
 func (HealthResponsivenessCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{37}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{39}
 }
 
 type HealthTriagePrecedenceCode int32
@@ -2216,11 +2329,11 @@ func (x HealthTriagePrecedenceCode) String() string {
 }
 
 func (HealthTriagePrecedenceCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[38].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[40].Descriptor()
 }
 
 func (HealthTriagePrecedenceCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[38]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[40]
 }
 
 func (x HealthTriagePrecedenceCode) Number() protoreflect.EnumNumber {
@@ -2229,7 +2342,7 @@ func (x HealthTriagePrecedenceCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthTriagePrecedenceCode.Descriptor instead.
 func (HealthTriagePrecedenceCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{38}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{40}
 }
 
 type TourniquetPlacementCode int32
@@ -2274,11 +2387,11 @@ func (x TourniquetPlacementCode) String() string {
 }
 
 func (TourniquetPlacementCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[39].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[41].Descriptor()
 }
 
 func (TourniquetPlacementCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[39]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[41]
 }
 
 func (x TourniquetPlacementCode) Number() protoreflect.EnumNumber {
@@ -2287,7 +2400,7 @@ func (x TourniquetPlacementCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TourniquetPlacementCode.Descriptor instead.
 func (TourniquetPlacementCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{39}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{41}
 }
 
 type TourniquetTypeCode int32
@@ -2326,11 +2439,11 @@ func (x TourniquetTypeCode) String() string {
 }
 
 func (TourniquetTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[40].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[42].Descriptor()
 }
 
 func (TourniquetTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[40]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[42]
 }
 
 func (x TourniquetTypeCode) Number() protoreflect.EnumNumber {
@@ -2339,7 +2452,7 @@ func (x TourniquetTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TourniquetTypeCode.Descriptor instead.
 func (TourniquetTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{40}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{42}
 }
 
 type WoundTreatmentCode int32
@@ -2390,11 +2503,11 @@ func (x WoundTreatmentCode) String() string {
 }
 
 func (WoundTreatmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[41].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[43].Descriptor()
 }
 
 func (WoundTreatmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[41]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[43]
 }
 
 func (x WoundTreatmentCode) Number() protoreflect.EnumNumber {
@@ -2403,7 +2516,7 @@ func (x WoundTreatmentCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WoundTreatmentCode.Descriptor instead.
 func (WoundTreatmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{41}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{43}
 }
 
 type AirwayTreatmentCode int32
@@ -2448,11 +2561,11 @@ func (x AirwayTreatmentCode) String() string {
 }
 
 func (AirwayTreatmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[42].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[44].Descriptor()
 }
 
 func (AirwayTreatmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[42]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[44]
 }
 
 func (x AirwayTreatmentCode) Number() protoreflect.EnumNumber {
@@ -2461,7 +2574,7 @@ func (x AirwayTreatmentCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AirwayTreatmentCode.Descriptor instead.
 func (AirwayTreatmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{42}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{44}
 }
 
 type BreathingTreatmentCode int32
@@ -2506,11 +2619,11 @@ func (x BreathingTreatmentCode) String() string {
 }
 
 func (BreathingTreatmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[43].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[45].Descriptor()
 }
 
 func (BreathingTreatmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[43]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[45]
 }
 
 func (x BreathingTreatmentCode) Number() protoreflect.EnumNumber {
@@ -2519,7 +2632,7 @@ func (x BreathingTreatmentCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BreathingTreatmentCode.Descriptor instead.
 func (BreathingTreatmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{43}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{45}
 }
 
 type FluidNameCode int32
@@ -2558,11 +2671,11 @@ func (x FluidNameCode) String() string {
 }
 
 func (FluidNameCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[44].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[46].Descriptor()
 }
 
 func (FluidNameCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[44]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[46]
 }
 
 func (x FluidNameCode) Number() protoreflect.EnumNumber {
@@ -2571,7 +2684,7 @@ func (x FluidNameCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FluidNameCode.Descriptor instead.
 func (FluidNameCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{44}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{46}
 }
 
 type FluidRouteCode int32
@@ -2607,11 +2720,11 @@ func (x FluidRouteCode) String() string {
 }
 
 func (FluidRouteCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[45].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[47].Descriptor()
 }
 
 func (FluidRouteCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[45]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[47]
 }
 
 func (x FluidRouteCode) Number() protoreflect.EnumNumber {
@@ -2620,7 +2733,7 @@ func (x FluidRouteCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FluidRouteCode.Descriptor instead.
 func (FluidRouteCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{45}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{47}
 }
 
 type BloodProductCode int32
@@ -2662,11 +2775,11 @@ func (x BloodProductCode) String() string {
 }
 
 func (BloodProductCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[46].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[48].Descriptor()
 }
 
 func (BloodProductCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[46]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[48]
 }
 
 func (x BloodProductCode) Number() protoreflect.EnumNumber {
@@ -2675,7 +2788,7 @@ func (x BloodProductCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BloodProductCode.Descriptor instead.
 func (BloodProductCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{46}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{48}
 }
 
 type MedicationRouteCode int32
@@ -2726,11 +2839,11 @@ func (x MedicationRouteCode) String() string {
 }
 
 func (MedicationRouteCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[47].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[49].Descriptor()
 }
 
 func (MedicationRouteCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[47]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[49]
 }
 
 func (x MedicationRouteCode) Number() protoreflect.EnumNumber {
@@ -2739,7 +2852,7 @@ func (x MedicationRouteCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MedicationRouteCode.Descriptor instead.
 func (MedicationRouteCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{47}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{49}
 }
 
 type AnalgesicMedicationCode int32
@@ -2778,11 +2891,11 @@ func (x AnalgesicMedicationCode) String() string {
 }
 
 func (AnalgesicMedicationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[48].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[50].Descriptor()
 }
 
 func (AnalgesicMedicationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[48]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[50]
 }
 
 func (x AnalgesicMedicationCode) Number() protoreflect.EnumNumber {
@@ -2791,7 +2904,7 @@ func (x AnalgesicMedicationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AnalgesicMedicationCode.Descriptor instead.
 func (AnalgesicMedicationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{48}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{50}
 }
 
 type AntibioticMedicationCode int32
@@ -2833,11 +2946,11 @@ func (x AntibioticMedicationCode) String() string {
 }
 
 func (AntibioticMedicationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[49].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[51].Descriptor()
 }
 
 func (AntibioticMedicationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[49]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[51]
 }
 
 func (x AntibioticMedicationCode) Number() protoreflect.EnumNumber {
@@ -2846,7 +2959,7 @@ func (x AntibioticMedicationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AntibioticMedicationCode.Descriptor instead.
 func (AntibioticMedicationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{49}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{51}
 }
 
 type OtherMedicationCode int32
@@ -2882,11 +2995,11 @@ func (x OtherMedicationCode) String() string {
 }
 
 func (OtherMedicationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[50].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[52].Descriptor()
 }
 
 func (OtherMedicationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[50]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[52]
 }
 
 func (x OtherMedicationCode) Number() protoreflect.EnumNumber {
@@ -2895,7 +3008,7 @@ func (x OtherMedicationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OtherMedicationCode.Descriptor instead.
 func (OtherMedicationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{50}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{52}
 }
 
 type CasualtyTypeCode int32
@@ -2931,11 +3044,11 @@ func (x CasualtyTypeCode) String() string {
 }
 
 func (CasualtyTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[51].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[53].Descriptor()
 }
 
 func (CasualtyTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[51]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[53]
 }
 
 func (x CasualtyTypeCode) Number() protoreflect.EnumNumber {
@@ -2944,7 +3057,7 @@ func (x CasualtyTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CasualtyTypeCode.Descriptor instead.
 func (CasualtyTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{51}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{53}
 }
 
 type HealthEvacuationRequestPriorityCode int32
@@ -2989,11 +3102,11 @@ func (x HealthEvacuationRequestPriorityCode) String() string {
 }
 
 func (HealthEvacuationRequestPriorityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[52].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[54].Descriptor()
 }
 
 func (HealthEvacuationRequestPriorityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[52]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[54]
 }
 
 func (x HealthEvacuationRequestPriorityCode) Number() protoreflect.EnumNumber {
@@ -3002,7 +3115,7 @@ func (x HealthEvacuationRequestPriorityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationRequestPriorityCode.Descriptor instead.
 func (HealthEvacuationRequestPriorityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{52}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{54}
 }
 
 type HealthEvacuationLocationMarkingCode int32
@@ -3047,11 +3160,11 @@ func (x HealthEvacuationLocationMarkingCode) String() string {
 }
 
 func (HealthEvacuationLocationMarkingCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[53].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[55].Descriptor()
 }
 
 func (HealthEvacuationLocationMarkingCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[53]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[55]
 }
 
 func (x HealthEvacuationLocationMarkingCode) Number() protoreflect.EnumNumber {
@@ -3060,7 +3173,7 @@ func (x HealthEvacuationLocationMarkingCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationLocationMarkingCode.Descriptor instead.
 func (HealthEvacuationLocationMarkingCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{53}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{55}
 }
 
 type HealthEvacuationContaminationCode int32
@@ -3102,11 +3215,11 @@ func (x HealthEvacuationContaminationCode) String() string {
 }
 
 func (HealthEvacuationContaminationCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[54].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[56].Descriptor()
 }
 
 func (HealthEvacuationContaminationCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[54]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[56]
 }
 
 func (x HealthEvacuationContaminationCode) Number() protoreflect.EnumNumber {
@@ -3115,7 +3228,7 @@ func (x HealthEvacuationContaminationCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationContaminationCode.Descriptor instead.
 func (HealthEvacuationContaminationCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{54}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{56}
 }
 
 type HealthEvacuationCasualtyTypeCode int32
@@ -3151,11 +3264,11 @@ func (x HealthEvacuationCasualtyTypeCode) String() string {
 }
 
 func (HealthEvacuationCasualtyTypeCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[55].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[57].Descriptor()
 }
 
 func (HealthEvacuationCasualtyTypeCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[55]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[57]
 }
 
 func (x HealthEvacuationCasualtyTypeCode) Number() protoreflect.EnumNumber {
@@ -3164,7 +3277,7 @@ func (x HealthEvacuationCasualtyTypeCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationCasualtyTypeCode.Descriptor instead.
 func (HealthEvacuationCasualtyTypeCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{55}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{57}
 }
 
 type HealthEvacuationRequestedEquipmentCode int32
@@ -3206,11 +3319,11 @@ func (x HealthEvacuationRequestedEquipmentCode) String() string {
 }
 
 func (HealthEvacuationRequestedEquipmentCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[56].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[58].Descriptor()
 }
 
 func (HealthEvacuationRequestedEquipmentCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[56]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[58]
 }
 
 func (x HealthEvacuationRequestedEquipmentCode) Number() protoreflect.EnumNumber {
@@ -3219,7 +3332,7 @@ func (x HealthEvacuationRequestedEquipmentCode) Number() protoreflect.EnumNumber
 
 // Deprecated: Use HealthEvacuationRequestedEquipmentCode.Descriptor instead.
 func (HealthEvacuationRequestedEquipmentCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{56}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{58}
 }
 
 type HealthEvacuationSecurityCode int32
@@ -3261,11 +3374,11 @@ func (x HealthEvacuationSecurityCode) String() string {
 }
 
 func (HealthEvacuationSecurityCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_lxdr_v1_lxdr_proto_enumTypes[57].Descriptor()
+	return file_proto_lxdr_v1_lxdr_proto_enumTypes[59].Descriptor()
 }
 
 func (HealthEvacuationSecurityCode) Type() protoreflect.EnumType {
-	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[57]
+	return &file_proto_lxdr_v1_lxdr_proto_enumTypes[59]
 }
 
 func (x HealthEvacuationSecurityCode) Number() protoreflect.EnumNumber {
@@ -3274,7 +3387,7 @@ func (x HealthEvacuationSecurityCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthEvacuationSecurityCode.Descriptor instead.
 func (HealthEvacuationSecurityCode) EnumDescriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{57}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{59}
 }
 
 type RequestHeader struct {
@@ -3449,6 +3562,151 @@ func (x *SynchronizedResponse) GetSynchronizedRequestId() string {
 	return ""
 }
 
+type CanonicalRegistryFieldEntry struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Section 19.1.
+	Activity        string            `protobuf:"bytes,1,opt,name=activity,proto3" json:"activity,omitempty"`
+	DataElement     string            `protobuf:"bytes,2,opt,name=data_element,json=dataElement,proto3" json:"data_element,omitempty"`
+	DataField       string            `protobuf:"bytes,3,opt,name=data_field,json=dataField,proto3" json:"data_field,omitempty"`
+	CanonicalFile   CanonicalFileType `protobuf:"varint,4,opt,name=canonical_file,json=canonicalFile,proto3,enum=lxdr.v1.CanonicalFileType" json:"canonical_file,omitempty"`
+	CanonicalBlock  string            `protobuf:"bytes,5,opt,name=canonical_block,json=canonicalBlock,proto3" json:"canonical_block,omitempty"`
+	CanonicalField  string            `protobuf:"bytes,6,opt,name=canonical_field,json=canonicalField,proto3" json:"canonical_field,omitempty"`
+	SourceReference string            `protobuf:"bytes,7,opt,name=source_reference,json=sourceReference,proto3" json:"source_reference,omitempty"`
+	ExchangeRole    ExchangeRole      `protobuf:"varint,8,opt,name=exchange_role,json=exchangeRole,proto3,enum=lxdr.v1.ExchangeRole" json:"exchange_role,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *CanonicalRegistryFieldEntry) Reset() {
+	*x = CanonicalRegistryFieldEntry{}
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CanonicalRegistryFieldEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CanonicalRegistryFieldEntry) ProtoMessage() {}
+
+func (x *CanonicalRegistryFieldEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CanonicalRegistryFieldEntry.ProtoReflect.Descriptor instead.
+func (*CanonicalRegistryFieldEntry) Descriptor() ([]byte, []int) {
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CanonicalRegistryFieldEntry) GetActivity() string {
+	if x != nil {
+		return x.Activity
+	}
+	return ""
+}
+
+func (x *CanonicalRegistryFieldEntry) GetDataElement() string {
+	if x != nil {
+		return x.DataElement
+	}
+	return ""
+}
+
+func (x *CanonicalRegistryFieldEntry) GetDataField() string {
+	if x != nil {
+		return x.DataField
+	}
+	return ""
+}
+
+func (x *CanonicalRegistryFieldEntry) GetCanonicalFile() CanonicalFileType {
+	if x != nil {
+		return x.CanonicalFile
+	}
+	return CanonicalFileType_CANONICAL_FILE_TYPE_UNSPECIFIED
+}
+
+func (x *CanonicalRegistryFieldEntry) GetCanonicalBlock() string {
+	if x != nil {
+		return x.CanonicalBlock
+	}
+	return ""
+}
+
+func (x *CanonicalRegistryFieldEntry) GetCanonicalField() string {
+	if x != nil {
+		return x.CanonicalField
+	}
+	return ""
+}
+
+func (x *CanonicalRegistryFieldEntry) GetSourceReference() string {
+	if x != nil {
+		return x.SourceReference
+	}
+	return ""
+}
+
+func (x *CanonicalRegistryFieldEntry) GetExchangeRole() ExchangeRole {
+	if x != nil {
+		return x.ExchangeRole
+	}
+	return ExchangeRole_EXCHANGE_ROLE_UNSPECIFIED
+}
+
+type CanonicalRegistry struct {
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Entries       []*CanonicalRegistryFieldEntry `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CanonicalRegistry) Reset() {
+	*x = CanonicalRegistry{}
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CanonicalRegistry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CanonicalRegistry) ProtoMessage() {}
+
+func (x *CanonicalRegistry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CanonicalRegistry.ProtoReflect.Descriptor instead.
+func (*CanonicalRegistry) Descriptor() ([]byte, []int) {
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CanonicalRegistry) GetEntries() []*CanonicalRegistryFieldEntry {
+	if x != nil {
+		return x.Entries
+	}
+	return nil
+}
+
 type RequestContainer struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Section 8. One request header with one or more request segments.
@@ -3460,7 +3718,7 @@ type RequestContainer struct {
 
 func (x *RequestContainer) Reset() {
 	*x = RequestContainer{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[2]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3472,7 +3730,7 @@ func (x *RequestContainer) String() string {
 func (*RequestContainer) ProtoMessage() {}
 
 func (x *RequestContainer) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[2]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3485,7 +3743,7 @@ func (x *RequestContainer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RequestContainer.ProtoReflect.Descriptor instead.
 func (*RequestContainer) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{2}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *RequestContainer) GetHeader() *RequestHeader {
@@ -3532,7 +3790,7 @@ type RequestSegment struct {
 
 func (x *RequestSegment) Reset() {
 	*x = RequestSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[3]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3544,7 +3802,7 @@ func (x *RequestSegment) String() string {
 func (*RequestSegment) ProtoMessage() {}
 
 func (x *RequestSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[3]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3557,7 +3815,7 @@ func (x *RequestSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RequestSegment.ProtoReflect.Descriptor instead.
 func (*RequestSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{3}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *RequestSegment) GetFunctionFamily() FunctionFamily {
@@ -3870,7 +4128,7 @@ type MobilityPaxRequestSegment struct {
 
 func (x *MobilityPaxRequestSegment) Reset() {
 	*x = MobilityPaxRequestSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[4]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3882,7 +4140,7 @@ func (x *MobilityPaxRequestSegment) String() string {
 func (*MobilityPaxRequestSegment) ProtoMessage() {}
 
 func (x *MobilityPaxRequestSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[4]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3895,7 +4153,7 @@ func (x *MobilityPaxRequestSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MobilityPaxRequestSegment.ProtoReflect.Descriptor instead.
 func (*MobilityPaxRequestSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{4}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *MobilityPaxRequestSegment) GetSegmentNumber() uint32 {
@@ -4010,7 +4268,7 @@ type MobilityCargoRequestSegment struct {
 
 func (x *MobilityCargoRequestSegment) Reset() {
 	*x = MobilityCargoRequestSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[5]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4022,7 +4280,7 @@ func (x *MobilityCargoRequestSegment) String() string {
 func (*MobilityCargoRequestSegment) ProtoMessage() {}
 
 func (x *MobilityCargoRequestSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[5]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4035,7 +4293,7 @@ func (x *MobilityCargoRequestSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MobilityCargoRequestSegment.ProtoReflect.Descriptor instead.
 func (*MobilityCargoRequestSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{5}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *MobilityCargoRequestSegment) GetSegmentNumber() uint32 {
@@ -4185,7 +4443,7 @@ type SupplyRequestSegment struct {
 
 func (x *SupplyRequestSegment) Reset() {
 	*x = SupplyRequestSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[6]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4197,7 +4455,7 @@ func (x *SupplyRequestSegment) String() string {
 func (*SupplyRequestSegment) ProtoMessage() {}
 
 func (x *SupplyRequestSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[6]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4210,7 +4468,7 @@ func (x *SupplyRequestSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SupplyRequestSegment.ProtoReflect.Descriptor instead.
 func (*SupplyRequestSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{6}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SupplyRequestSegment) GetSegmentNumber() uint32 {
@@ -4301,7 +4559,7 @@ type MaintenanceRequestSegment struct {
 
 func (x *MaintenanceRequestSegment) Reset() {
 	*x = MaintenanceRequestSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[7]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4313,7 +4571,7 @@ func (x *MaintenanceRequestSegment) String() string {
 func (*MaintenanceRequestSegment) ProtoMessage() {}
 
 func (x *MaintenanceRequestSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[7]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4326,7 +4584,7 @@ func (x *MaintenanceRequestSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MaintenanceRequestSegment.ProtoReflect.Descriptor instead.
 func (*MaintenanceRequestSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{7}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *MaintenanceRequestSegment) GetSegmentNumber() uint32 {
@@ -4451,7 +4709,7 @@ type EngineerReconAreaItemReport struct {
 
 func (x *EngineerReconAreaItemReport) Reset() {
 	*x = EngineerReconAreaItemReport{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[8]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4463,7 +4721,7 @@ func (x *EngineerReconAreaItemReport) String() string {
 func (*EngineerReconAreaItemReport) ProtoMessage() {}
 
 func (x *EngineerReconAreaItemReport) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[8]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4476,7 +4734,7 @@ func (x *EngineerReconAreaItemReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconAreaItemReport.ProtoReflect.Descriptor instead.
 func (*EngineerReconAreaItemReport) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{8}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *EngineerReconAreaItemReport) GetItemLocation() string {
@@ -4503,7 +4761,7 @@ type EngineerReconAreaWaterSource struct {
 
 func (x *EngineerReconAreaWaterSource) Reset() {
 	*x = EngineerReconAreaWaterSource{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[9]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4515,7 +4773,7 @@ func (x *EngineerReconAreaWaterSource) String() string {
 func (*EngineerReconAreaWaterSource) ProtoMessage() {}
 
 func (x *EngineerReconAreaWaterSource) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[9]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4528,7 +4786,7 @@ func (x *EngineerReconAreaWaterSource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconAreaWaterSource.ProtoReflect.Descriptor instead.
 func (*EngineerReconAreaWaterSource) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{9}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *EngineerReconAreaWaterSource) GetFlowRateVelocity() string {
@@ -4561,7 +4819,7 @@ type EngineerReconAreaReportSegment struct {
 
 func (x *EngineerReconAreaReportSegment) Reset() {
 	*x = EngineerReconAreaReportSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[10]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4573,7 +4831,7 @@ func (x *EngineerReconAreaReportSegment) String() string {
 func (*EngineerReconAreaReportSegment) ProtoMessage() {}
 
 func (x *EngineerReconAreaReportSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[10]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4586,7 +4844,7 @@ func (x *EngineerReconAreaReportSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconAreaReportSegment.ProtoReflect.Descriptor instead.
 func (*EngineerReconAreaReportSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{10}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *EngineerReconAreaReportSegment) GetDateOfEvaluationLocal() string {
@@ -4648,7 +4906,7 @@ type EngineerReconZoneEnemyReport struct {
 
 func (x *EngineerReconZoneEnemyReport) Reset() {
 	*x = EngineerReconZoneEnemyReport{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[11]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4660,7 +4918,7 @@ func (x *EngineerReconZoneEnemyReport) String() string {
 func (*EngineerReconZoneEnemyReport) ProtoMessage() {}
 
 func (x *EngineerReconZoneEnemyReport) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[11]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4673,7 +4931,7 @@ func (x *EngineerReconZoneEnemyReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconZoneEnemyReport.ProtoReflect.Descriptor instead.
 func (*EngineerReconZoneEnemyReport) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{11}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *EngineerReconZoneEnemyReport) GetEnemyLocation() string {
@@ -4708,7 +4966,7 @@ type EngineerReconZoneReportSegment struct {
 
 func (x *EngineerReconZoneReportSegment) Reset() {
 	*x = EngineerReconZoneReportSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[12]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4720,7 +4978,7 @@ func (x *EngineerReconZoneReportSegment) String() string {
 func (*EngineerReconZoneReportSegment) ProtoMessage() {}
 
 func (x *EngineerReconZoneReportSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[12]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4733,7 +4991,7 @@ func (x *EngineerReconZoneReportSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconZoneReportSegment.ProtoReflect.Descriptor instead.
 func (*EngineerReconZoneReportSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{12}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *EngineerReconZoneReportSegment) GetDateOfEvaluationLocal() string {
@@ -4816,7 +5074,7 @@ type EngineerReconRouteReportSegment struct {
 
 func (x *EngineerReconRouteReportSegment) Reset() {
 	*x = EngineerReconRouteReportSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[13]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4828,7 +5086,7 @@ func (x *EngineerReconRouteReportSegment) String() string {
 func (*EngineerReconRouteReportSegment) ProtoMessage() {}
 
 func (x *EngineerReconRouteReportSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[13]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4841,7 +5099,7 @@ func (x *EngineerReconRouteReportSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconRouteReportSegment.ProtoReflect.Descriptor instead.
 func (*EngineerReconRouteReportSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{13}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *EngineerReconRouteReportSegment) GetDateOfEvaluationLocal() string {
@@ -4919,7 +5177,7 @@ type EngineerReconRoadReportSegment struct {
 
 func (x *EngineerReconRoadReportSegment) Reset() {
 	*x = EngineerReconRoadReportSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[14]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4931,7 +5189,7 @@ func (x *EngineerReconRoadReportSegment) String() string {
 func (*EngineerReconRoadReportSegment) ProtoMessage() {}
 
 func (x *EngineerReconRoadReportSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[14]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4944,7 +5202,7 @@ func (x *EngineerReconRoadReportSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineerReconRoadReportSegment.ProtoReflect.Descriptor instead.
 func (*EngineerReconRoadReportSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{14}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *EngineerReconRoadReportSegment) GetDateOfEvaluationLocal() string {
@@ -5042,7 +5300,7 @@ type EngineerReconLandingZoneReportSegment struct {
 
 func (x *EngineerReconLandingZoneReportSegment) Reset() {
 	*x = EngineerReconLandingZoneReportSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[15]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5054,7 +5312,7 @@ func (x *EngineerReconLandingZoneReportSegment) String() string {
 func (*EngineerReconLandingZoneReportSegment) ProtoMessage() {}
 
 func (x *EngineerReconLandingZoneReportSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[15]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5067,7 +5325,7 @@ func (x *EngineerReconLandingZoneReportSegment) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use EngineerReconLandingZoneReportSegment.ProtoReflect.Descriptor instead.
 func (*EngineerReconLandingZoneReportSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{15}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *EngineerReconLandingZoneReportSegment) GetDateOfEvaluationLocal() string {
@@ -5203,7 +5461,7 @@ type GeneralEngineeringObstacleRemovalSegment struct {
 
 func (x *GeneralEngineeringObstacleRemovalSegment) Reset() {
 	*x = GeneralEngineeringObstacleRemovalSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[16]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5215,7 +5473,7 @@ func (x *GeneralEngineeringObstacleRemovalSegment) String() string {
 func (*GeneralEngineeringObstacleRemovalSegment) ProtoMessage() {}
 
 func (x *GeneralEngineeringObstacleRemovalSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[16]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5228,7 +5486,7 @@ func (x *GeneralEngineeringObstacleRemovalSegment) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GeneralEngineeringObstacleRemovalSegment.ProtoReflect.Descriptor instead.
 func (*GeneralEngineeringObstacleRemovalSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{16}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GeneralEngineeringObstacleRemovalSegment) GetDateOfEvaluationLocal() string {
@@ -5336,7 +5594,7 @@ type ExplosiveOrdnanceDisposalSegment struct {
 
 func (x *ExplosiveOrdnanceDisposalSegment) Reset() {
 	*x = ExplosiveOrdnanceDisposalSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[17]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5348,7 +5606,7 @@ func (x *ExplosiveOrdnanceDisposalSegment) String() string {
 func (*ExplosiveOrdnanceDisposalSegment) ProtoMessage() {}
 
 func (x *ExplosiveOrdnanceDisposalSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[17]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5361,7 +5619,7 @@ func (x *ExplosiveOrdnanceDisposalSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExplosiveOrdnanceDisposalSegment.ProtoReflect.Descriptor instead.
 func (*ExplosiveOrdnanceDisposalSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{17}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ExplosiveOrdnanceDisposalSegment) GetDateOfUxoDiscovery() string {
@@ -5464,7 +5722,7 @@ type GeneralEngineeringBulkLiquidSupportSegment struct {
 
 func (x *GeneralEngineeringBulkLiquidSupportSegment) Reset() {
 	*x = GeneralEngineeringBulkLiquidSupportSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[18]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5476,7 +5734,7 @@ func (x *GeneralEngineeringBulkLiquidSupportSegment) String() string {
 func (*GeneralEngineeringBulkLiquidSupportSegment) ProtoMessage() {}
 
 func (x *GeneralEngineeringBulkLiquidSupportSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[18]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5489,7 +5747,7 @@ func (x *GeneralEngineeringBulkLiquidSupportSegment) ProtoReflect() protoreflect
 
 // Deprecated: Use GeneralEngineeringBulkLiquidSupportSegment.ProtoReflect.Descriptor instead.
 func (*GeneralEngineeringBulkLiquidSupportSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{18}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GeneralEngineeringBulkLiquidSupportSegment) GetDateOfEvaluationLocal() string {
@@ -5559,7 +5817,7 @@ type GeneralEngineeringDemolitionSegment struct {
 
 func (x *GeneralEngineeringDemolitionSegment) Reset() {
 	*x = GeneralEngineeringDemolitionSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[19]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5571,7 +5829,7 @@ func (x *GeneralEngineeringDemolitionSegment) String() string {
 func (*GeneralEngineeringDemolitionSegment) ProtoMessage() {}
 
 func (x *GeneralEngineeringDemolitionSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[19]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5584,7 +5842,7 @@ func (x *GeneralEngineeringDemolitionSegment) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GeneralEngineeringDemolitionSegment.ProtoReflect.Descriptor instead.
 func (*GeneralEngineeringDemolitionSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{19}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GeneralEngineeringDemolitionSegment) GetDateOfEvaluationLocal() string {
@@ -5671,7 +5929,7 @@ type HealthCollectionSegment struct {
 
 func (x *HealthCollectionSegment) Reset() {
 	*x = HealthCollectionSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[20]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5683,7 +5941,7 @@ func (x *HealthCollectionSegment) String() string {
 func (*HealthCollectionSegment) ProtoMessage() {}
 
 func (x *HealthCollectionSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[20]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5696,7 +5954,7 @@ func (x *HealthCollectionSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthCollectionSegment.ProtoReflect.Descriptor instead.
 func (*HealthCollectionSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{20}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *HealthCollectionSegment) GetSegmentNumber() uint32 {
@@ -5807,7 +6065,7 @@ type HealthTriageSegment struct {
 
 func (x *HealthTriageSegment) Reset() {
 	*x = HealthTriageSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[21]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5819,7 +6077,7 @@ func (x *HealthTriageSegment) String() string {
 func (*HealthTriageSegment) ProtoMessage() {}
 
 func (x *HealthTriageSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[21]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5832,7 +6090,7 @@ func (x *HealthTriageSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthTriageSegment.ProtoReflect.Descriptor instead.
 func (*HealthTriageSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{21}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *HealthTriageSegment) GetPrimaryMechanismOfInjury() HealthPrimaryMechanismCode {
@@ -5952,7 +6210,7 @@ type TourniquetTreatment struct {
 
 func (x *TourniquetTreatment) Reset() {
 	*x = TourniquetTreatment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[22]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5964,7 +6222,7 @@ func (x *TourniquetTreatment) String() string {
 func (*TourniquetTreatment) ProtoMessage() {}
 
 func (x *TourniquetTreatment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[22]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5977,7 +6235,7 @@ func (x *TourniquetTreatment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TourniquetTreatment.ProtoReflect.Descriptor instead.
 func (*TourniquetTreatment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{22}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *TourniquetTreatment) GetPlacement() TourniquetPlacementCode {
@@ -6022,7 +6280,7 @@ type FluidCirculationTreatment struct {
 
 func (x *FluidCirculationTreatment) Reset() {
 	*x = FluidCirculationTreatment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[23]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6034,7 +6292,7 @@ func (x *FluidCirculationTreatment) String() string {
 func (*FluidCirculationTreatment) ProtoMessage() {}
 
 func (x *FluidCirculationTreatment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[23]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6047,7 +6305,7 @@ func (x *FluidCirculationTreatment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FluidCirculationTreatment.ProtoReflect.Descriptor instead.
 func (*FluidCirculationTreatment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{23}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *FluidCirculationTreatment) GetFluidNameCode() FluidNameCode {
@@ -6105,7 +6363,7 @@ type BloodCirculationTreatment struct {
 
 func (x *BloodCirculationTreatment) Reset() {
 	*x = BloodCirculationTreatment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[24]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6117,7 +6375,7 @@ func (x *BloodCirculationTreatment) String() string {
 func (*BloodCirculationTreatment) ProtoMessage() {}
 
 func (x *BloodCirculationTreatment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[24]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6130,7 +6388,7 @@ func (x *BloodCirculationTreatment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BloodCirculationTreatment.ProtoReflect.Descriptor instead.
 func (*BloodCirculationTreatment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{24}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *BloodCirculationTreatment) GetBloodProductName() BloodProductCode {
@@ -6182,7 +6440,7 @@ type AnalgesicMedicationTreatment struct {
 
 func (x *AnalgesicMedicationTreatment) Reset() {
 	*x = AnalgesicMedicationTreatment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[25]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6194,7 +6452,7 @@ func (x *AnalgesicMedicationTreatment) String() string {
 func (*AnalgesicMedicationTreatment) ProtoMessage() {}
 
 func (x *AnalgesicMedicationTreatment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[25]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6207,7 +6465,7 @@ func (x *AnalgesicMedicationTreatment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AnalgesicMedicationTreatment.ProtoReflect.Descriptor instead.
 func (*AnalgesicMedicationTreatment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{25}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *AnalgesicMedicationTreatment) GetMedicationCode() AnalgesicMedicationCode {
@@ -6266,7 +6524,7 @@ type AntibioticMedicationTreatment struct {
 
 func (x *AntibioticMedicationTreatment) Reset() {
 	*x = AntibioticMedicationTreatment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[26]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6278,7 +6536,7 @@ func (x *AntibioticMedicationTreatment) String() string {
 func (*AntibioticMedicationTreatment) ProtoMessage() {}
 
 func (x *AntibioticMedicationTreatment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[26]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6291,7 +6549,7 @@ func (x *AntibioticMedicationTreatment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AntibioticMedicationTreatment.ProtoReflect.Descriptor instead.
 func (*AntibioticMedicationTreatment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{26}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *AntibioticMedicationTreatment) GetMedicationCode() AntibioticMedicationCode {
@@ -6350,7 +6608,7 @@ type OtherMedicationTreatment struct {
 
 func (x *OtherMedicationTreatment) Reset() {
 	*x = OtherMedicationTreatment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[27]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6362,7 +6620,7 @@ func (x *OtherMedicationTreatment) String() string {
 func (*OtherMedicationTreatment) ProtoMessage() {}
 
 func (x *OtherMedicationTreatment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[27]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6375,7 +6633,7 @@ func (x *OtherMedicationTreatment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OtherMedicationTreatment.ProtoReflect.Descriptor instead.
 func (*OtherMedicationTreatment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{27}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *OtherMedicationTreatment) GetMedicationCode() OtherMedicationCode {
@@ -6440,7 +6698,7 @@ type HealthInterventionSegment struct {
 
 func (x *HealthInterventionSegment) Reset() {
 	*x = HealthInterventionSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[28]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6452,7 +6710,7 @@ func (x *HealthInterventionSegment) String() string {
 func (*HealthInterventionSegment) ProtoMessage() {}
 
 func (x *HealthInterventionSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[28]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6465,7 +6723,7 @@ func (x *HealthInterventionSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthInterventionSegment.ProtoReflect.Descriptor instead.
 func (*HealthInterventionSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{28}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *HealthInterventionSegment) GetTourniquets() []*TourniquetTreatment {
@@ -6558,7 +6816,7 @@ type HealthHoldSegment struct {
 
 func (x *HealthHoldSegment) Reset() {
 	*x = HealthHoldSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[29]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6570,7 +6828,7 @@ func (x *HealthHoldSegment) String() string {
 func (*HealthHoldSegment) ProtoMessage() {}
 
 func (x *HealthHoldSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[29]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6583,7 +6841,7 @@ func (x *HealthHoldSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthHoldSegment.ProtoReflect.Descriptor instead.
 func (*HealthHoldSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{29}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *HealthHoldSegment) GetTriageEntries() []*HealthTriageSegment {
@@ -6610,7 +6868,7 @@ type HealthEvacuationPrecedenceCount struct {
 
 func (x *HealthEvacuationPrecedenceCount) Reset() {
 	*x = HealthEvacuationPrecedenceCount{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[30]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6622,7 +6880,7 @@ func (x *HealthEvacuationPrecedenceCount) String() string {
 func (*HealthEvacuationPrecedenceCount) ProtoMessage() {}
 
 func (x *HealthEvacuationPrecedenceCount) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[30]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6635,7 +6893,7 @@ func (x *HealthEvacuationPrecedenceCount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthEvacuationPrecedenceCount.ProtoReflect.Descriptor instead.
 func (*HealthEvacuationPrecedenceCount) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{30}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *HealthEvacuationPrecedenceCount) GetPrecedence() HealthTriagePrecedenceCode {
@@ -6662,7 +6920,7 @@ type HealthEvacuationCasualtyTypeCount struct {
 
 func (x *HealthEvacuationCasualtyTypeCount) Reset() {
 	*x = HealthEvacuationCasualtyTypeCount{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[31]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6674,7 +6932,7 @@ func (x *HealthEvacuationCasualtyTypeCount) String() string {
 func (*HealthEvacuationCasualtyTypeCount) ProtoMessage() {}
 
 func (x *HealthEvacuationCasualtyTypeCount) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[31]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6687,7 +6945,7 @@ func (x *HealthEvacuationCasualtyTypeCount) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use HealthEvacuationCasualtyTypeCount.ProtoReflect.Descriptor instead.
 func (*HealthEvacuationCasualtyTypeCount) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{31}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *HealthEvacuationCasualtyTypeCount) GetCasualtyType() HealthEvacuationCasualtyTypeCode {
@@ -6729,7 +6987,7 @@ type HealthEvacuationCasualtyRecord struct {
 
 func (x *HealthEvacuationCasualtyRecord) Reset() {
 	*x = HealthEvacuationCasualtyRecord{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[32]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6741,7 +6999,7 @@ func (x *HealthEvacuationCasualtyRecord) String() string {
 func (*HealthEvacuationCasualtyRecord) ProtoMessage() {}
 
 func (x *HealthEvacuationCasualtyRecord) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[32]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6754,7 +7012,7 @@ func (x *HealthEvacuationCasualtyRecord) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthEvacuationCasualtyRecord.ProtoReflect.Descriptor instead.
 func (*HealthEvacuationCasualtyRecord) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{32}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *HealthEvacuationCasualtyRecord) GetZapOrEdiPi() string {
@@ -6895,7 +7153,7 @@ type HealthEvacuationSegment struct {
 
 func (x *HealthEvacuationSegment) Reset() {
 	*x = HealthEvacuationSegment{}
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[33]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6907,7 +7165,7 @@ func (x *HealthEvacuationSegment) String() string {
 func (*HealthEvacuationSegment) ProtoMessage() {}
 
 func (x *HealthEvacuationSegment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[33]
+	mi := &file_proto_lxdr_v1_lxdr_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6920,7 +7178,7 @@ func (x *HealthEvacuationSegment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthEvacuationSegment.ProtoReflect.Descriptor instead.
 func (*HealthEvacuationSegment) Descriptor() ([]byte, []int) {
-	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{33}
+	return file_proto_lxdr_v1_lxdr_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *HealthEvacuationSegment) GetRequestPriority() HealthEvacuationRequestPriorityCode {
@@ -7015,7 +7273,19 @@ const file_proto_lxdr_v1_lxdr_proto_rawDesc = "" +
 	"\x18_synchronized_request_id\"x\n" +
 	"\x14SynchronizedResponse\x12(\n" +
 	"\x10local_request_id\x18\x01 \x01(\tR\x0elocalRequestId\x126\n" +
-	"\x17synchronized_request_id\x18\x02 \x01(\tR\x15synchronizedRequestId\"w\n" +
+	"\x17synchronized_request_id\x18\x02 \x01(\tR\x15synchronizedRequestId\"\xf7\x02\n" +
+	"\x1bCanonicalRegistryFieldEntry\x12\x1a\n" +
+	"\bactivity\x18\x01 \x01(\tR\bactivity\x12!\n" +
+	"\fdata_element\x18\x02 \x01(\tR\vdataElement\x12\x1d\n" +
+	"\n" +
+	"data_field\x18\x03 \x01(\tR\tdataField\x12A\n" +
+	"\x0ecanonical_file\x18\x04 \x01(\x0e2\x1a.lxdr.v1.CanonicalFileTypeR\rcanonicalFile\x12'\n" +
+	"\x0fcanonical_block\x18\x05 \x01(\tR\x0ecanonicalBlock\x12'\n" +
+	"\x0fcanonical_field\x18\x06 \x01(\tR\x0ecanonicalField\x12)\n" +
+	"\x10source_reference\x18\a \x01(\tR\x0fsourceReference\x12:\n" +
+	"\rexchange_role\x18\b \x01(\x0e2\x15.lxdr.v1.ExchangeRoleR\fexchangeRole\"S\n" +
+	"\x11CanonicalRegistry\x12>\n" +
+	"\aentries\x18\x01 \x03(\v2$.lxdr.v1.CanonicalRegistryFieldEntryR\aentries\"w\n" +
 	"\x10RequestContainer\x12.\n" +
 	"\x06header\x18\x01 \x01(\v2\x16.lxdr.v1.RequestHeaderR\x06header\x123\n" +
 	"\bsegments\x18\x02 \x03(\v2\x17.lxdr.v1.RequestSegmentR\bsegments\"\xa9\f\n" +
@@ -7471,7 +7741,20 @@ const file_proto_lxdr_v1_lxdr_proto_rawDesc = "" +
 	"\x16FUNCTION_FAMILY_SUPPLY\x10\x02\x12\x1f\n" +
 	"\x1bFUNCTION_FAMILY_MAINTENANCE\x10\x03\x12'\n" +
 	"#FUNCTION_FAMILY_GENERAL_ENGINEERING\x10\x04\x12#\n" +
-	"\x1fFUNCTION_FAMILY_HEALTH_SERVICES\x10\x05*\xfe\x03\n" +
+	"\x1fFUNCTION_FAMILY_HEALTH_SERVICES\x10\x05*\x92\x02\n" +
+	"\x11CanonicalFileType\x12#\n" +
+	"\x1fCANONICAL_FILE_TYPE_UNSPECIFIED\x10\x00\x12&\n" +
+	"\"CANONICAL_FILE_TYPE_REQUEST_HEADER\x10\x01\x12'\n" +
+	"#CANONICAL_FILE_TYPE_REQUEST_SEGMENT\x10\x02\x12)\n" +
+	"%CANONICAL_FILE_TYPE_REQUEST_CONTAINER\x10\x03\x12%\n" +
+	"!CANONICAL_FILE_TYPE_SYNC_RESPONSE\x10\x04\x125\n" +
+	"1CANONICAL_FILE_TYPE_ATTACHMENT_OR_MEDIA_REFERENCE\x10\x05*\xa8\x01\n" +
+	"\fExchangeRole\x12\x1d\n" +
+	"\x19EXCHANGE_ROLE_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19EXCHANGE_ROLE_TRANSMITTED\x10\x01\x12\x1c\n" +
+	"\x18EXCHANGE_ROLE_CALCULATED\x10\x02\x12\x1e\n" +
+	"\x1aEXCHANGE_ROLE_SYNCHRONIZED\x10\x03\x12\x1c\n" +
+	"\x18EXCHANGE_ROLE_LOCAL_ONLY\x10\x04*\xfe\x03\n" +
 	"\x13RequestPriorityCode\x12%\n" +
 	"!REQUEST_PRIORITY_CODE_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18REQUEST_PRIORITY_CODE_01\x10\x01\x12\x1c\n" +
@@ -7853,239 +8136,246 @@ func file_proto_lxdr_v1_lxdr_proto_rawDescGZIP() []byte {
 	return file_proto_lxdr_v1_lxdr_proto_rawDescData
 }
 
-var file_proto_lxdr_v1_lxdr_proto_enumTypes = make([]protoimpl.EnumInfo, 58)
-var file_proto_lxdr_v1_lxdr_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_proto_lxdr_v1_lxdr_proto_enumTypes = make([]protoimpl.EnumInfo, 60)
+var file_proto_lxdr_v1_lxdr_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
 var file_proto_lxdr_v1_lxdr_proto_goTypes = []any{
 	(FunctionFamily)(0),                                // 0: lxdr.v1.FunctionFamily
-	(RequestPriorityCode)(0),                           // 1: lxdr.v1.RequestPriorityCode
-	(MobilityPaxRequestTypeCode)(0),                    // 2: lxdr.v1.MobilityPaxRequestTypeCode
-	(MobilityCargoRequestTypeCode)(0),                  // 3: lxdr.v1.MobilityCargoRequestTypeCode
-	(CargoHMICCode)(0),                                 // 4: lxdr.v1.CargoHMICCode
-	(CargoHandlingCode)(0),                             // 5: lxdr.v1.CargoHandlingCode
-	(SupplyRequestTypeCode)(0),                         // 6: lxdr.v1.SupplyRequestTypeCode
-	(MaintenanceRequestTypeCode)(0),                    // 7: lxdr.v1.MaintenanceRequestTypeCode
-	(AttachmentIndicatorCode)(0),                       // 8: lxdr.v1.AttachmentIndicatorCode
-	(MaintenanceOperationalConditionCode)(0),           // 9: lxdr.v1.MaintenanceOperationalConditionCode
-	(MaintenanceSupportTypeCode)(0),                    // 10: lxdr.v1.MaintenanceSupportTypeCode
-	(MaintenanceRepairTypeCode)(0),                     // 11: lxdr.v1.MaintenanceRepairTypeCode
-	(MaintenanceMajorDefectCode)(0),                    // 12: lxdr.v1.MaintenanceMajorDefectCode
-	(RoadClassificationCode)(0),                        // 13: lxdr.v1.RoadClassificationCode
-	(RoadDrainageCode)(0),                              // 14: lxdr.v1.RoadDrainageCode
-	(RoadFoundationCode)(0),                            // 15: lxdr.v1.RoadFoundationCode
-	(RoadSurfaceTypeCode)(0),                           // 16: lxdr.v1.RoadSurfaceTypeCode
-	(EstimateCode)(0),                                  // 17: lxdr.v1.EstimateCode
-	(LandingZoneLayoutDesignationCode)(0),              // 18: lxdr.v1.LandingZoneLayoutDesignationCode
-	(AircraftSupportabilityCode)(0),                    // 19: lxdr.v1.AircraftSupportabilityCode
-	(CardinalDirectionCode)(0),                         // 20: lxdr.v1.CardinalDirectionCode
-	(LandingZoneSurfaceSlopeCode)(0),                   // 21: lxdr.v1.LandingZoneSurfaceSlopeCode
-	(LandingZoneObstacleCode)(0),                       // 22: lxdr.v1.LandingZoneObstacleCode
-	(ObstacleActionCode)(0),                            // 23: lxdr.v1.ObstacleActionCode
-	(ObstacleDeterminationCode)(0),                     // 24: lxdr.v1.ObstacleDeterminationCode
-	(BypassCode)(0),                                    // 25: lxdr.v1.BypassCode
-	(CBRNAgentTypeCode)(0),                             // 26: lxdr.v1.CBRNAgentTypeCode
-	(CBRNPhysicalPropertyCode)(0),                      // 27: lxdr.v1.CBRNPhysicalPropertyCode
-	(CBRNContaminationValueCode)(0),                    // 28: lxdr.v1.CBRNContaminationValueCode
-	(MunitionPurposeCode)(0),                           // 29: lxdr.v1.MunitionPurposeCode
-	(MunitionTypeCode)(0),                              // 30: lxdr.v1.MunitionTypeCode
-	(HealthCollectionRequestTypeCode)(0),               // 31: lxdr.v1.HealthCollectionRequestTypeCode
-	(ServiceCode)(0),                                   // 32: lxdr.v1.ServiceCode
-	(HealthPrimaryMechanismCode)(0),                    // 33: lxdr.v1.HealthPrimaryMechanismCode
-	(HealthCBRNExposureCode)(0),                        // 34: lxdr.v1.HealthCBRNExposureCode
-	(HealthMajorSignsSymptomsCode)(0),                  // 35: lxdr.v1.HealthMajorSignsSymptomsCode
-	(HealthPulseLocationCode)(0),                       // 36: lxdr.v1.HealthPulseLocationCode
-	(HealthResponsivenessCode)(0),                      // 37: lxdr.v1.HealthResponsivenessCode
-	(HealthTriagePrecedenceCode)(0),                    // 38: lxdr.v1.HealthTriagePrecedenceCode
-	(TourniquetPlacementCode)(0),                       // 39: lxdr.v1.TourniquetPlacementCode
-	(TourniquetTypeCode)(0),                            // 40: lxdr.v1.TourniquetTypeCode
-	(WoundTreatmentCode)(0),                            // 41: lxdr.v1.WoundTreatmentCode
-	(AirwayTreatmentCode)(0),                           // 42: lxdr.v1.AirwayTreatmentCode
-	(BreathingTreatmentCode)(0),                        // 43: lxdr.v1.BreathingTreatmentCode
-	(FluidNameCode)(0),                                 // 44: lxdr.v1.FluidNameCode
-	(FluidRouteCode)(0),                                // 45: lxdr.v1.FluidRouteCode
-	(BloodProductCode)(0),                              // 46: lxdr.v1.BloodProductCode
-	(MedicationRouteCode)(0),                           // 47: lxdr.v1.MedicationRouteCode
-	(AnalgesicMedicationCode)(0),                       // 48: lxdr.v1.AnalgesicMedicationCode
-	(AntibioticMedicationCode)(0),                      // 49: lxdr.v1.AntibioticMedicationCode
-	(OtherMedicationCode)(0),                           // 50: lxdr.v1.OtherMedicationCode
-	(CasualtyTypeCode)(0),                              // 51: lxdr.v1.CasualtyTypeCode
-	(HealthEvacuationRequestPriorityCode)(0),           // 52: lxdr.v1.HealthEvacuationRequestPriorityCode
-	(HealthEvacuationLocationMarkingCode)(0),           // 53: lxdr.v1.HealthEvacuationLocationMarkingCode
-	(HealthEvacuationContaminationCode)(0),             // 54: lxdr.v1.HealthEvacuationContaminationCode
-	(HealthEvacuationCasualtyTypeCode)(0),              // 55: lxdr.v1.HealthEvacuationCasualtyTypeCode
-	(HealthEvacuationRequestedEquipmentCode)(0),        // 56: lxdr.v1.HealthEvacuationRequestedEquipmentCode
-	(HealthEvacuationSecurityCode)(0),                  // 57: lxdr.v1.HealthEvacuationSecurityCode
-	(*RequestHeader)(nil),                              // 58: lxdr.v1.RequestHeader
-	(*SynchronizedResponse)(nil),                       // 59: lxdr.v1.SynchronizedResponse
-	(*RequestContainer)(nil),                           // 60: lxdr.v1.RequestContainer
-	(*RequestSegment)(nil),                             // 61: lxdr.v1.RequestSegment
-	(*MobilityPaxRequestSegment)(nil),                  // 62: lxdr.v1.MobilityPaxRequestSegment
-	(*MobilityCargoRequestSegment)(nil),                // 63: lxdr.v1.MobilityCargoRequestSegment
-	(*SupplyRequestSegment)(nil),                       // 64: lxdr.v1.SupplyRequestSegment
-	(*MaintenanceRequestSegment)(nil),                  // 65: lxdr.v1.MaintenanceRequestSegment
-	(*EngineerReconAreaItemReport)(nil),                // 66: lxdr.v1.EngineerReconAreaItemReport
-	(*EngineerReconAreaWaterSource)(nil),               // 67: lxdr.v1.EngineerReconAreaWaterSource
-	(*EngineerReconAreaReportSegment)(nil),             // 68: lxdr.v1.EngineerReconAreaReportSegment
-	(*EngineerReconZoneEnemyReport)(nil),               // 69: lxdr.v1.EngineerReconZoneEnemyReport
-	(*EngineerReconZoneReportSegment)(nil),             // 70: lxdr.v1.EngineerReconZoneReportSegment
-	(*EngineerReconRouteReportSegment)(nil),            // 71: lxdr.v1.EngineerReconRouteReportSegment
-	(*EngineerReconRoadReportSegment)(nil),             // 72: lxdr.v1.EngineerReconRoadReportSegment
-	(*EngineerReconLandingZoneReportSegment)(nil),      // 73: lxdr.v1.EngineerReconLandingZoneReportSegment
-	(*GeneralEngineeringObstacleRemovalSegment)(nil),   // 74: lxdr.v1.GeneralEngineeringObstacleRemovalSegment
-	(*ExplosiveOrdnanceDisposalSegment)(nil),           // 75: lxdr.v1.ExplosiveOrdnanceDisposalSegment
-	(*GeneralEngineeringBulkLiquidSupportSegment)(nil), // 76: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
-	(*GeneralEngineeringDemolitionSegment)(nil),        // 77: lxdr.v1.GeneralEngineeringDemolitionSegment
-	(*HealthCollectionSegment)(nil),                    // 78: lxdr.v1.HealthCollectionSegment
-	(*HealthTriageSegment)(nil),                        // 79: lxdr.v1.HealthTriageSegment
-	(*TourniquetTreatment)(nil),                        // 80: lxdr.v1.TourniquetTreatment
-	(*FluidCirculationTreatment)(nil),                  // 81: lxdr.v1.FluidCirculationTreatment
-	(*BloodCirculationTreatment)(nil),                  // 82: lxdr.v1.BloodCirculationTreatment
-	(*AnalgesicMedicationTreatment)(nil),               // 83: lxdr.v1.AnalgesicMedicationTreatment
-	(*AntibioticMedicationTreatment)(nil),              // 84: lxdr.v1.AntibioticMedicationTreatment
-	(*OtherMedicationTreatment)(nil),                   // 85: lxdr.v1.OtherMedicationTreatment
-	(*HealthInterventionSegment)(nil),                  // 86: lxdr.v1.HealthInterventionSegment
-	(*HealthHoldSegment)(nil),                          // 87: lxdr.v1.HealthHoldSegment
-	(*HealthEvacuationPrecedenceCount)(nil),            // 88: lxdr.v1.HealthEvacuationPrecedenceCount
-	(*HealthEvacuationCasualtyTypeCount)(nil),          // 89: lxdr.v1.HealthEvacuationCasualtyTypeCount
-	(*HealthEvacuationCasualtyRecord)(nil),             // 90: lxdr.v1.HealthEvacuationCasualtyRecord
-	(*HealthEvacuationSegment)(nil),                    // 91: lxdr.v1.HealthEvacuationSegment
+	(CanonicalFileType)(0),                             // 1: lxdr.v1.CanonicalFileType
+	(ExchangeRole)(0),                                  // 2: lxdr.v1.ExchangeRole
+	(RequestPriorityCode)(0),                           // 3: lxdr.v1.RequestPriorityCode
+	(MobilityPaxRequestTypeCode)(0),                    // 4: lxdr.v1.MobilityPaxRequestTypeCode
+	(MobilityCargoRequestTypeCode)(0),                  // 5: lxdr.v1.MobilityCargoRequestTypeCode
+	(CargoHMICCode)(0),                                 // 6: lxdr.v1.CargoHMICCode
+	(CargoHandlingCode)(0),                             // 7: lxdr.v1.CargoHandlingCode
+	(SupplyRequestTypeCode)(0),                         // 8: lxdr.v1.SupplyRequestTypeCode
+	(MaintenanceRequestTypeCode)(0),                    // 9: lxdr.v1.MaintenanceRequestTypeCode
+	(AttachmentIndicatorCode)(0),                       // 10: lxdr.v1.AttachmentIndicatorCode
+	(MaintenanceOperationalConditionCode)(0),           // 11: lxdr.v1.MaintenanceOperationalConditionCode
+	(MaintenanceSupportTypeCode)(0),                    // 12: lxdr.v1.MaintenanceSupportTypeCode
+	(MaintenanceRepairTypeCode)(0),                     // 13: lxdr.v1.MaintenanceRepairTypeCode
+	(MaintenanceMajorDefectCode)(0),                    // 14: lxdr.v1.MaintenanceMajorDefectCode
+	(RoadClassificationCode)(0),                        // 15: lxdr.v1.RoadClassificationCode
+	(RoadDrainageCode)(0),                              // 16: lxdr.v1.RoadDrainageCode
+	(RoadFoundationCode)(0),                            // 17: lxdr.v1.RoadFoundationCode
+	(RoadSurfaceTypeCode)(0),                           // 18: lxdr.v1.RoadSurfaceTypeCode
+	(EstimateCode)(0),                                  // 19: lxdr.v1.EstimateCode
+	(LandingZoneLayoutDesignationCode)(0),              // 20: lxdr.v1.LandingZoneLayoutDesignationCode
+	(AircraftSupportabilityCode)(0),                    // 21: lxdr.v1.AircraftSupportabilityCode
+	(CardinalDirectionCode)(0),                         // 22: lxdr.v1.CardinalDirectionCode
+	(LandingZoneSurfaceSlopeCode)(0),                   // 23: lxdr.v1.LandingZoneSurfaceSlopeCode
+	(LandingZoneObstacleCode)(0),                       // 24: lxdr.v1.LandingZoneObstacleCode
+	(ObstacleActionCode)(0),                            // 25: lxdr.v1.ObstacleActionCode
+	(ObstacleDeterminationCode)(0),                     // 26: lxdr.v1.ObstacleDeterminationCode
+	(BypassCode)(0),                                    // 27: lxdr.v1.BypassCode
+	(CBRNAgentTypeCode)(0),                             // 28: lxdr.v1.CBRNAgentTypeCode
+	(CBRNPhysicalPropertyCode)(0),                      // 29: lxdr.v1.CBRNPhysicalPropertyCode
+	(CBRNContaminationValueCode)(0),                    // 30: lxdr.v1.CBRNContaminationValueCode
+	(MunitionPurposeCode)(0),                           // 31: lxdr.v1.MunitionPurposeCode
+	(MunitionTypeCode)(0),                              // 32: lxdr.v1.MunitionTypeCode
+	(HealthCollectionRequestTypeCode)(0),               // 33: lxdr.v1.HealthCollectionRequestTypeCode
+	(ServiceCode)(0),                                   // 34: lxdr.v1.ServiceCode
+	(HealthPrimaryMechanismCode)(0),                    // 35: lxdr.v1.HealthPrimaryMechanismCode
+	(HealthCBRNExposureCode)(0),                        // 36: lxdr.v1.HealthCBRNExposureCode
+	(HealthMajorSignsSymptomsCode)(0),                  // 37: lxdr.v1.HealthMajorSignsSymptomsCode
+	(HealthPulseLocationCode)(0),                       // 38: lxdr.v1.HealthPulseLocationCode
+	(HealthResponsivenessCode)(0),                      // 39: lxdr.v1.HealthResponsivenessCode
+	(HealthTriagePrecedenceCode)(0),                    // 40: lxdr.v1.HealthTriagePrecedenceCode
+	(TourniquetPlacementCode)(0),                       // 41: lxdr.v1.TourniquetPlacementCode
+	(TourniquetTypeCode)(0),                            // 42: lxdr.v1.TourniquetTypeCode
+	(WoundTreatmentCode)(0),                            // 43: lxdr.v1.WoundTreatmentCode
+	(AirwayTreatmentCode)(0),                           // 44: lxdr.v1.AirwayTreatmentCode
+	(BreathingTreatmentCode)(0),                        // 45: lxdr.v1.BreathingTreatmentCode
+	(FluidNameCode)(0),                                 // 46: lxdr.v1.FluidNameCode
+	(FluidRouteCode)(0),                                // 47: lxdr.v1.FluidRouteCode
+	(BloodProductCode)(0),                              // 48: lxdr.v1.BloodProductCode
+	(MedicationRouteCode)(0),                           // 49: lxdr.v1.MedicationRouteCode
+	(AnalgesicMedicationCode)(0),                       // 50: lxdr.v1.AnalgesicMedicationCode
+	(AntibioticMedicationCode)(0),                      // 51: lxdr.v1.AntibioticMedicationCode
+	(OtherMedicationCode)(0),                           // 52: lxdr.v1.OtherMedicationCode
+	(CasualtyTypeCode)(0),                              // 53: lxdr.v1.CasualtyTypeCode
+	(HealthEvacuationRequestPriorityCode)(0),           // 54: lxdr.v1.HealthEvacuationRequestPriorityCode
+	(HealthEvacuationLocationMarkingCode)(0),           // 55: lxdr.v1.HealthEvacuationLocationMarkingCode
+	(HealthEvacuationContaminationCode)(0),             // 56: lxdr.v1.HealthEvacuationContaminationCode
+	(HealthEvacuationCasualtyTypeCode)(0),              // 57: lxdr.v1.HealthEvacuationCasualtyTypeCode
+	(HealthEvacuationRequestedEquipmentCode)(0),        // 58: lxdr.v1.HealthEvacuationRequestedEquipmentCode
+	(HealthEvacuationSecurityCode)(0),                  // 59: lxdr.v1.HealthEvacuationSecurityCode
+	(*RequestHeader)(nil),                              // 60: lxdr.v1.RequestHeader
+	(*SynchronizedResponse)(nil),                       // 61: lxdr.v1.SynchronizedResponse
+	(*CanonicalRegistryFieldEntry)(nil),                // 62: lxdr.v1.CanonicalRegistryFieldEntry
+	(*CanonicalRegistry)(nil),                          // 63: lxdr.v1.CanonicalRegistry
+	(*RequestContainer)(nil),                           // 64: lxdr.v1.RequestContainer
+	(*RequestSegment)(nil),                             // 65: lxdr.v1.RequestSegment
+	(*MobilityPaxRequestSegment)(nil),                  // 66: lxdr.v1.MobilityPaxRequestSegment
+	(*MobilityCargoRequestSegment)(nil),                // 67: lxdr.v1.MobilityCargoRequestSegment
+	(*SupplyRequestSegment)(nil),                       // 68: lxdr.v1.SupplyRequestSegment
+	(*MaintenanceRequestSegment)(nil),                  // 69: lxdr.v1.MaintenanceRequestSegment
+	(*EngineerReconAreaItemReport)(nil),                // 70: lxdr.v1.EngineerReconAreaItemReport
+	(*EngineerReconAreaWaterSource)(nil),               // 71: lxdr.v1.EngineerReconAreaWaterSource
+	(*EngineerReconAreaReportSegment)(nil),             // 72: lxdr.v1.EngineerReconAreaReportSegment
+	(*EngineerReconZoneEnemyReport)(nil),               // 73: lxdr.v1.EngineerReconZoneEnemyReport
+	(*EngineerReconZoneReportSegment)(nil),             // 74: lxdr.v1.EngineerReconZoneReportSegment
+	(*EngineerReconRouteReportSegment)(nil),            // 75: lxdr.v1.EngineerReconRouteReportSegment
+	(*EngineerReconRoadReportSegment)(nil),             // 76: lxdr.v1.EngineerReconRoadReportSegment
+	(*EngineerReconLandingZoneReportSegment)(nil),      // 77: lxdr.v1.EngineerReconLandingZoneReportSegment
+	(*GeneralEngineeringObstacleRemovalSegment)(nil),   // 78: lxdr.v1.GeneralEngineeringObstacleRemovalSegment
+	(*ExplosiveOrdnanceDisposalSegment)(nil),           // 79: lxdr.v1.ExplosiveOrdnanceDisposalSegment
+	(*GeneralEngineeringBulkLiquidSupportSegment)(nil), // 80: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
+	(*GeneralEngineeringDemolitionSegment)(nil),        // 81: lxdr.v1.GeneralEngineeringDemolitionSegment
+	(*HealthCollectionSegment)(nil),                    // 82: lxdr.v1.HealthCollectionSegment
+	(*HealthTriageSegment)(nil),                        // 83: lxdr.v1.HealthTriageSegment
+	(*TourniquetTreatment)(nil),                        // 84: lxdr.v1.TourniquetTreatment
+	(*FluidCirculationTreatment)(nil),                  // 85: lxdr.v1.FluidCirculationTreatment
+	(*BloodCirculationTreatment)(nil),                  // 86: lxdr.v1.BloodCirculationTreatment
+	(*AnalgesicMedicationTreatment)(nil),               // 87: lxdr.v1.AnalgesicMedicationTreatment
+	(*AntibioticMedicationTreatment)(nil),              // 88: lxdr.v1.AntibioticMedicationTreatment
+	(*OtherMedicationTreatment)(nil),                   // 89: lxdr.v1.OtherMedicationTreatment
+	(*HealthInterventionSegment)(nil),                  // 90: lxdr.v1.HealthInterventionSegment
+	(*HealthHoldSegment)(nil),                          // 91: lxdr.v1.HealthHoldSegment
+	(*HealthEvacuationPrecedenceCount)(nil),            // 92: lxdr.v1.HealthEvacuationPrecedenceCount
+	(*HealthEvacuationCasualtyTypeCount)(nil),          // 93: lxdr.v1.HealthEvacuationCasualtyTypeCount
+	(*HealthEvacuationCasualtyRecord)(nil),             // 94: lxdr.v1.HealthEvacuationCasualtyRecord
+	(*HealthEvacuationSegment)(nil),                    // 95: lxdr.v1.HealthEvacuationSegment
 }
 var file_proto_lxdr_v1_lxdr_proto_depIdxs = []int32{
-	1,   // 0: lxdr.v1.RequestHeader.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	58,  // 1: lxdr.v1.RequestContainer.header:type_name -> lxdr.v1.RequestHeader
-	61,  // 2: lxdr.v1.RequestContainer.segments:type_name -> lxdr.v1.RequestSegment
-	0,   // 3: lxdr.v1.RequestSegment.function_family:type_name -> lxdr.v1.FunctionFamily
-	62,  // 4: lxdr.v1.RequestSegment.mobility_pax:type_name -> lxdr.v1.MobilityPaxRequestSegment
-	63,  // 5: lxdr.v1.RequestSegment.mobility_cargo:type_name -> lxdr.v1.MobilityCargoRequestSegment
-	64,  // 6: lxdr.v1.RequestSegment.supply:type_name -> lxdr.v1.SupplyRequestSegment
-	65,  // 7: lxdr.v1.RequestSegment.maintenance:type_name -> lxdr.v1.MaintenanceRequestSegment
-	68,  // 8: lxdr.v1.RequestSegment.engineer_recon_area:type_name -> lxdr.v1.EngineerReconAreaReportSegment
-	70,  // 9: lxdr.v1.RequestSegment.engineer_recon_zone:type_name -> lxdr.v1.EngineerReconZoneReportSegment
-	71,  // 10: lxdr.v1.RequestSegment.engineer_recon_route:type_name -> lxdr.v1.EngineerReconRouteReportSegment
-	72,  // 11: lxdr.v1.RequestSegment.engineer_recon_road:type_name -> lxdr.v1.EngineerReconRoadReportSegment
-	73,  // 12: lxdr.v1.RequestSegment.engineer_recon_landing_zone:type_name -> lxdr.v1.EngineerReconLandingZoneReportSegment
-	74,  // 13: lxdr.v1.RequestSegment.obstacle_removal:type_name -> lxdr.v1.GeneralEngineeringObstacleRemovalSegment
-	75,  // 14: lxdr.v1.RequestSegment.eod:type_name -> lxdr.v1.ExplosiveOrdnanceDisposalSegment
-	76,  // 15: lxdr.v1.RequestSegment.bulk_liquid_support:type_name -> lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
-	77,  // 16: lxdr.v1.RequestSegment.demolition:type_name -> lxdr.v1.GeneralEngineeringDemolitionSegment
-	78,  // 17: lxdr.v1.RequestSegment.health_collection:type_name -> lxdr.v1.HealthCollectionSegment
-	79,  // 18: lxdr.v1.RequestSegment.health_triage:type_name -> lxdr.v1.HealthTriageSegment
-	86,  // 19: lxdr.v1.RequestSegment.health_intervention:type_name -> lxdr.v1.HealthInterventionSegment
-	87,  // 20: lxdr.v1.RequestSegment.health_hold:type_name -> lxdr.v1.HealthHoldSegment
-	91,  // 21: lxdr.v1.RequestSegment.health_evacuation:type_name -> lxdr.v1.HealthEvacuationSegment
-	2,   // 22: lxdr.v1.MobilityPaxRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityPaxRequestTypeCode
-	1,   // 23: lxdr.v1.MobilityPaxRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	3,   // 24: lxdr.v1.MobilityCargoRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityCargoRequestTypeCode
-	1,   // 25: lxdr.v1.MobilityCargoRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	4,   // 26: lxdr.v1.MobilityCargoRequestSegment.hmic:type_name -> lxdr.v1.CargoHMICCode
-	5,   // 27: lxdr.v1.MobilityCargoRequestSegment.handling:type_name -> lxdr.v1.CargoHandlingCode
-	6,   // 28: lxdr.v1.SupplyRequestSegment.request_type_code:type_name -> lxdr.v1.SupplyRequestTypeCode
-	1,   // 29: lxdr.v1.SupplyRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	8,   // 30: lxdr.v1.SupplyRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	7,   // 31: lxdr.v1.MaintenanceRequestSegment.request_type_code:type_name -> lxdr.v1.MaintenanceRequestTypeCode
-	1,   // 32: lxdr.v1.MaintenanceRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	9,   // 33: lxdr.v1.MaintenanceRequestSegment.equipment_operational_condition:type_name -> lxdr.v1.MaintenanceOperationalConditionCode
-	10,  // 34: lxdr.v1.MaintenanceRequestSegment.type_of_maintenance_support_required:type_name -> lxdr.v1.MaintenanceSupportTypeCode
-	11,  // 35: lxdr.v1.MaintenanceRequestSegment.type_of_repair:type_name -> lxdr.v1.MaintenanceRepairTypeCode
-	12,  // 36: lxdr.v1.MaintenanceRequestSegment.repair_major_defect:type_name -> lxdr.v1.MaintenanceMajorDefectCode
-	8,   // 37: lxdr.v1.MaintenanceRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	67,  // 38: lxdr.v1.EngineerReconAreaReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
-	66,  // 39: lxdr.v1.EngineerReconAreaReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
-	8,   // 40: lxdr.v1.EngineerReconAreaReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	69,  // 41: lxdr.v1.EngineerReconZoneReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
-	67,  // 42: lxdr.v1.EngineerReconZoneReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
-	66,  // 43: lxdr.v1.EngineerReconZoneReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
-	8,   // 44: lxdr.v1.EngineerReconZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	69,  // 45: lxdr.v1.EngineerReconRouteReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
-	67,  // 46: lxdr.v1.EngineerReconRouteReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
-	66,  // 47: lxdr.v1.EngineerReconRouteReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
-	8,   // 48: lxdr.v1.EngineerReconRouteReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	13,  // 49: lxdr.v1.EngineerReconRoadReportSegment.road_classification:type_name -> lxdr.v1.RoadClassificationCode
-	14,  // 50: lxdr.v1.EngineerReconRoadReportSegment.drainage:type_name -> lxdr.v1.RoadDrainageCode
-	15,  // 51: lxdr.v1.EngineerReconRoadReportSegment.foundation:type_name -> lxdr.v1.RoadFoundationCode
-	16,  // 52: lxdr.v1.EngineerReconRoadReportSegment.surface_type:type_name -> lxdr.v1.RoadSurfaceTypeCode
-	8,   // 53: lxdr.v1.EngineerReconRoadReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	17,  // 54: lxdr.v1.EngineerReconLandingZoneReportSegment.estimate:type_name -> lxdr.v1.EstimateCode
-	18,  // 55: lxdr.v1.EngineerReconLandingZoneReportSegment.layout_designation:type_name -> lxdr.v1.LandingZoneLayoutDesignationCode
-	19,  // 56: lxdr.v1.EngineerReconLandingZoneReportSegment.aircraft_supportability:type_name -> lxdr.v1.AircraftSupportabilityCode
-	20,  // 57: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_approach:type_name -> lxdr.v1.CardinalDirectionCode
-	20,  // 58: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_departure:type_name -> lxdr.v1.CardinalDirectionCode
-	21,  // 59: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_surface_slope:type_name -> lxdr.v1.LandingZoneSurfaceSlopeCode
-	22,  // 60: lxdr.v1.EngineerReconLandingZoneReportSegment.obstacle:type_name -> lxdr.v1.LandingZoneObstacleCode
-	8,   // 61: lxdr.v1.EngineerReconLandingZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	23,  // 62: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.obstacle:type_name -> lxdr.v1.ObstacleActionCode
-	24,  // 63: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
-	25,  // 64: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.bypass:type_name -> lxdr.v1.BypassCode
-	8,   // 65: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	26,  // 66: lxdr.v1.ExplosiveOrdnanceDisposalSegment.type_of_cbrn_agent:type_name -> lxdr.v1.CBRNAgentTypeCode
-	27,  // 67: lxdr.v1.ExplosiveOrdnanceDisposalSegment.physical_property_of_cbrn_agent:type_name -> lxdr.v1.CBRNPhysicalPropertyCode
-	28,  // 68: lxdr.v1.ExplosiveOrdnanceDisposalSegment.contamination_value_of_cbrn_agent:type_name -> lxdr.v1.CBRNContaminationValueCode
-	29,  // 69: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_purpose:type_name -> lxdr.v1.MunitionPurposeCode
-	30,  // 70: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_type:type_name -> lxdr.v1.MunitionTypeCode
-	8,   // 71: lxdr.v1.ExplosiveOrdnanceDisposalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	17,  // 72: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.estimate:type_name -> lxdr.v1.EstimateCode
-	8,   // 73: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	24,  // 74: lxdr.v1.GeneralEngineeringDemolitionSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
-	25,  // 75: lxdr.v1.GeneralEngineeringDemolitionSegment.bypass:type_name -> lxdr.v1.BypassCode
-	8,   // 76: lxdr.v1.GeneralEngineeringDemolitionSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
-	31,  // 77: lxdr.v1.HealthCollectionSegment.request_type_code:type_name -> lxdr.v1.HealthCollectionRequestTypeCode
-	1,   // 78: lxdr.v1.HealthCollectionSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
-	32,  // 79: lxdr.v1.HealthCollectionSegment.service:type_name -> lxdr.v1.ServiceCode
-	33,  // 80: lxdr.v1.HealthTriageSegment.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
-	34,  // 81: lxdr.v1.HealthTriageSegment.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
-	35,  // 82: lxdr.v1.HealthTriageSegment.major_signs_symptoms:type_name -> lxdr.v1.HealthMajorSignsSymptomsCode
-	36,  // 83: lxdr.v1.HealthTriageSegment.pulse_location:type_name -> lxdr.v1.HealthPulseLocationCode
-	37,  // 84: lxdr.v1.HealthTriageSegment.responsiveness:type_name -> lxdr.v1.HealthResponsivenessCode
-	38,  // 85: lxdr.v1.HealthTriageSegment.triage_precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
-	39,  // 86: lxdr.v1.TourniquetTreatment.placement:type_name -> lxdr.v1.TourniquetPlacementCode
-	40,  // 87: lxdr.v1.TourniquetTreatment.type:type_name -> lxdr.v1.TourniquetTypeCode
-	44,  // 88: lxdr.v1.FluidCirculationTreatment.fluid_name_code:type_name -> lxdr.v1.FluidNameCode
-	45,  // 89: lxdr.v1.FluidCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
-	46,  // 90: lxdr.v1.BloodCirculationTreatment.blood_product_name:type_name -> lxdr.v1.BloodProductCode
-	45,  // 91: lxdr.v1.BloodCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
-	48,  // 92: lxdr.v1.AnalgesicMedicationTreatment.medication_code:type_name -> lxdr.v1.AnalgesicMedicationCode
-	47,  // 93: lxdr.v1.AnalgesicMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
-	49,  // 94: lxdr.v1.AntibioticMedicationTreatment.medication_code:type_name -> lxdr.v1.AntibioticMedicationCode
-	47,  // 95: lxdr.v1.AntibioticMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
-	50,  // 96: lxdr.v1.OtherMedicationTreatment.medication_code:type_name -> lxdr.v1.OtherMedicationCode
-	47,  // 97: lxdr.v1.OtherMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
-	80,  // 98: lxdr.v1.HealthInterventionSegment.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
-	41,  // 99: lxdr.v1.HealthInterventionSegment.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
-	42,  // 100: lxdr.v1.HealthInterventionSegment.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
-	43,  // 101: lxdr.v1.HealthInterventionSegment.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
-	81,  // 102: lxdr.v1.HealthInterventionSegment.fluid_circulation_treatments:type_name -> lxdr.v1.FluidCirculationTreatment
-	82,  // 103: lxdr.v1.HealthInterventionSegment.blood_circulation_treatments:type_name -> lxdr.v1.BloodCirculationTreatment
-	83,  // 104: lxdr.v1.HealthInterventionSegment.analgesic_medication_treatments:type_name -> lxdr.v1.AnalgesicMedicationTreatment
-	84,  // 105: lxdr.v1.HealthInterventionSegment.antibiotic_medication_treatments:type_name -> lxdr.v1.AntibioticMedicationTreatment
-	85,  // 106: lxdr.v1.HealthInterventionSegment.other_medication_treatments:type_name -> lxdr.v1.OtherMedicationTreatment
-	51,  // 107: lxdr.v1.HealthInterventionSegment.casualty_type:type_name -> lxdr.v1.CasualtyTypeCode
-	79,  // 108: lxdr.v1.HealthHoldSegment.triage_entries:type_name -> lxdr.v1.HealthTriageSegment
-	86,  // 109: lxdr.v1.HealthHoldSegment.intervention_entries:type_name -> lxdr.v1.HealthInterventionSegment
-	38,  // 110: lxdr.v1.HealthEvacuationPrecedenceCount.precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
-	55,  // 111: lxdr.v1.HealthEvacuationCasualtyTypeCount.casualty_type:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCode
-	33,  // 112: lxdr.v1.HealthEvacuationCasualtyRecord.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
-	80,  // 113: lxdr.v1.HealthEvacuationCasualtyRecord.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
-	41,  // 114: lxdr.v1.HealthEvacuationCasualtyRecord.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
-	42,  // 115: lxdr.v1.HealthEvacuationCasualtyRecord.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
-	43,  // 116: lxdr.v1.HealthEvacuationCasualtyRecord.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
-	81,  // 117: lxdr.v1.HealthEvacuationCasualtyRecord.fluid_circulation_treatment:type_name -> lxdr.v1.FluidCirculationTreatment
-	82,  // 118: lxdr.v1.HealthEvacuationCasualtyRecord.blood_circulation_treatment:type_name -> lxdr.v1.BloodCirculationTreatment
-	83,  // 119: lxdr.v1.HealthEvacuationCasualtyRecord.analgesic_medication_treatment:type_name -> lxdr.v1.AnalgesicMedicationTreatment
-	84,  // 120: lxdr.v1.HealthEvacuationCasualtyRecord.antibiotic_medication_treatment:type_name -> lxdr.v1.AntibioticMedicationTreatment
-	85,  // 121: lxdr.v1.HealthEvacuationCasualtyRecord.other_medication_treatment:type_name -> lxdr.v1.OtherMedicationTreatment
-	34,  // 122: lxdr.v1.HealthEvacuationCasualtyRecord.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
-	52,  // 123: lxdr.v1.HealthEvacuationSegment.request_priority:type_name -> lxdr.v1.HealthEvacuationRequestPriorityCode
-	53,  // 124: lxdr.v1.HealthEvacuationSegment.location_marking:type_name -> lxdr.v1.HealthEvacuationLocationMarkingCode
-	54,  // 125: lxdr.v1.HealthEvacuationSegment.location_contamination:type_name -> lxdr.v1.HealthEvacuationContaminationCode
-	88,  // 126: lxdr.v1.HealthEvacuationSegment.count_of_casualties_precedence:type_name -> lxdr.v1.HealthEvacuationPrecedenceCount
-	89,  // 127: lxdr.v1.HealthEvacuationSegment.count_of_casualty_types:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCount
-	56,  // 128: lxdr.v1.HealthEvacuationSegment.requested_equipment:type_name -> lxdr.v1.HealthEvacuationRequestedEquipmentCode
-	57,  // 129: lxdr.v1.HealthEvacuationSegment.security:type_name -> lxdr.v1.HealthEvacuationSecurityCode
-	90,  // 130: lxdr.v1.HealthEvacuationSegment.casualties:type_name -> lxdr.v1.HealthEvacuationCasualtyRecord
-	131, // [131:131] is the sub-list for method output_type
-	131, // [131:131] is the sub-list for method input_type
-	131, // [131:131] is the sub-list for extension type_name
-	131, // [131:131] is the sub-list for extension extendee
-	0,   // [0:131] is the sub-list for field type_name
+	3,   // 0: lxdr.v1.RequestHeader.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	1,   // 1: lxdr.v1.CanonicalRegistryFieldEntry.canonical_file:type_name -> lxdr.v1.CanonicalFileType
+	2,   // 2: lxdr.v1.CanonicalRegistryFieldEntry.exchange_role:type_name -> lxdr.v1.ExchangeRole
+	62,  // 3: lxdr.v1.CanonicalRegistry.entries:type_name -> lxdr.v1.CanonicalRegistryFieldEntry
+	60,  // 4: lxdr.v1.RequestContainer.header:type_name -> lxdr.v1.RequestHeader
+	65,  // 5: lxdr.v1.RequestContainer.segments:type_name -> lxdr.v1.RequestSegment
+	0,   // 6: lxdr.v1.RequestSegment.function_family:type_name -> lxdr.v1.FunctionFamily
+	66,  // 7: lxdr.v1.RequestSegment.mobility_pax:type_name -> lxdr.v1.MobilityPaxRequestSegment
+	67,  // 8: lxdr.v1.RequestSegment.mobility_cargo:type_name -> lxdr.v1.MobilityCargoRequestSegment
+	68,  // 9: lxdr.v1.RequestSegment.supply:type_name -> lxdr.v1.SupplyRequestSegment
+	69,  // 10: lxdr.v1.RequestSegment.maintenance:type_name -> lxdr.v1.MaintenanceRequestSegment
+	72,  // 11: lxdr.v1.RequestSegment.engineer_recon_area:type_name -> lxdr.v1.EngineerReconAreaReportSegment
+	74,  // 12: lxdr.v1.RequestSegment.engineer_recon_zone:type_name -> lxdr.v1.EngineerReconZoneReportSegment
+	75,  // 13: lxdr.v1.RequestSegment.engineer_recon_route:type_name -> lxdr.v1.EngineerReconRouteReportSegment
+	76,  // 14: lxdr.v1.RequestSegment.engineer_recon_road:type_name -> lxdr.v1.EngineerReconRoadReportSegment
+	77,  // 15: lxdr.v1.RequestSegment.engineer_recon_landing_zone:type_name -> lxdr.v1.EngineerReconLandingZoneReportSegment
+	78,  // 16: lxdr.v1.RequestSegment.obstacle_removal:type_name -> lxdr.v1.GeneralEngineeringObstacleRemovalSegment
+	79,  // 17: lxdr.v1.RequestSegment.eod:type_name -> lxdr.v1.ExplosiveOrdnanceDisposalSegment
+	80,  // 18: lxdr.v1.RequestSegment.bulk_liquid_support:type_name -> lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment
+	81,  // 19: lxdr.v1.RequestSegment.demolition:type_name -> lxdr.v1.GeneralEngineeringDemolitionSegment
+	82,  // 20: lxdr.v1.RequestSegment.health_collection:type_name -> lxdr.v1.HealthCollectionSegment
+	83,  // 21: lxdr.v1.RequestSegment.health_triage:type_name -> lxdr.v1.HealthTriageSegment
+	90,  // 22: lxdr.v1.RequestSegment.health_intervention:type_name -> lxdr.v1.HealthInterventionSegment
+	91,  // 23: lxdr.v1.RequestSegment.health_hold:type_name -> lxdr.v1.HealthHoldSegment
+	95,  // 24: lxdr.v1.RequestSegment.health_evacuation:type_name -> lxdr.v1.HealthEvacuationSegment
+	4,   // 25: lxdr.v1.MobilityPaxRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityPaxRequestTypeCode
+	3,   // 26: lxdr.v1.MobilityPaxRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	5,   // 27: lxdr.v1.MobilityCargoRequestSegment.request_type_code:type_name -> lxdr.v1.MobilityCargoRequestTypeCode
+	3,   // 28: lxdr.v1.MobilityCargoRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	6,   // 29: lxdr.v1.MobilityCargoRequestSegment.hmic:type_name -> lxdr.v1.CargoHMICCode
+	7,   // 30: lxdr.v1.MobilityCargoRequestSegment.handling:type_name -> lxdr.v1.CargoHandlingCode
+	8,   // 31: lxdr.v1.SupplyRequestSegment.request_type_code:type_name -> lxdr.v1.SupplyRequestTypeCode
+	3,   // 32: lxdr.v1.SupplyRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	10,  // 33: lxdr.v1.SupplyRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	9,   // 34: lxdr.v1.MaintenanceRequestSegment.request_type_code:type_name -> lxdr.v1.MaintenanceRequestTypeCode
+	3,   // 35: lxdr.v1.MaintenanceRequestSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	11,  // 36: lxdr.v1.MaintenanceRequestSegment.equipment_operational_condition:type_name -> lxdr.v1.MaintenanceOperationalConditionCode
+	12,  // 37: lxdr.v1.MaintenanceRequestSegment.type_of_maintenance_support_required:type_name -> lxdr.v1.MaintenanceSupportTypeCode
+	13,  // 38: lxdr.v1.MaintenanceRequestSegment.type_of_repair:type_name -> lxdr.v1.MaintenanceRepairTypeCode
+	14,  // 39: lxdr.v1.MaintenanceRequestSegment.repair_major_defect:type_name -> lxdr.v1.MaintenanceMajorDefectCode
+	10,  // 40: lxdr.v1.MaintenanceRequestSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	71,  // 41: lxdr.v1.EngineerReconAreaReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
+	70,  // 42: lxdr.v1.EngineerReconAreaReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
+	10,  // 43: lxdr.v1.EngineerReconAreaReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	73,  // 44: lxdr.v1.EngineerReconZoneReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
+	71,  // 45: lxdr.v1.EngineerReconZoneReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
+	70,  // 46: lxdr.v1.EngineerReconZoneReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
+	10,  // 47: lxdr.v1.EngineerReconZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	73,  // 48: lxdr.v1.EngineerReconRouteReportSegment.enemy_report:type_name -> lxdr.v1.EngineerReconZoneEnemyReport
+	71,  // 49: lxdr.v1.EngineerReconRouteReportSegment.water_source:type_name -> lxdr.v1.EngineerReconAreaWaterSource
+	70,  // 50: lxdr.v1.EngineerReconRouteReportSegment.items_report:type_name -> lxdr.v1.EngineerReconAreaItemReport
+	10,  // 51: lxdr.v1.EngineerReconRouteReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	15,  // 52: lxdr.v1.EngineerReconRoadReportSegment.road_classification:type_name -> lxdr.v1.RoadClassificationCode
+	16,  // 53: lxdr.v1.EngineerReconRoadReportSegment.drainage:type_name -> lxdr.v1.RoadDrainageCode
+	17,  // 54: lxdr.v1.EngineerReconRoadReportSegment.foundation:type_name -> lxdr.v1.RoadFoundationCode
+	18,  // 55: lxdr.v1.EngineerReconRoadReportSegment.surface_type:type_name -> lxdr.v1.RoadSurfaceTypeCode
+	10,  // 56: lxdr.v1.EngineerReconRoadReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	19,  // 57: lxdr.v1.EngineerReconLandingZoneReportSegment.estimate:type_name -> lxdr.v1.EstimateCode
+	20,  // 58: lxdr.v1.EngineerReconLandingZoneReportSegment.layout_designation:type_name -> lxdr.v1.LandingZoneLayoutDesignationCode
+	21,  // 59: lxdr.v1.EngineerReconLandingZoneReportSegment.aircraft_supportability:type_name -> lxdr.v1.AircraftSupportabilityCode
+	22,  // 60: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_approach:type_name -> lxdr.v1.CardinalDirectionCode
+	22,  // 61: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_departure:type_name -> lxdr.v1.CardinalDirectionCode
+	23,  // 62: lxdr.v1.EngineerReconLandingZoneReportSegment.landing_zone_surface_slope:type_name -> lxdr.v1.LandingZoneSurfaceSlopeCode
+	24,  // 63: lxdr.v1.EngineerReconLandingZoneReportSegment.obstacle:type_name -> lxdr.v1.LandingZoneObstacleCode
+	10,  // 64: lxdr.v1.EngineerReconLandingZoneReportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	25,  // 65: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.obstacle:type_name -> lxdr.v1.ObstacleActionCode
+	26,  // 66: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
+	27,  // 67: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.bypass:type_name -> lxdr.v1.BypassCode
+	10,  // 68: lxdr.v1.GeneralEngineeringObstacleRemovalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	28,  // 69: lxdr.v1.ExplosiveOrdnanceDisposalSegment.type_of_cbrn_agent:type_name -> lxdr.v1.CBRNAgentTypeCode
+	29,  // 70: lxdr.v1.ExplosiveOrdnanceDisposalSegment.physical_property_of_cbrn_agent:type_name -> lxdr.v1.CBRNPhysicalPropertyCode
+	30,  // 71: lxdr.v1.ExplosiveOrdnanceDisposalSegment.contamination_value_of_cbrn_agent:type_name -> lxdr.v1.CBRNContaminationValueCode
+	31,  // 72: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_purpose:type_name -> lxdr.v1.MunitionPurposeCode
+	32,  // 73: lxdr.v1.ExplosiveOrdnanceDisposalSegment.munition_type:type_name -> lxdr.v1.MunitionTypeCode
+	10,  // 74: lxdr.v1.ExplosiveOrdnanceDisposalSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	19,  // 75: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.estimate:type_name -> lxdr.v1.EstimateCode
+	10,  // 76: lxdr.v1.GeneralEngineeringBulkLiquidSupportSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	26,  // 77: lxdr.v1.GeneralEngineeringDemolitionSegment.determination_of_action:type_name -> lxdr.v1.ObstacleDeterminationCode
+	27,  // 78: lxdr.v1.GeneralEngineeringDemolitionSegment.bypass:type_name -> lxdr.v1.BypassCode
+	10,  // 79: lxdr.v1.GeneralEngineeringDemolitionSegment.attachment_indicator:type_name -> lxdr.v1.AttachmentIndicatorCode
+	33,  // 80: lxdr.v1.HealthCollectionSegment.request_type_code:type_name -> lxdr.v1.HealthCollectionRequestTypeCode
+	3,   // 81: lxdr.v1.HealthCollectionSegment.request_priority:type_name -> lxdr.v1.RequestPriorityCode
+	34,  // 82: lxdr.v1.HealthCollectionSegment.service:type_name -> lxdr.v1.ServiceCode
+	35,  // 83: lxdr.v1.HealthTriageSegment.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
+	36,  // 84: lxdr.v1.HealthTriageSegment.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
+	37,  // 85: lxdr.v1.HealthTriageSegment.major_signs_symptoms:type_name -> lxdr.v1.HealthMajorSignsSymptomsCode
+	38,  // 86: lxdr.v1.HealthTriageSegment.pulse_location:type_name -> lxdr.v1.HealthPulseLocationCode
+	39,  // 87: lxdr.v1.HealthTriageSegment.responsiveness:type_name -> lxdr.v1.HealthResponsivenessCode
+	40,  // 88: lxdr.v1.HealthTriageSegment.triage_precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
+	41,  // 89: lxdr.v1.TourniquetTreatment.placement:type_name -> lxdr.v1.TourniquetPlacementCode
+	42,  // 90: lxdr.v1.TourniquetTreatment.type:type_name -> lxdr.v1.TourniquetTypeCode
+	46,  // 91: lxdr.v1.FluidCirculationTreatment.fluid_name_code:type_name -> lxdr.v1.FluidNameCode
+	47,  // 92: lxdr.v1.FluidCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
+	48,  // 93: lxdr.v1.BloodCirculationTreatment.blood_product_name:type_name -> lxdr.v1.BloodProductCode
+	47,  // 94: lxdr.v1.BloodCirculationTreatment.route:type_name -> lxdr.v1.FluidRouteCode
+	50,  // 95: lxdr.v1.AnalgesicMedicationTreatment.medication_code:type_name -> lxdr.v1.AnalgesicMedicationCode
+	49,  // 96: lxdr.v1.AnalgesicMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
+	51,  // 97: lxdr.v1.AntibioticMedicationTreatment.medication_code:type_name -> lxdr.v1.AntibioticMedicationCode
+	49,  // 98: lxdr.v1.AntibioticMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
+	52,  // 99: lxdr.v1.OtherMedicationTreatment.medication_code:type_name -> lxdr.v1.OtherMedicationCode
+	49,  // 100: lxdr.v1.OtherMedicationTreatment.route:type_name -> lxdr.v1.MedicationRouteCode
+	84,  // 101: lxdr.v1.HealthInterventionSegment.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
+	43,  // 102: lxdr.v1.HealthInterventionSegment.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
+	44,  // 103: lxdr.v1.HealthInterventionSegment.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
+	45,  // 104: lxdr.v1.HealthInterventionSegment.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
+	85,  // 105: lxdr.v1.HealthInterventionSegment.fluid_circulation_treatments:type_name -> lxdr.v1.FluidCirculationTreatment
+	86,  // 106: lxdr.v1.HealthInterventionSegment.blood_circulation_treatments:type_name -> lxdr.v1.BloodCirculationTreatment
+	87,  // 107: lxdr.v1.HealthInterventionSegment.analgesic_medication_treatments:type_name -> lxdr.v1.AnalgesicMedicationTreatment
+	88,  // 108: lxdr.v1.HealthInterventionSegment.antibiotic_medication_treatments:type_name -> lxdr.v1.AntibioticMedicationTreatment
+	89,  // 109: lxdr.v1.HealthInterventionSegment.other_medication_treatments:type_name -> lxdr.v1.OtherMedicationTreatment
+	53,  // 110: lxdr.v1.HealthInterventionSegment.casualty_type:type_name -> lxdr.v1.CasualtyTypeCode
+	83,  // 111: lxdr.v1.HealthHoldSegment.triage_entries:type_name -> lxdr.v1.HealthTriageSegment
+	90,  // 112: lxdr.v1.HealthHoldSegment.intervention_entries:type_name -> lxdr.v1.HealthInterventionSegment
+	40,  // 113: lxdr.v1.HealthEvacuationPrecedenceCount.precedence:type_name -> lxdr.v1.HealthTriagePrecedenceCode
+	57,  // 114: lxdr.v1.HealthEvacuationCasualtyTypeCount.casualty_type:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCode
+	35,  // 115: lxdr.v1.HealthEvacuationCasualtyRecord.primary_mechanism_of_injury:type_name -> lxdr.v1.HealthPrimaryMechanismCode
+	84,  // 116: lxdr.v1.HealthEvacuationCasualtyRecord.tourniquets:type_name -> lxdr.v1.TourniquetTreatment
+	43,  // 117: lxdr.v1.HealthEvacuationCasualtyRecord.wound_treatments:type_name -> lxdr.v1.WoundTreatmentCode
+	44,  // 118: lxdr.v1.HealthEvacuationCasualtyRecord.airway_treatment:type_name -> lxdr.v1.AirwayTreatmentCode
+	45,  // 119: lxdr.v1.HealthEvacuationCasualtyRecord.breathing_treatment:type_name -> lxdr.v1.BreathingTreatmentCode
+	85,  // 120: lxdr.v1.HealthEvacuationCasualtyRecord.fluid_circulation_treatment:type_name -> lxdr.v1.FluidCirculationTreatment
+	86,  // 121: lxdr.v1.HealthEvacuationCasualtyRecord.blood_circulation_treatment:type_name -> lxdr.v1.BloodCirculationTreatment
+	87,  // 122: lxdr.v1.HealthEvacuationCasualtyRecord.analgesic_medication_treatment:type_name -> lxdr.v1.AnalgesicMedicationTreatment
+	88,  // 123: lxdr.v1.HealthEvacuationCasualtyRecord.antibiotic_medication_treatment:type_name -> lxdr.v1.AntibioticMedicationTreatment
+	89,  // 124: lxdr.v1.HealthEvacuationCasualtyRecord.other_medication_treatment:type_name -> lxdr.v1.OtherMedicationTreatment
+	36,  // 125: lxdr.v1.HealthEvacuationCasualtyRecord.cbrn_related_exposure:type_name -> lxdr.v1.HealthCBRNExposureCode
+	54,  // 126: lxdr.v1.HealthEvacuationSegment.request_priority:type_name -> lxdr.v1.HealthEvacuationRequestPriorityCode
+	55,  // 127: lxdr.v1.HealthEvacuationSegment.location_marking:type_name -> lxdr.v1.HealthEvacuationLocationMarkingCode
+	56,  // 128: lxdr.v1.HealthEvacuationSegment.location_contamination:type_name -> lxdr.v1.HealthEvacuationContaminationCode
+	92,  // 129: lxdr.v1.HealthEvacuationSegment.count_of_casualties_precedence:type_name -> lxdr.v1.HealthEvacuationPrecedenceCount
+	93,  // 130: lxdr.v1.HealthEvacuationSegment.count_of_casualty_types:type_name -> lxdr.v1.HealthEvacuationCasualtyTypeCount
+	58,  // 131: lxdr.v1.HealthEvacuationSegment.requested_equipment:type_name -> lxdr.v1.HealthEvacuationRequestedEquipmentCode
+	59,  // 132: lxdr.v1.HealthEvacuationSegment.security:type_name -> lxdr.v1.HealthEvacuationSecurityCode
+	94,  // 133: lxdr.v1.HealthEvacuationSegment.casualties:type_name -> lxdr.v1.HealthEvacuationCasualtyRecord
+	134, // [134:134] is the sub-list for method output_type
+	134, // [134:134] is the sub-list for method input_type
+	134, // [134:134] is the sub-list for extension type_name
+	134, // [134:134] is the sub-list for extension extendee
+	0,   // [0:134] is the sub-list for field type_name
 }
 
 func init() { file_proto_lxdr_v1_lxdr_proto_init() }
@@ -8094,7 +8384,7 @@ func file_proto_lxdr_v1_lxdr_proto_init() {
 		return
 	}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[0].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[3].OneofWrappers = []any{
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[5].OneofWrappers = []any{
 		(*RequestSegment_MobilityPax)(nil),
 		(*RequestSegment_MobilityCargo)(nil),
 		(*RequestSegment_Supply)(nil),
@@ -8114,13 +8404,11 @@ func file_proto_lxdr_v1_lxdr_proto_init() {
 		(*RequestSegment_HealthHold)(nil),
 		(*RequestSegment_HealthEvacuation)(nil),
 	}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[4].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[5].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[6].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[7].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[10].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[8].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[9].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[12].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[13].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[14].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[15].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[16].OneofWrappers = []any{}
@@ -8129,19 +8417,21 @@ func file_proto_lxdr_v1_lxdr_proto_init() {
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[19].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[20].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[21].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[22].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[23].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[25].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[26].OneofWrappers = []any{}
 	file_proto_lxdr_v1_lxdr_proto_msgTypes[27].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[32].OneofWrappers = []any{}
-	file_proto_lxdr_v1_lxdr_proto_msgTypes[33].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[28].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[29].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[34].OneofWrappers = []any{}
+	file_proto_lxdr_v1_lxdr_proto_msgTypes[35].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_lxdr_v1_lxdr_proto_rawDesc), len(file_proto_lxdr_v1_lxdr_proto_rawDesc)),
-			NumEnums:      58,
-			NumMessages:   34,
+			NumEnums:      60,
+			NumMessages:   36,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

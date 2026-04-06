@@ -1,0 +1,150 @@
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Department of Defense Activity Address Code"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "department_of_defense_activity_address_code"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Unit Identifier Code"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "unit_identifier_code"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Service/Agency"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "service_agency"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Organization Type Code"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "organization_type_code"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Authority Code"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "authority_code"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Major Command"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "major_command"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Sub Tier Code"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "sub_tier_code"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Deletion Date"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "deletion_date"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Contractor"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "contractor"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Contractor Administration Office"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "contractor_administration_office"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Last Update"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "last_update"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Common Governmentwide Accounting Classification"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "common_governmentwide_accounting_classification"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Procurement Authority"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "procurement_authority"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Grant Authority"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "grant_authority"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}
+entries: {
+  activity: "Department of Defense Activity Address Directory"
+  data_element: "Header"
+  data_field: "Funding Office"
+  canonical_file: CANONICAL_FILE_TYPE_REQUEST_HEADER
+  canonical_block: "Header"
+  canonical_field: "funding_office"
+  source_reference: "Appendix F"
+  exchange_role: EXCHANGE_ROLE_LOCAL_ONLY
+}

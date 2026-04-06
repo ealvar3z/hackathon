@@ -36,6 +36,23 @@ enum FunctionFamily {
   FUNCTION_FAMILY_HEALTH_SERVICES = 5;
 }
 
+enum CanonicalFileType {
+  CANONICAL_FILE_TYPE_UNSPECIFIED = 0;
+  CANONICAL_FILE_TYPE_REQUEST_HEADER = 1;
+  CANONICAL_FILE_TYPE_REQUEST_SEGMENT = 2;
+  CANONICAL_FILE_TYPE_REQUEST_CONTAINER = 3;
+  CANONICAL_FILE_TYPE_SYNC_RESPONSE = 4;
+  CANONICAL_FILE_TYPE_ATTACHMENT_OR_MEDIA_REFERENCE = 5;
+}
+
+enum ExchangeRole {
+  EXCHANGE_ROLE_UNSPECIFIED = 0;
+  EXCHANGE_ROLE_TRANSMITTED = 1;
+  EXCHANGE_ROLE_CALCULATED = 2;
+  EXCHANGE_ROLE_SYNCHRONIZED = 3;
+  EXCHANGE_ROLE_LOCAL_ONLY = 4;
+}
+
 enum RequestPriorityCode {
   REQUEST_PRIORITY_CODE_UNSPECIFIED = 0;
   REQUEST_PRIORITY_CODE_01 = 1;
@@ -540,6 +557,22 @@ message SynchronizedResponse {
   // Section 9.3 and section 17.2.
   string local_request_id = 1;
   string synchronized_request_id = 2;
+}
+
+message CanonicalRegistryFieldEntry {
+  // Section 19.1.
+  string activity = 1;
+  string data_element = 2;
+  string data_field = 3;
+  CanonicalFileType canonical_file = 4;
+  string canonical_block = 5;
+  string canonical_field = 6;
+  string source_reference = 7;
+  ExchangeRole exchange_role = 8;
+}
+
+message CanonicalRegistry {
+  repeated CanonicalRegistryFieldEntry entries = 1;
 }
 
 message RequestContainer {

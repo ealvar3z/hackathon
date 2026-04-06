@@ -1678,6 +1678,12 @@ These recurring blocks strongly suggest that:
 - different functions will reuse many of the same atomic fields
 - request segments should not be modeled as isolated one-off forms
 
+The early Appendix F `Header` rows also show an important modeling
+constraint: Appendix F header-class metadata is broader than the Section 9
+LXDR transmitted request header. Registry entries for Appendix F `Header`
+must therefore preserve source provenance even when they do not map
+one-for-one to the tactical request header fields.
+
 ### 19.3 Initial Canonical File Interpretation
 
 From chapters 1 through 3 plus Appendix F, the most defensible initial
@@ -1923,10 +1929,15 @@ The columns are:
 | Mobility cargo | [x] | [x] | [x] | [x] | [x] |
 | Supply request | [x] | [x] | [x] | [ ] | [ ] |
 | Maintenance request | [x] | [x] | [x] | [ ] | [ ] |
+| Engineer area report | [x] | [x] | [x] | [ ] | [ ] |
+| Engineer zone report | [x] | [x] | [x] | [ ] | [ ] |
+| Engineer route report | [x] | [x] | [x] | [ ] | [ ] |
 | Engineer road report | [x] | [x] | [x] | [ ] | [ ] |
 | Engineer landing zone report | [x] | [x] | [x] | [ ] | [ ] |
 | Obstacle removal | [x] | [x] | [x] | [ ] | [ ] |
 | EOD clearing/rendering safe | [x] | [x] | [x] | [ ] | [ ] |
+| Bulk liquid support | [x] | [x] | [x] | [ ] | [ ] |
+| Demolition | [x] | [x] | [x] | [ ] | [ ] |
 | Engineer tunnel report | [ ] | [ ] | [ ] | [ ] | [ ] |
 | Engineer bridge report | [ ] | [ ] | [ ] | [ ] | [ ] |
 | Engineer ford report | [ ] | [ ] | [ ] | [ ] | [ ] |
@@ -1937,4 +1948,4 @@ The columns are:
 | Health intervention | [x] | [x] | [x] | [ ] | [ ] |
 | Health hold | [x] | [x] | [x] | [ ] | [ ] |
 | Health evacuate / CASEVAC | [x] | [x] | [x] | [ ] | [ ] |
-| Appendix F canonical registry | [x] | [ ] | [ ] | [ ] | [ ] |
+| Appendix F canonical registry | [x] | [x] | [x] | [ ] | [ ] |

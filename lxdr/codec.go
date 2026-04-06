@@ -163,6 +163,27 @@ func (c RequestPriorityCode) IsValid() bool {
 	)
 }
 
+func (c CanonicalFileType) IsValid() bool {
+	return isOneOf(
+		c,
+		CanonicalFileTypeRequestHeader,
+		CanonicalFileTypeRequestSegment,
+		CanonicalFileTypeRequestContainer,
+		CanonicalFileTypeSyncResponse,
+		CanonicalFileTypeAttachmentOrMediaReference,
+	)
+}
+
+func (c ExchangeRole) IsValid() bool {
+	return isOneOf(
+		c,
+		ExchangeRoleTransmitted,
+		ExchangeRoleCalculated,
+		ExchangeRoleSynchronized,
+		ExchangeRoleLocalOnly,
+	)
+}
+
 func (c CargoHMICCode) IsValid() bool {
 	return isOneOf(
 		c,
@@ -1959,6 +1980,45 @@ func validateRequiredFields(
 	for _, field := range fields {
 		if field.value == "" {
 			return fmt.Errorf("%s is required", field.name)
+		}
+	}
+	return nil
+}
+
+func (e CanonicalRegistryFieldEntry) Validate() error {
+	required := []struct {
+		name  string
+		value string
+	}{
+		{"activity", e.Activity},
+		{"data element", e.DataElement},
+		{"data field", e.DataField},
+		{"canonical block", e.CanonicalBlock},
+		{"canonical field", e.CanonicalField},
+		{"source reference", e.SourceReference},
+	}
+	if err := validateRequiredFields(required); err != nil {
+		return err
+	}
+	if !e.CanonicalFile.IsValid() {
+		return errors.New("canonical registry file type is required")
+	}
+	if !e.ExchangeRole.IsValid() {
+		return errors.New("canonical registry exchange role is required")
+	}
+	return nil
+}
+
+func (r CanonicalRegistry) Validate() error {
+	if len(r.Entries) == 0 {
+		return errors.New("canonical registry requires at least one entry")
+	}
+	for i, entry := range r.Entries {
+		if entry == nil {
+			return fmt.Errorf("canonical registry entry %d must not be nil", i)
+		}
+		if err := entry.Validate(); err != nil {
+			return fmt.Errorf("canonical registry entry %d: %w", i, err)
 		}
 	}
 	return nil

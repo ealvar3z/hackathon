@@ -10,6 +10,23 @@ const (
 )
 
 const (
+	CanonicalFileTypeUnspecified                = CanonicalFileType_CANONICAL_FILE_TYPE_UNSPECIFIED
+	CanonicalFileTypeRequestHeader              = CanonicalFileType_CANONICAL_FILE_TYPE_REQUEST_HEADER
+	CanonicalFileTypeRequestSegment             = CanonicalFileType_CANONICAL_FILE_TYPE_REQUEST_SEGMENT
+	CanonicalFileTypeRequestContainer           = CanonicalFileType_CANONICAL_FILE_TYPE_REQUEST_CONTAINER
+	CanonicalFileTypeSyncResponse               = CanonicalFileType_CANONICAL_FILE_TYPE_SYNC_RESPONSE
+	CanonicalFileTypeAttachmentOrMediaReference = CanonicalFileType_CANONICAL_FILE_TYPE_ATTACHMENT_OR_MEDIA_REFERENCE
+)
+
+const (
+	ExchangeRoleUnspecified  = ExchangeRole_EXCHANGE_ROLE_UNSPECIFIED
+	ExchangeRoleTransmitted  = ExchangeRole_EXCHANGE_ROLE_TRANSMITTED
+	ExchangeRoleCalculated   = ExchangeRole_EXCHANGE_ROLE_CALCULATED
+	ExchangeRoleSynchronized = ExchangeRole_EXCHANGE_ROLE_SYNCHRONIZED
+	ExchangeRoleLocalOnly    = ExchangeRole_EXCHANGE_ROLE_LOCAL_ONLY
+)
+
+const (
 	RequestPriorityCodeUnspecified = RequestPriorityCode_REQUEST_PRIORITY_CODE_UNSPECIFIED
 	RequestPriorityCode01          = RequestPriorityCode_REQUEST_PRIORITY_CODE_01
 	RequestPriorityCode02          = RequestPriorityCode_REQUEST_PRIORITY_CODE_02

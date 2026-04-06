@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"google.golang.org/protobuf/encoding/prototext"
 )
 
 func stringPtr(value string) *string {
@@ -182,6 +184,18 @@ func readFixture(t *testing.T, name string) string {
 	}
 
 	return strings.TrimSpace(string(data))
+}
+
+func readTextProtoFixture(t *testing.T, name string) []byte {
+	t.Helper()
+
+	path := filepath.Join("testdata", name)
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read fixture %q: %v", name, err)
+	}
+
+	return data
 }
 
 func TestParseHeaderExample(t *testing.T) {
@@ -1535,5 +1549,74 @@ func TestRequestContainerAcceptsDemolitionSegment(t *testing.T) {
 
 	if err := container.Validate(); err != nil {
 		t.Fatalf("validate container with demolition segment: %v", err)
+	}
+}
+
+func TestCanonicalRegistryFieldEntryValidate(t *testing.T) {
+	entry := CanonicalRegistryFieldEntry{
+		Activity:        "Department of Defense Activity Address Directory",
+		DataElement:     "Header",
+		DataField:       "Department of Defense Activity Address Code",
+		CanonicalFile:   CanonicalFileTypeRequestHeader,
+		CanonicalBlock:  "Header",
+		CanonicalField:  "department_of_defense_activity_address_code",
+		SourceReference: "Appendix F",
+		ExchangeRole:    ExchangeRoleLocalOnly,
+	}
+
+	if err := entry.Validate(); err != nil {
+		t.Fatalf("validate canonical registry field entry: %v", err)
+	}
+}
+
+func TestCanonicalRegistryFieldEntryRejectsMissingRequiredFields(t *testing.T) {
+	entry := CanonicalRegistryFieldEntry{
+		Activity:      "Department of Defense Activity Address Directory",
+		DataElement:   "Header",
+		CanonicalFile: CanonicalFileTypeRequestHeader,
+		ExchangeRole:  ExchangeRoleLocalOnly,
+	}
+
+	if err := entry.Validate(); err == nil {
+		t.Fatalf("expected canonical registry field entry validation error")
+	}
+}
+
+func TestCanonicalRegistryValidate(t *testing.T) {
+	registry := CanonicalRegistry{
+		Entries: []*CanonicalRegistryFieldEntry{
+			{
+				Activity:        "Department of Defense Activity Address Directory",
+				DataElement:     "Header",
+				DataField:       "Department of Defense Activity Address Code",
+				CanonicalFile:   CanonicalFileTypeRequestHeader,
+				CanonicalBlock:  "Header",
+				CanonicalField:  "department_of_defense_activity_address_code",
+				SourceReference: "Appendix F",
+				ExchangeRole:    ExchangeRoleLocalOnly,
+			},
+		},
+	}
+
+	if err := registry.Validate(); err != nil {
+		t.Fatalf("validate canonical registry: %v", err)
+	}
+}
+
+func TestAppendixFHeaderRegistryFixtureLoads(t *testing.T) {
+	var registry CanonicalRegistry
+	data := readTextProtoFixture(t, "appendix_f_header_registry.textproto")
+
+	if err := prototext.Unmarshal(data, &registry); err != nil {
+		t.Fatalf("unmarshal appendix f header registry: %v", err)
+	}
+	if err := registry.Validate(); err != nil {
+		t.Fatalf("validate appendix f header registry: %v", err)
+	}
+	if got := len(registry.Entries); got != 15 {
+		t.Fatalf("registry entry count = %d, want 15", got)
+	}
+	if registry.Entries[0].CanonicalField != "department_of_defense_activity_address_code" {
+		t.Fatalf("unexpected first canonical field: %q", registry.Entries[0].CanonicalField)
 	}
 }
