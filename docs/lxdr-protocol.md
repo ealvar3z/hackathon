@@ -2105,6 +2105,65 @@ This means:
 - `carried` must be derived from protocol helper/state-machine context,
   not encoded back into the request
 
+### 22.5 Local Router Semantics
+
+LXDR v1 also defines a minimal local router layer above `LXDR-Core` and
+`LXDR-Link`.
+
+This router is not a transport, bearer, or persistence subsystem. It is a
+local protocol engine for:
+
+- tracked outbound requests
+- seen `link_message_id` values
+- duplicate-frame detection
+- referenced sync-response handling
+- local request state transitions
+- local retry/failure metadata
+
+The v1 local router request states are:
+
+- `generated`
+- `outbound`
+- `carried`
+- `synchronized`
+- `failed`
+
+The v1 local router frame dispositions are:
+
+- `accepted`
+- `duplicate`
+- `synchronized`
+
+The v1 local router also maintains local-only retry and failure metadata:
+
+- `attempt_count`
+- `last_error`
+- `next_attempt_at`
+
+These are not wire fields and are not part of `LXDR-Core` or
+`LXDR-Link`. They exist only to support local retry scheduling and local
+failure bookkeeping.
+
+In the current implementation, the router supports the following local
+workflow:
+
+1. track a valid `RequestContainer`
+2. queue it into a valid outbound `LXDR-Link` request frame
+3. mark the request as carried once the local exchange layer treats it as
+   in flight
+4. accept an inbound sync-response frame
+5. reject duplicate or conflicting replay frames by `link_message_id`
+6. apply the synchronized response to the tracked request
+
+The v1 router does not yet define:
+
+- transport retries
+- persistence
+- peer discovery
+- routing
+- receipts
+- fragmentation
+
 ## 23. Conformance Matrix
 
 Status markers in this table mean:
