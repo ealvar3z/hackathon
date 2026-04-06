@@ -311,3 +311,145 @@ func TestNewCanonicalRegistryLinkFrame(t *testing.T) {
 		t.Fatalf("delivery method = %v, want %v", frame.DeliveryMethod, LinkDeliveryMethodOpportunistic)
 	}
 }
+
+func TestNewSynchronizedResponseForRequest(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+
+	resp, err := NewSynchronizedResponseForRequest(container, "KL9K15474QFJ")
+	if err != nil {
+		t.Fatalf("new synchronized response for request: %v", err)
+	}
+
+	if resp.LocalRequestId != "3838JBNM5" {
+		t.Fatalf("local request id = %q, want %q", resp.LocalRequestId, "3838JBNM5")
+	}
+	if resp.SynchronizedRequestId != "KL9K15474QFJ" {
+		t.Fatalf(
+			"synchronized request id = %q, want %q",
+			resp.SynchronizedRequestId,
+			"KL9K15474QFJ",
+		)
+	}
+}
+
+func TestApplySynchronizedResponse(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+	resp := &SynchronizedResponse{
+		LocalRequestId:        "3838JBNM5",
+		SynchronizedRequestId: "KL9K15474QFJ",
+	}
+
+	if err := ApplySynchronizedResponse(container, resp); err != nil {
+		t.Fatalf("apply synchronized response: %v", err)
+	}
+	if !container.Header.IsSynchronized() {
+		t.Fatalf("expected synchronized header state")
+	}
+	if container.Header.GetSynchronizedRequestId() != "KL9K15474QFJ" {
+		t.Fatalf(
+			"synchronized request id = %q, want %q",
+			container.Header.GetSynchronizedRequestId(),
+			"KL9K15474QFJ",
+		)
+	}
+}
+
+func TestApplySynchronizedResponseRejectsMismatchedLocalRequestID(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+	resp := &SynchronizedResponse{
+		LocalRequestId:        "ZZZZZZZZZ",
+		SynchronizedRequestId: "KL9K15474QFJ",
+	}
+
+	if err := ApplySynchronizedResponse(container, resp); err == nil {
+		t.Fatalf("expected mismatched synchronized response error")
+	}
+}
+
+func TestNewSynchronizedResponseLinkFrameForRequest(t *testing.T) {
+	container := &RequestContainer{
+		Header: testHeader(),
+		Segments: []*RequestSegment{
+			wrapMobilityPax(&MobilityPaxRequestSegment{
+				SegmentNumber:                  1,
+				RequestTypeCode:                MobilityPaxRequestTypeCodePM,
+				RequestPriority:                RequestPriorityCode02,
+				ZapOrEdiPi:                     "1010919789",
+				EarliestDepartureDateLocal:     "2027OCT15",
+				LatestDepartureDateLocal:       "2027OCT20",
+				DepartureLocation:              "4QFJ123456",
+				DestinationLocation:            "4QFJ456789",
+				TotalEstimatedBaggageWeightLbs: "075",
+				HazardousMaterialType:          "X",
+			}),
+		},
+	}
+
+	frame, err := NewSynchronizedResponseLinkFrameForRequest(
+		container,
+		"KL9K15474QFJ",
+		LinkDeliveryMethodDirect,
+	)
+	if err != nil {
+		t.Fatalf("new synchronized response link frame for request: %v", err)
+	}
+
+	if frame.PayloadKind() != LinkPayloadKindSynchronizedResponse {
+		t.Fatalf("payload kind = %q, want %q", frame.PayloadKind(), LinkPayloadKindSynchronizedResponse)
+	}
+	if frame.GetSynchronizedResponse().LocalRequestId != "3838JBNM5" {
+		t.Fatalf(
+			"local request id = %q, want %q",
+			frame.GetSynchronizedResponse().LocalRequestId,
+			"3838JBNM5",
+		)
+	}
+}

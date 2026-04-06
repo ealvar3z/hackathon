@@ -2022,6 +2022,35 @@ The current implementation also constrains the frame/payload combination:
 Future canonical-text or packed link representations may require
 different payload carriers, but those are not part of this draft yet.
 
+### 22.3 Formal Sync Exchange
+
+The initial LXDR synchronization exchange is intentionally narrow and is
+based directly on the request header and synchronized response model from
+Section 9.
+
+The formal exchange is:
+
+1. a node originates a `RequestContainer` with:
+   - a local placeholder request ID
+   - no synchronized request ID yet present
+2. the request is carried in an `LXDR-Link` frame
+3. a supporting or higher-echelon node returns a `SynchronizedResponse`
+   carrying:
+   - the original local request ID
+   - the synchronized enterprise request ID
+4. the originating request header is updated by matching the local
+   request ID and storing the synchronized request ID in header state
+
+For v1, this implies:
+
+- the synchronized response is a first-class carried object
+- synchronization is applied to an existing request by local request ID
+  match
+- synchronization failure occurs when the local request ID in the
+  response does not match the request header being updated
+- synchronization updates request-header state but does not change the
+  request segments themselves
+
 ## 23. Conformance Matrix
 
 Status markers in this table mean:
