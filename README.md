@@ -2,49 +2,140 @@
 
 ![section4 logo](assets/section4-small.png)
 
-section4 is a Python project to implement the ideas in
-[`project-adrian.txt`](./docs/project-adrian.txt): a logistics common
-operational picture for contested, disconnected, degraded, and
-intermittent environments that does more than display status. The goal
-is a logistics COP that enables decision-making at the tactical edge.
+section4 is implementing `LXDR`, an ADRIAN-derived logistics exchange
+protocol built strictly from
+[`docs/project-adrian.txt`](./docs/project-adrian.txt).
 
-The project is now centered on `LXDR`:
+The current project direction is deliberately narrow:
 
-- `LXDR-Core`
-    - ADRIAN-derived request header, segment schemas, and canonical field
-      registry
-- `LXDR-Link`
-    - transport-agnostic delivery, sync, bundle, and DDIL exchange
-      envelope
-- `LXDR-Transport`
-    - bearer adapters for whatever path is available, with HF data-burst
-      as the lowest denominator design assumption
+- implement `LXDR` fully from the ADRIAN whitepaper
+- keep the protocol spec and code aligned
+- do not build a custom network stack
+- use `TAK` as the operational transport and network surface
+- build an `lxmfcot` bridge, in the style of `aiscot`, `djicot`,
+  `adsbcot`, and related TAK adapters
+- use `PyTAK` to move `LXDR`-derived exchange data over CoT
 
-section4 is not trying to build a generic dashboard. It is trying to
-build the logistics data and synchronization substrate that
-`project-adrian.txt` argues is missing: critical data capture at the
-point of need, connected/disconnected synchronization, and decision
-support across the logistics functions.
+## What This Repo Is
 
-## Demo Topology
+This repository is first and foremost an `LXDR` protocol implementation.
 
-For the hackathon demo, section4 still uses:
+It currently contains:
 
-- `ATAK` on the Android EUDs as the field-node interface
-- `s4net` TUI on the laptop as the local operator console
-- `LXDR` underneath as the transport-agnostic protocol core
+- the evolving protocol draft in
+  [`docs/lxdr-protocol.md`](./docs/lxdr-protocol.md)
+- the ADRIAN source material in
+  [`docs/project-adrian.txt`](./docs/project-adrian.txt)
+- a protobuf schema for `LXDR` core and link objects in
+  [`proto/lxdr/v1/lxdr.proto`](./proto/lxdr/v1/lxdr.proto)
+- a Go implementation of:
+  - `LXDR-Core`
+  - `LXDR-Link`
+  - `LXDR-Router v1`
 
-That split is intentional:
+This repository is not currently trying to be:
 
-- the demo nodes can use familiar operational interfaces
-- the laptop provides the local-first command and logistics view
-- the protocol stays bearer-agnostic so the same core can ride over
-  different transports in DDIL environments
+- a bespoke transport stack
+- a Reticulum replacement
+- a TAK server
+- a dashboard-first application
+
+## Architecture Direction
+
+The working architecture is:
+
+1. `LXDR`
+   - the ADRIAN protocol implementation
+   - request/header/segment/schema/sync/router semantics
+
+2. `lxmfcot`
+   - a planned bridge process that converts between:
+     - `LXDR`
+     - `Cursor on Target`
+   - built in the spirit of TAK adapter tools such as:
+     - `aiscot`
+     - `djicot`
+     - `adsbcot`
+
+3. `PyTAK`
+   - the transport/client library used to publish and receive CoT over
+     the TAK ecosystem
+
+4. `TAK`
+   - the operational transport and network substrate for demo and
+     integration use
+
+The key decision is that `TAK` is the network and transport environment.
+`section4` will not spend time building a new bearer or routing stack
+before the protocol itself is mature.
+
+## Why This Direction
+
+`project-adrian.txt` is the normative design source for this work.
+
+The ADRIAN whitepaper argues for:
+
+- critical logistics data capture at the point of need
+- connected and disconnected synchronization
+- homogeneous exchange across the logistics functions
+- minimum critical data under constrained communications
+
+Those requirements point to a protocol implementation effort first.
+
+For practical integration and demo speed, `TAK` already gives us:
+
+- fielded user interfaces
+- familiar operational workflows
+- established CoT exchange patterns
+- a transport and networking environment we can ride immediately
+
+So the project strategy is:
+
+- finish `LXDR`
+- bridge it into the TAK ecosystem
+- demonstrate contested-logistics workflows there
+
+## Planned Demo Direction
+
+The intended demo path is:
+
+1. edge users originate logistics-relevant information in TAK
+2. `lxmfcot` receives CoT via `PyTAK`
+3. `lxmfcot` converts that information into valid `LXDR`
+4. `LXDR` request and synchronization logic runs locally
+5. resulting state or synchronized outputs are emitted back into TAK
+
+This keeps the main thing the main thing:
+
+- the protocol is `LXDR`
+- TAK is the transport and operator ecosystem
+- `lxmfcot` is the bridge
+
+## Current Protocol Status
+
+The repository currently has a working `LXDR v1` baseline, including:
+
+- protobuf-backed core schema
+- generated Go types
+- canonical text support where ADRIAN gives explicit examples:
+  - request header
+  - synchronized response
+  - mobility PAX
+  - mobility cargo
+- validated Chapter 3 segment coverage for the implemented v1 families
+- minimal `LXDR-Link` frame semantics
+- formal synchronization exchange helpers
+- local `LXDR-Router v1` state and workflow semantics
+
+See:
+
+- [`docs/lxdr-protocol.md`](./docs/lxdr-protocol.md)
+- [`proto/lxdr/v1/lxdr.proto`](./proto/lxdr/v1/lxdr.proto)
 
 ## Canonical ADRIAN Workflows
 
-The ADRIAN source document is the project guidebook. These extracted
-figures show the canonical ideas section4 is implementing.
+These extracted figures from the ADRIAN source document remain the
+conceptual guiderails for the implementation.
 
 ### HF Data Transmission
 
@@ -62,130 +153,42 @@ figures show the canonical ideas section4 is implementing.
 
 ![ADRIAN data to wisdom model](assets/adrian-data-to-wisdom.jpg)
 
-## Why This Stack
-
-section4 follows the source material under [`docs/`](./docs), with
-`project-adrian.txt` as the normative design document for the protocol
-and workflow model.
-
-The ADRIAN document is explicit that:
-
-- logistics data capture has to work with connected and disconnected
-  synchronization
-- the solution must span the five analyzed logistics functions as one
-  homogeneous data system
-- the right data has to get from the right sensor to the right
-  logistician at the right time
-- the point-of-need user in a communication-constrained environment is
-  the design center
-
-Those requirements drive the protocol and application architecture more
-than any one transport or UI choice.
-
-## Planned Capabilities
-
-section4 is being built to provide:
-
-1. ADRIAN request creation using generated headers and function-specific
-   segments
-2. DDIL-friendly exchange using canonical text bursts, structured link
-   frames, packed representations, and synchronization bundles
-3. a local-first operator interface for working with logistics requests,
-   status, and history
-4. a logistics COP that supports decision-making, not just display
-5. an ADRIAN-specialized LLM workflow to reason over logistics requests,
-   supportability, routing, synchronization state, and decision options
-
-The first concrete workflow still looks like:
-
-1. A forward node reports a failed component and low local stock
-2. section4 ingests the report and stores it locally
-3. section4 ranks candidate courses of action:
-    - local repair
-    - additive fabrication
-    - reroute from another node
-4. A task is assigned to a capable responder node
-5. section4 publishes operational state to ATAK clients via CoT
-6. The ALOC UI shows readiness impact, ETA, task state, and audit
-   history
-
-But the longer-term objective is broader: implement the ADRIAN logistics
-data model and make it operationally useful for command and sustainment
-decisions.
-
-## Project Status
-
-This repository is being built in stages:
-
-1. `section4` project identity and local operator tooling
-2. ADRIAN-derived `LXDR` protocol specification
-3. `LXDR-Core` models and canonical field registry
-4. `LXDR-Link` serialization, packed codecs, and sync bundles
-5. next: router, outbox/inbox, and DDIL message handling
-
 ## Development
 
-This project uses [`uv`](https://docs.astral.sh/uv/) for environment
-and dependency management.
+The implementation language is Go, with protobuf as the canonical typed
+schema layer.
 
-### Install dependencies
-
-```bash
-uv sync
-```
-
-### Bootstrap the local database
+### Regenerate protobuf types
 
 ```bash
-uv run python -m section4.app bootstrap
+make proto
 ```
 
-### Run the app
-
-Bootstrap once, then launch the local ALOC console:
+### Format Go sources
 
 ```bash
-uv run python -m section4.app bootstrap
-uv run python -m section4.app tui
+make fmt
 ```
 
-Other useful commands:
+### Run tests
 
 ```bash
-uv run python -m section4.app init-db
-uv run python -m section4.app seed-demo
-uv run python -m section4.app publish-incident
-uv run python -m section4.app publish-capability
-uv run python -m section4.app receive-once
+make test
 ```
 
-### Lint
+## Near-Term Work
 
-```bash
-uv run ruff check .
-uv run ruff format .
-```
+Near-term work is expected to focus on:
 
-## Initial Technical Decisions
+- continuing to harden `LXDR`
+- documenting and testing v1 protocol behavior
+- building `lxmfcot`
+- integrating with TAK through `PyTAK`
 
-- Language: Python 3.12
-- Dependency management: `uv`
-- Linting and formatting: `ruff`
-- First UI: `urwid` TUI
-- Persistence: SQLite + SQLAlchemy
-- Protocol core: `LXDR`
-- Lowest transport assumption: HF data-burst
-- Structured link/debug representation: JSON
-- Constrained representation: packed codecs derived from ADRIAN field
-  lengths
-- One major goal: train or specialize an ADRIAN LLM model for the
-  hackathon solution
+## Non-Goals Right Now
 
-## Non-Goals For MVP
-
-- No dependency on a single transport stack
-- No assumption of persistent connectivity
-- No generic logistics dashboard detached from ADRIAN
-- No premature cloud-first architecture
-- No heavyweight SPA frontend unless the workflow proves it is
-  necessary
+- building a custom network stack
+- building a new TAK replacement
+- inventing protocol fields not justified by
+  [`docs/project-adrian.txt`](./docs/project-adrian.txt)
+- drifting into UI-first work before the protocol and bridge are ready
