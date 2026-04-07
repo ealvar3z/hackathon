@@ -18,9 +18,13 @@ The current project direction is deliberately narrow:
 - run a small local `ADRIAN` model specialized for the contested
   logistics use case
 
+Related repository:
+
+- [`lxmfcot`](https://github.com/ealvar3z/lxmfcot)
+
 ## What This Repo Is
 
-This repository is first and foremost an `LXDR` protocol implementation.
+This repository implements `LXDR`.
 
 It currently contains:
 
@@ -35,7 +39,7 @@ It currently contains:
     - `LXDR-Link`
     - `LXDR-Router v1`
 
-This repository is not currently trying to be:
+This repository does not try to be:
 
 - a bespoke transport stack
 - a TAK server
@@ -50,7 +54,7 @@ The working architecture is:
     - request/header/segment/schema/sync/router semantics
 
 2. `lxmfcot`
-    - a planned bridge process that converts between:
+    - a bridge process that converts between:
         - `LXDR`
         - `Cursor on Target`
     - built in the spirit of TAK adapter tools such as:
@@ -79,9 +83,9 @@ The working architecture is:
     - the operational transport and network substrate for demo and
       integration use
 
-The key decision is that `TAK` is the network and transport environment.
-`section4` will not spend time building a new bearer or routing stack
-before the protocol itself is mature.
+The key decision is simple: `TAK` is the network and transport
+environment. `section4` will not spend time building a new bearer or
+routing stack before the protocol itself is mature.
 
 ## Why This Direction
 
@@ -94,7 +98,7 @@ The ADRIAN whitepaper argues for:
 - homogeneous exchange across the logistics functions
 - minimum critical data under constrained communications
 
-Those requirements point to a protocol implementation effort first.
+Those requirements make the protocol implementation the first effort.
 
 For practical integration and demo speed, `TAK` already gives us:
 
@@ -103,7 +107,7 @@ For practical integration and demo speed, `TAK` already gives us:
 - established CoT exchange patterns
 - a transport and networking environment we can ride immediately
 
-So the project strategy is:
+The project strategy is:
 
 - finish `LXDR`
 - bridge it into the TAK ecosystem
@@ -144,7 +148,7 @@ The repository currently has a working `LXDR v1` baseline, including:
 - formal synchronization exchange helpers
 - local `LXDR-Router v1` state and workflow semantics
 
-`LXDR v1` baseline is considered done.
+`LXDR v1` baseline is done.
 
 Current work is `v1.x` hardening:
 
@@ -172,8 +176,7 @@ The current target is:
     - 10-core CPU
     - 32 GB RAM
 
-This is the current recommended balance point for the development
-machine:
+This is the recommended balance point for the development machine:
 
 - `Gemma 3 4B` would be easier to run, but likely gives up too much
   reasoning headroom for a protocol-aware logistics assistant
@@ -181,15 +184,15 @@ machine:
   match for a fanless Air in terms of speed and thermals
 - `Gemma 3 12B` in 4-bit form is the more credible local target
 
-Model adaptation may be done in the cloud, including on:
+Model adaptation may run in the cloud, including on:
 
 - AWS
 - GCP
 - Google Colab
 
-But the hard constraint for this project is that the resulting model must
-run locally on the target development/demo machine. Cloud training is
-acceptable; cloud dependence at runtime is not.
+But the hard constraint for this project is that the resulting model
+must run locally on the target development/demo machine. Cloud training
+is acceptable. Cloud dependence at runtime is not.
 
 The model is intended to be specialized for this project by grounding it
 on:
@@ -199,9 +202,9 @@ on:
 - tactical and operational logistics references
 - synthetic scenario data used for the demo
 
-The dataset strategy is specialist, not generalist. `project-adrian.txt`
-is necessary, but not sufficient on its own. The training and grounding
-corpus is expected to include:
+The dataset strategy is specialist, not generalist.
+`project-adrian.txt` is necessary, but not sufficient on its own. The
+training and grounding corpus will include:
 
 - ADRIAN source material
 - `LXDR` schema and protocol artifacts
