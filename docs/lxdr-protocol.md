@@ -2225,15 +2225,44 @@ Against that shape, the current `LXDR` position is:
   - referenced sync-response correlation
   - local request/router states
   - local retry metadata
-- still missing but potentially useful later:
-  - explicit failed-queue accessors beyond state inspection
-  - configurable retry ceilings and backoff policy
+  - explicit failed-queue accessors
+  - configurable retry ceilings and retry wait
   - local processing loop for queued work
+- still missing but potentially useful later:
   - persistence of seen-frame and retry state
+  - richer failed-queue inspection or compaction policy
+  - background processing rather than explicit local processing passes
 
 These remaining items are router-layer concerns, not transport-layer
 requirements. They should be considered only if they materially improve
 `LXDR` protocol behavior without forcing premature network-stack work.
+
+### 22.7 LXDR v1.x Freeze Note
+
+`LXDR v1` baseline is complete.
+
+Current work is now in `v1.x` hardening, focused on:
+
+- link behavior
+- router behavior
+- local protocol workflow correctness
+
+The next integration layer after this hardening phase is:
+
+- `lxmfcot`
+
+`lxmfcot` is the planned bridge between:
+
+- `LXDR`
+- CoT / TAK via `PyTAK`
+
+This means current `LXDR` work should continue to prefer:
+
+- protocol correctness
+- bounded local router behavior
+- clean integration seams
+
+over new transport or bearer development.
 
 ## 23. Conformance Matrix
 

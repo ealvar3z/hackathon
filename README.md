@@ -15,7 +15,7 @@ The current project direction is deliberately narrow:
 - build an `lxmfcot` bridge, in the style of `aiscot`, `djicot`,
   `adsbcot`, and related TAK adapters
 - use `PyTAK` to move `LXDR`-derived exchange data over CoT
-- run a small local `Adrian` model specialized for the contested
+- run a small local `ADRIAN` model specialized for the contested
   logistics use case
 
 ## What This Repo Is
@@ -57,26 +57,27 @@ The working architecture is:
         - `aiscot`
         - `djicot`
         - `adsbcot`
+        - `aprscot`
 
 3. `PyTAK`
-   - the transport/client library used to publish and receive CoT over
-     the TAK ecosystem
+    - the transport/client library used to publish and receive CoT over
+      the TAK ecosystem
 
-4. `Adrian`
-   - a planned local logistics reasoning model
-   - grounded on:
-     - `project-adrian.txt`
-     - `lxdr-protocol.md`
-     - tactical and operational logistics doctrine
-   - used for:
-     - request interpretation
-     - protocol-aware normalization
-     - recommendation support
-     - explanation of logistics decisions
+4. `ADRIAN`
+    - a planned local logistics reasoning model
+    - grounded on:
+        - `project-adrian.txt`
+        - `lxdr-protocol.md`
+        - tactical and operational logistics doctrine
+    - used for:
+        - request interpretation
+        - protocol-aware normalization
+        - recommendation support
+        - explanation of logistics decisions
 
 5. `TAK`
-   - the operational transport and network substrate for demo and
-     integration use
+    - the operational transport and network substrate for demo and
+      integration use
 
 The key decision is that `TAK` is the network and transport environment.
 `section4` will not spend time building a new bearer or routing stack
@@ -117,7 +118,7 @@ The intended demo path is:
 2. `lxmfcot` receives CoT via `PyTAK`
 3. `lxmfcot` converts that information into valid `LXDR`
 4. `LXDR` request and synchronization logic runs locally
-5. `Adrian` reasons over the `LXDR` request and local context
+5. `ADRIAN` reasons over the `LXDR` request and local context
 6. resulting state or synchronized outputs are emitted back into TAK
 
 This keeps the main thing the main thing:
@@ -125,7 +126,7 @@ This keeps the main thing the main thing:
 - the protocol is `LXDR`
 - TAK is the transport and operator ecosystem
 - `lxmfcot` is the bridge
-- `Adrian` is the local reasoning layer
+- `ADRIAN` is the local reasoning layer
 
 ## Current Protocol Status
 
@@ -143,6 +144,21 @@ The repository currently has a working `LXDR v1` baseline, including:
 - formal synchronization exchange helpers
 - local `LXDR-Router v1` state and workflow semantics
 
+`LXDR v1` baseline is considered done.
+
+Current work is `v1.x` hardening:
+
+- tightening `LXDR-Link`
+- tightening `LXDR-Router`
+- proving local exchange correctness
+
+The next integration layer after this hardening phase is:
+
+- `lxmfcot`
+
+That is the planned CoT / TAK bridge built on top of the current
+protocol baseline.
+
 ## Local AI Direction
 
 One of the defining hackathon features will be a small local model for
@@ -152,9 +168,9 @@ The current target is:
 
 - `Gemma 3 12B Instruct`
 - quantized to 4-bit for local inference on:
-  - MacBook Air M4
-  - 10-core CPU
-  - 32 GB RAM
+    - MacBook Air M4
+    - 10-core CPU
+    - 32 GB RAM
 
 This is the current recommended balance point for the development
 machine:
@@ -261,7 +277,7 @@ Near-term work is expected to focus on:
 - documenting and testing v1 protocol behavior
 - building `lxmfcot`
 - integrating with TAK through `PyTAK`
-- standing up a local `Adrian` model using `Gemma 3 12B Instruct`
+- standing up a local `ADRIAN` model using `Gemma 3 12B Instruct`
 
 ## Non-Goals Right Now
 
