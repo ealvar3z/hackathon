@@ -412,6 +412,147 @@ func TestRouterRetryableRequests(t *testing.T) {
 	}
 }
 
+func TestRouterFailedRequests(t *testing.T) {
+	router := NewRouter()
+	container := testPAXRequestContainer()
+	if _, err := router.TrackRequest(container); err != nil {
+		t.Fatalf("track request: %v", err)
+	}
+	if err := router.MarkRequestFailed(container.Header.LocalRequestId, errors.New("no path")); err != nil {
+		t.Fatalf("mark request failed: %v", err)
+	}
+
+	failed := router.FailedRequests()
+	if len(failed) != 1 {
+		t.Fatalf("failed requests = %d, want 1", len(failed))
+	}
+	if failed[0].Container.Header.LocalRequestId != container.Header.LocalRequestId {
+		t.Fatalf(
+			"failed local request id = %q, want %q",
+			failed[0].Container.Header.LocalRequestId,
+			container.Header.LocalRequestId,
+		)
+	}
+}
+
+func TestRouterQueueLengthAndSeenFrameCount(t *testing.T) {
+	router := NewRouter()
+	container := testPAXRequestContainer()
+	if _, err := router.TrackRequest(container); err != nil {
+		t.Fatalf("track request: %v", err)
+	}
+
+	if router.QueueLength() != 0 {
+		t.Fatalf("queue length = %d, want 0", router.QueueLength())
+	}
+	if router.SeenFrameCount() != 0 {
+		t.Fatalf("seen frame count = %d, want 0", router.SeenFrameCount())
+	}
+
+	if _, err := router.QueueRequest(container.Header.LocalRequestId, LinkDeliveryMethodDirect); err != nil {
+		t.Fatalf("queue request: %v", err)
+	}
+	if router.QueueLength() != 1 {
+		t.Fatalf("queue length = %d, want 1", router.QueueLength())
+	}
+	if router.SeenFrameCount() != 1 {
+		t.Fatalf("seen frame count = %d, want 1", router.SeenFrameCount())
+	}
+}
+
+func TestRouterScheduleRetryByPolicy(t *testing.T) {
+	router := NewRouterWithConfig(RouterConfig{
+		MaxAttempts: 3,
+		RetryWait:   30 * time.Second,
+	})
+	container := testPAXRequestContainer()
+	if _, err := router.TrackRequest(container); err != nil {
+		t.Fatalf("track request: %v", err)
+	}
+
+	now := time.Date(2026, 4, 7, 12, 0, 0, 0, time.UTC)
+	if err := router.ScheduleRetryByPolicy(container.Header.LocalRequestId, now, errors.New("busy")); err != nil {
+		t.Fatalf("schedule retry by policy: %v", err)
+	}
+
+	tracked, _ := router.TrackedRequest(container.Header.LocalRequestId)
+	if tracked.NextAttemptAt == nil || !tracked.NextAttemptAt.Equal(now.Add(30*time.Second)) {
+		t.Fatalf("next attempt at = %v, want %v", tracked.NextAttemptAt, now.Add(30*time.Second))
+	}
+}
+
+func TestRouterScheduleRetryByPolicyStopsAtMaxAttempts(t *testing.T) {
+	router := NewRouterWithConfig(RouterConfig{
+		MaxAttempts: 1,
+		RetryWait:   30 * time.Second,
+	})
+	container := testPAXRequestContainer()
+	if _, err := router.TrackRequest(container); err != nil {
+		t.Fatalf("track request: %v", err)
+	}
+	if _, err := router.QueueRequest(container.Header.LocalRequestId, LinkDeliveryMethodDirect); err != nil {
+		t.Fatalf("queue request: %v", err)
+	}
+
+	now := time.Date(2026, 4, 7, 12, 0, 0, 0, time.UTC)
+	if err := router.ScheduleRetryByPolicy(container.Header.LocalRequestId, now, errors.New("busy")); err != nil {
+		t.Fatalf("schedule retry by policy: %v", err)
+	}
+
+	tracked, _ := router.TrackedRequest(container.Header.LocalRequestId)
+	if tracked.NextAttemptAt != nil {
+		t.Fatalf("expected no next attempt time at max attempts")
+	}
+	if tracked.State != RouterRequestStateFailed {
+		t.Fatalf("state = %q, want %q", tracked.State, RouterRequestStateFailed)
+	}
+}
+
+func TestRouterProcessOnceQueuesGeneratedRequests(t *testing.T) {
+	router := NewRouter()
+	container := testPAXRequestContainer()
+	if _, err := router.TrackRequest(container); err != nil {
+		t.Fatalf("track request: %v", err)
+	}
+
+	frames, err := router.ProcessOnce(time.Date(2026, 4, 7, 12, 0, 0, 0, time.UTC), LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("process once: %v", err)
+	}
+	if len(frames) != 1 {
+		t.Fatalf("frames ready = %d, want 1", len(frames))
+	}
+	if frames[0].PayloadKind() != LinkPayloadKindRequestContainer {
+		t.Fatalf("payload kind = %q, want %q", frames[0].PayloadKind(), LinkPayloadKindRequestContainer)
+	}
+}
+
+func TestRouterProcessOnceQueuesRetryableRequests(t *testing.T) {
+	router := NewRouter()
+	container := testPAXRequestContainer()
+	if _, err := router.TrackRequest(container); err != nil {
+		t.Fatalf("track request: %v", err)
+	}
+
+	now := time.Date(2026, 4, 7, 12, 0, 0, 0, time.UTC)
+	if err := router.ScheduleRetry(container.Header.LocalRequestId, now.Add(-time.Second), errors.New("retry")); err != nil {
+		t.Fatalf("schedule retry: %v", err)
+	}
+
+	frames, err := router.ProcessOnce(now, LinkDeliveryMethodDirect)
+	if err != nil {
+		t.Fatalf("process once: %v", err)
+	}
+	if len(frames) != 1 {
+		t.Fatalf("frames ready = %d, want 1", len(frames))
+	}
+
+	tracked, _ := router.TrackedRequest(container.Header.LocalRequestId)
+	if tracked.State != RouterRequestStateOutbound {
+		t.Fatalf("state = %q, want %q", tracked.State, RouterRequestStateOutbound)
+	}
+}
+
 func TestRouterQueueRequestClearsRetryMetadata(t *testing.T) {
 	router := NewRouter()
 	container := testPAXRequestContainer()

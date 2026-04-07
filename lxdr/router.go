@@ -66,13 +66,34 @@ type TrackedRequest struct {
 	NextAttemptAt *time.Time
 }
 
+type RouterConfig struct {
+	MaxAttempts uint32
+	RetryWait   time.Duration
+}
+
 type Router struct {
+	config     RouterConfig
 	requests   map[string]*TrackedRequest
 	seenFrames map[string]*LinkFrame
 }
 
 func NewRouter() *Router {
+	return NewRouterWithConfig(RouterConfig{
+		MaxAttempts: 5,
+		RetryWait:   10 * time.Second,
+	})
+}
+
+func NewRouterWithConfig(config RouterConfig) *Router {
+	if config.MaxAttempts == 0 {
+		config.MaxAttempts = 5
+	}
+	if config.RetryWait <= 0 {
+		config.RetryWait = 10 * time.Second
+	}
+
 	return &Router{
+		config:     config,
 		requests:   map[string]*TrackedRequest{},
 		seenFrames: map[string]*LinkFrame{},
 	}
@@ -106,6 +127,14 @@ func (r *Router) QueueRequest(
 	localRequestID string,
 	method LinkDeliveryMethod,
 ) (*LinkFrame, error) {
+	return r.queueRequestAt(localRequestID, method, time.Now())
+}
+
+func (r *Router) queueRequestAt(
+	localRequestID string,
+	method LinkDeliveryMethod,
+	now time.Time,
+) (*LinkFrame, error) {
 	if r == nil {
 		return nil, fmt.Errorf("router must not be nil")
 	}
@@ -116,8 +145,15 @@ func (r *Router) QueueRequest(
 	if tracked.State == RouterRequestStateSynchronized {
 		return nil, fmt.Errorf("request %q is already synchronized", localRequestID)
 	}
+	if tracked.AttemptCount >= r.config.MaxAttempts {
+		return nil, fmt.Errorf(
+			"request %q exceeded max attempts (%d)",
+			localRequestID,
+			r.config.MaxAttempts,
+		)
+	}
 	if tracked.State == RouterRequestStateFailed && tracked.NextAttemptAt != nil {
-		if time.Now().Before(*tracked.NextAttemptAt) {
+		if now.Before(*tracked.NextAttemptAt) {
 			return nil, fmt.Errorf(
 				"request %q retry is not due until %s",
 				localRequestID,
@@ -197,6 +233,26 @@ func (r *Router) ScheduleRetry(
 	return nil
 }
 
+func (r *Router) ScheduleRetryByPolicy(
+	localRequestID string,
+	now time.Time,
+	err error,
+) error {
+	if r == nil {
+		return fmt.Errorf("router must not be nil")
+	}
+	tracked, ok := r.requests[localRequestID]
+	if !ok {
+		return fmt.Errorf("request %q is not tracked", localRequestID)
+	}
+
+	if tracked.AttemptCount >= r.config.MaxAttempts {
+		return r.MarkRequestFailed(localRequestID, err)
+	}
+
+	return r.ScheduleRetry(localRequestID, now.Add(r.config.RetryWait), err)
+}
+
 func (r *Router) TrackedRequest(localRequestID string) (*TrackedRequest, bool) {
 	if r == nil {
 		return nil, false
@@ -217,6 +273,31 @@ func (r *Router) PendingOutboundFrames() []*LinkFrame {
 		}
 	}
 	return frames
+}
+
+func (r *Router) FailedRequests() []*TrackedRequest {
+	if r == nil {
+		return nil
+	}
+
+	failed := []*TrackedRequest{}
+	for _, tracked := range r.requests {
+		if tracked.State == RouterRequestStateFailed {
+			failed = append(failed, tracked)
+		}
+	}
+	return failed
+}
+
+func (r *Router) QueueLength() int {
+	return len(r.PendingOutboundFrames())
+}
+
+func (r *Router) SeenFrameCount() int {
+	if r == nil {
+		return 0
+	}
+	return len(r.seenFrames)
 }
 
 func (r *Router) ReadyForRetry(
@@ -252,6 +333,41 @@ func (r *Router) RetryableRequests(now time.Time) []*TrackedRequest {
 		}
 	}
 	return retryable
+}
+
+func (r *Router) ProcessOnce(
+	now time.Time,
+	method LinkDeliveryMethod,
+) ([]*LinkFrame, error) {
+	if r == nil {
+		return nil, fmt.Errorf("router must not be nil")
+	}
+
+	ready := []*LinkFrame{}
+	for localRequestID, tracked := range r.requests {
+		switch tracked.State {
+		case RouterRequestStateGenerated:
+			frame, err := r.queueRequestAt(localRequestID, method, now)
+			if err != nil {
+				return nil, err
+			}
+			ready = append(ready, frame)
+		case RouterRequestStateFailed:
+			retryable, err := r.ReadyForRetry(localRequestID, now)
+			if err != nil {
+				return nil, err
+			}
+			if !retryable {
+				continue
+			}
+			frame, err := r.queueRequestAt(localRequestID, method, now)
+			if err != nil {
+				return nil, err
+			}
+			ready = append(ready, frame)
+		}
+	}
+	return ready, nil
 }
 
 func (r *Router) SeenFrameStatus(frame *LinkFrame) (SeenFrameStatus, error) {

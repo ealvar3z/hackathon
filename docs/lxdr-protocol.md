@@ -2155,6 +2155,47 @@ workflow:
 5. reject duplicate or conflicting replay frames by `link_message_id`
 6. apply the synchronized response to the tracked request
 
+The current router can answer three explicit protocol questions:
+
+- have I seen this frame before?
+  - answered by local `link_message_id` cache inspection with outcomes:
+    - `new`
+    - `duplicate`
+    - `conflicting`
+- is this sync response new, repeated, or conflicting?
+  - answered by combining:
+    - duplicate status
+    - request-frame linkage
+    - synchronized request ID state
+- which request frame does this sync response answer?
+  - answered by:
+    - local request ID match
+    - optional `reference_link_message_id` validation
+
+The current implementation exposes these as local router query
+primitives rather than wire fields.
+
+The current implementation also supports a small local policy surface:
+
+- `max_attempts`
+- `retry_wait`
+
+These values govern local retry scheduling only. They are not link or
+transport metadata.
+
+The current implementation also supports a single local processing pass:
+
+- `ProcessOnce()`
+
+This local processing pass identifies request frames that are ready to be
+carried now, including:
+
+- newly generated requests
+- failed requests whose retry time is due
+
+It does not transmit them. It only emits the frames that are locally
+ready for the next exchange step.
+
 The v1 router does not yet define:
 
 - transport retries
@@ -2163,6 +2204,36 @@ The v1 router does not yet define:
 - routing
 - receipts
 - fragmentation
+
+### 22.6 Focused LXMF-Informed Gap Review
+
+Earlier review of `LXMF` suggests that the message/router concerns most
+worth borrowing are:
+
+- explicit message and router lifecycle handling
+- duplicate and replay caches
+- delivery-method and representation discipline
+- retry and failed-queue semantics
+
+Against that shape, the current `LXDR` position is:
+
+- already present:
+  - stable link-frame identity
+  - explicit delivery method
+  - explicit representation
+  - duplicate-frame detection
+  - referenced sync-response correlation
+  - local request/router states
+  - local retry metadata
+- still missing but potentially useful later:
+  - explicit failed-queue accessors beyond state inspection
+  - configurable retry ceilings and backoff policy
+  - local processing loop for queued work
+  - persistence of seen-frame and retry state
+
+These remaining items are router-layer concerns, not transport-layer
+requirements. They should be considered only if they materially improve
+`LXDR` protocol behavior without forcing premature network-stack work.
 
 ## 23. Conformance Matrix
 
